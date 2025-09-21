@@ -1,0 +1,12 @@
+Node.js
+
+Libraries:
+johnny-five.io (https://johnny-five.io/, interface with arduino)
+p5.js (early graphics)
+Phaser (game management)
+Pixie.js (game management)
+Lodash (basic js commands/shortcuts)
+
+Frameworks:
+Electron (desktop application)
+Express.js (asset management)
