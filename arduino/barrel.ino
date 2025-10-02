@@ -1,11 +1,14 @@
+#include <Encoder.h>
+
 // Arduino and KY-040 module
-int encoderPinA = 8; // CLK pin
-int encoderPinB = 9; // DT pin
-int encoderBtn = 10; // SW pin
+int encoderBtn = 8; // SW pin
+int encoderPinA = 9; // CLK pin
+int encoderPinB = 10; // DT pin
 int count = 0;
 int encoderPinA_prev;
 int encoderPinA_value;
-boolean bool_CW;
+bool bool_CW = false;
+
 void setup() {
 Serial.begin (9600);
 pinMode (encoderPinA, INPUT);
@@ -15,7 +18,7 @@ encoderPinA_prev = digitalRead(encoderPinA);
 }
 void loop() {
 encoderPinA_value = digitalRead(encoderPinA);
-if (encoderPinA_value != encoderPinA_prev) { // check if knob is rotating
+//if (encoderPinA_value != encoderPinA_prev) { // check if knob is rotating
 // if pin A state changed before pin B, rotation is clockwise
 if (digitalRead(encoderPinB) != encoderPinA_value) {
 count ++;
@@ -30,12 +33,11 @@ Serial.print("Clockwise | ");
 } else {
 Serial.print("Counter-Clockwise | ");
 }
-}
+//}
 encoderPinA_prev = encoderPinA_value;
 // check if button is pressed (pin SW)
 if (digitalRead(encoderBtn) == LOW) Serial.println("Button Pressed");
 else Serial.println("Button Released");
+delay(500);
+bool_CW = false;
 }
-
-
-
