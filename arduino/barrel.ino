@@ -30,8 +30,6 @@ Serial.print("Clockwise | ");
 } else {
 Serial.print("Counter-Clockwise | ");
 }
-Serial.print(count);
-Serial.print(" | ");
 }
 encoderPinA_prev = encoderPinA_value;
 // check if button is pressed (pin SW)
