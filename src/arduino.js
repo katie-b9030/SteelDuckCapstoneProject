@@ -1,13 +1,23 @@
         const { SerialPort } = require('serialport');
         const { ReadlineParser } = require('@serialport/parser-readline');
 
-        const port = new SerialPort({ path: 'COM5', baudRate: 9600 }); 
-        const parser = port.pipe(new ReadlineParser({ delimiter: '\n' }));
+        const barrelPort = new SerialPort({ path: 'COM5', baudRate: 9600 }); 
+        const cannonPort = new SerialPort({ path: 'COM4', baudRate: 9600 });
+        const barrelParser = barrelPort.pipe(new ReadlineParser({ delimiter: '\n' }));
+        const cannonParser = cannonPort.pipe(new ReadlineParser({ delimiter: '\n' }));
 
-        port.on('open', () => console.log('Serial port open'));
 
-        parser.on('data', data => {
-          console.log('Arduino output:', data);
+        barrelPort.on('open', () => console.log('Barrel port open'));
+        cannonPort.on('open', () => console.log('Cannon port open'));
+
+        barrelParser.on('data', data => {
+          console.log('Barrel output:', data);
         });
 
-        port.on('error', err => console.error('Serial port error:', err.message));
+        cannonParser.on('data', data => {
+          console.log('Cannon output:', data);
+        });
+
+        barrelPort.on('error', err => console.error('Barrel port error:', err.message));
+        cannonPort.on('error', err => console.error('Cannon port error:', err.message));
+
