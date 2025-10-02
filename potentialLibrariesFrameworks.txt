@@ -2,7 +2,7 @@ Node.js
 Phaser.io (game management)
 
 Libraries:
-johnny-five.io (https://johnny-five.io/, interface with arduino)
+Node Serial (connect to Arduino)
 p5.js (early graphics)
 Pixi.js (game management)
 Lodash (basic js commands/shortcuts)
