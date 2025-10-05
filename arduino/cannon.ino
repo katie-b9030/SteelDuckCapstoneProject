@@ -1,3 +1,6 @@
+#include <Adafruit_Sensor.h>
+#include <Adafruit_ADXL345_U.h>
+
 int encoderBtn = 8; // SW pin
 int encoderPinA = 9; // CLK pin
 int encoderPinB = 10; // DT pin
@@ -6,21 +9,37 @@ int encoderPinA_prev;
 int encoderPinA_value;
 bool bool_CW;
 
-int leverPin = ;
+int leverPin = 7;
 bool leverState;
 bool leverState_prev;
 
-int accelerometerPin = ;
+Adafruit_ADXL345_Unified accelerometer = Adafruit_ADXL345_Unified();
+int sdaPin = A4;
+int sclPin = A5;
+double xState = 0;
 
 
 
 void setup() {
     Serial.begin (9600);
+    // Encoder setup
     pinMode (encoderPinA, INPUT);
     pinMode (encoderPinB, INPUT);
     pinMode(encoderBtn, INPUT_PULLUP);
     encoderPinA_prev = digitalRead(encoderPinA);
+    // Lever setup
     leverState_prev = digitalRead(leverPin);
+    // Accelerometer setup
+    pinMode(sdaPin, INPUT);
+    pinMode(sclPin, INPUT);
+    if (!accelerometer.begin()) {
+        Serial.println("No accelerometer found");
+        while(1);
+    }
+    // get an event and set starting states
+    sensors_event_t event;
+    accelerometer.getEvent(&event);
+    xState = event.acceleration.x;
 }
 
 void loop() {
@@ -34,8 +53,6 @@ void loop() {
         // if pin B state changed before pin A, rotation is counter-clockwise
             bool_CW = false;
         }
-
-        // TODO: set bool_CW
         
         // if barrel is spinning
         if (bool_CW) {
@@ -52,7 +69,15 @@ void loop() {
 
 
     // Angle Mechanic
-    
+    sensors_event_t event;
+    xState = event.acceleration.x;
+    if (xState < ) {
+        Serial.print("Left Lane | ");
+    } else if (xState < ) {
+        Serial.print("Center Lane | ");
+    } else {
+        Serial.print("Right Lane | ")
+    }
 
 
     //Launch Mechanic

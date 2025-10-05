@@ -10,8 +10,9 @@ let barrelDirection;
 let barrelPowerup;
 let barrelPressed;
 
+let cannonLoadCount;
+let cannonLoadPress;
 let cannonDirection;
-let cannonLoaded;
 let cannonLaunched;
 
 barrelPort.on("open", () => console.log("Barrel port open"));
@@ -27,9 +28,10 @@ barrelParser.on("data", (data) => {
 
 cannonParser.on("data", (data) => {
   cannonData = data.split(" | ");
-  cannonDirection = cannonData[0];
-  cannonLoaded = cannonData[1];
-  cannonLaunched = cannonData[2];
+  cannonLoadCount = cannonData[0];
+  cannonLoadPress = cannonData[1];
+  cannonDirection = cannonData[2];
+  cannonLaunched = cannonData[3];
   console.log("Cannon output:", data);
 });
 
@@ -44,7 +46,8 @@ export {
   barrelDirection,
   barrelPowerup,
   barrelPressed,
+  cannonLoadCount,
+  cannonLoadPress,
   cannonDirection,
-  cannonLoaded,
   cannonLaunched,
 };
