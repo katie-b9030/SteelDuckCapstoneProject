@@ -9,6 +9,7 @@ const cannonParser = cannonPort.pipe(new ReadlineParser({ delimiter: "\n" }));
 let barrelDirection;
 let barrelPowerup;
 let barrelPressed;
+let barrelPowerupPressed;
 
 let cannonLoadCount;
 let cannonLoadPress;
@@ -21,8 +22,9 @@ cannonPort.on("open", () => console.log("Cannon port open"));
 barrelParser.on("data", (data) => {
   barrelData = data.split(" | ");
   barrelDirection = barrelData[0];
-  barrelPowerup = barrelData[1];
-  barrelPressed = barrelData[2];
+  barrelPressed = barrelData[1];
+  barrelPowerup = barrelData[2];
+  barrelPowerupPressed = barrelData[4];
   console.log("Barrel output:", data);
 });
 
@@ -42,10 +44,11 @@ cannonPort.on("error", (err) =>
   console.error("Cannon port error:", err.message)
 );
 
-export {
+module.exports = {
   barrelDirection,
   barrelPowerup,
   barrelPressed,
+  barrelPowerupPressed,
   cannonLoadCount,
   cannonLoadPress,
   cannonDirection,
