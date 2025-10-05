@@ -10,7 +10,7 @@ int encoderPinA_value;
 bool bool_CW = false;
 
 void setup() {
-Serial.begin (9600);
+Serial.begin(9600);
 pinMode (encoderPinA, INPUT);
 pinMode (encoderPinB, INPUT);
 pinMode(encoderBtn, INPUT_PULLUP);

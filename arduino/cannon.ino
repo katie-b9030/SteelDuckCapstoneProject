@@ -1,5 +1,5 @@
-#include <Adafruit_Sensor.h>
-#include <Adafruit_ADXL345_U.h>
+// #include <Adafruit_Sensor.h>
+// #include <Adafruit_ADXL345_U.h>
 
 int encoderBtn = 8; // SW pin
 int encoderPinA = 9; // CLK pin

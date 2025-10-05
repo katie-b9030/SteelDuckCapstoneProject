@@ -1,4 +1,4 @@
-#include <Encoder.h>
+// #include <Encoder.h>
 
 // Arduino and KY-040 module
 int encoderBtn = 8; // SW pin
@@ -9,9 +9,11 @@ int encoderPinA_prev;
 int encoderPinA_value;
 bool bool_CW = false;
 
-int potentiometerPin = 4;
-int potentiometerBtn = 5;
-int potentiometerVal;
+int powerupBtn = 4;
+int powerupPinA = 5;
+int powerupPinB = 6;
+int powerupVal = 0;
+bool bool_powerup_CW = false;
 
 void setup() {
     Serial.begin (9600);
@@ -19,6 +21,10 @@ void setup() {
     pinMode (encoderPinB, INPUT);
     pinMode(encoderBtn, INPUT_PULLUP);
     encoderPinA_prev = digitalRead(encoderPinA);
+
+    pinMode (powerupPinA, INPUT);
+    pinMode (powerupPinB, INPUT);
+    pinMode (powerupBtn, INPUT_PULLUP);
 }
 
 void loop() {
@@ -50,26 +56,27 @@ void loop() {
     
 
     // // check if button is pressed (pin SW)
-    // if (digitalRead(encoderBtn) == LOW) Serial.print("Button Pressed | ");
-    // else Serial.print("Button Released | ");
+    if (digitalRead(encoderBtn) == LOW) Serial.print("Button Pressed | ");
+    else Serial.print("Button Released | ");
 
 
     //Powerup Mechanic
-    potentiometerVal = digitalRead(potentiometerPin);
+    powerupVal = digitalRead(powerupPinA);
+    Serial.print(powerupVal + " | ");
 
-    if (potentiometerVal < -0.3) {
-        Serial.print("Powerup 1 | ");
-    }
-    else if (potentiometerVal < 0.3) {
-        Serial.print("Powerup 2 | ");
-    } else {
-        Serial.print("Powerup 3 | ");
-    }
+    // if (powerupVal < 4) {
+    //     Serial.print("Powerup 1 | ");
+    // }
+    // else if (powerupVal < 8) {
+    //     Serifal.print("Powerup 2 | ");
+    // } else {
+    //     Serial.print("Powerup 3 | ");
+    // }
 
-    if (digitalRead(potentiometerBtn) == LOW) Serial.println("Button Pressed");
+    if (digitalRead(powerupBtn) == LOW) Serial.println("Button Pressed");
     else Serial.println("Button Released");
     
 
-    delay(500);
+    delay(100);
     encoderPinA_prev = encoderPinA_value;
 }
