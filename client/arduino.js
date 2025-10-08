@@ -21,19 +21,23 @@ cannonPort.on("open", () => console.log("Cannon port open"));
 
 barrelParser.on("data", (data) => {
   barrelData = data.split(" | ");
-  barrelDirection = barrelData[0];
-  barrelPressed = barrelData[1];
-  barrelPowerup = barrelData[2];
-  barrelPowerupPressed = barrelData[4];
+  notify("barrel", {
+    barrelDirection: barrelData[0],
+    barrelPressed: barrelData[1],
+    barrelPowerup: barrelData[2],
+    barrelPowerupPressed: barrelData[4],
+  });
   console.log("Barrel output:", data);
 });
 
 cannonParser.on("data", (data) => {
   cannonData = data.split(" | ");
-  cannonLoadCount = cannonData[0];
-  cannonLoadPress = cannonData[1];
-  cannonDirection = cannonData[2];
-  cannonLaunched = cannonData[3];
+  notify("cannon", {
+    cannonLoadCount: cannonData[0],
+    cannonLoadPress: cannonData[1],
+    cannonDirection: cannonData[2],
+    cannonLaunched: cannonData[3],
+  });
   console.log("Cannon output:", data);
 });
 
@@ -45,12 +49,5 @@ cannonPort.on("error", (err) =>
 );
 
 module.exports = {
-  barrelDirection,
-  barrelPowerup,
-  barrelPressed,
-  barrelPowerupPressed,
-  cannonLoadCount,
-  cannonLoadPress,
-  cannonDirection,
-  cannonLaunched,
+  subscribe,
 };
