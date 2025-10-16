@@ -1,4 +1,4 @@
-class Troop {
+export class Troop {
     constructor(team, lane, powerup) {
         this.team = team    // bubble brigade or dust dominion
         this.lane = lane;
