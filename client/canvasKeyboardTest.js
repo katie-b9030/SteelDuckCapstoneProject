@@ -63,7 +63,7 @@ function circleIncrease() {
 }
 
 window.setup = function () {
-  createCanvas(600, 400);
+  createCanvas(windowWidth - 20, windowHeight - 20);
 };
 
 window.draw = function () {
