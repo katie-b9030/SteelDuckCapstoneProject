@@ -1,17 +1,17 @@
 "use strict";
 
-const socket = io();
+//const socket = io();
 
-let barrelData = {};
-let cannonData = {};
+//let barrelData = {};
+//let cannonData = {};
 
-socket.on("barrelData", (data) => {
-  barrelData = data;
-});
+///socket.on("barrelData", (data) => {
+/// barrelData = data;
+///});
 
-socket.on("cannonData", (data) => {
-  cannonData = data;
-});
+///socket.on("cannonData", (data) => {
+///  cannonData = data;
+///});
 
 let squareX = 100;
 let squareY = 200;
@@ -23,10 +23,9 @@ let squareA = 100;
 function squareMove() {
   // Square is the Barrel Rotary Encoder
 
-  if (barrelData.barrelDirection == "Clockwise") {
+  if (keyIsDown(RIGHT_ARROW)) { // barrelDirection == "Clockwise"
     squareX += 5;
-  } else if (barrelData.barrelDirection == "Counter-Clockwise") {
-    // WILL BECOME BarrelRotation = CounterClockwise
+  } else if (keyIsDown(LEFT_ARROW)) { // barrelDirection = "Counter-Clockwise"
     squareX -= 5;
   }
 }
@@ -34,21 +33,18 @@ function squareMove() {
 function circleMove() {
   // Circle is the Barrel Powerup Rotary Encoder
 
-  if (barrelData.barrelPowerup == "Powerup 1") {
-    // (49 = 1 key) WILL BECOME BarrelPowerup = 1st value
+  if (keyIsDown(49)) { // (49 = 1 key) WILL BECOME barrelPowerup == "Powerup 1"
     circleY = 50;
-  } else if (barrelData.barrelPowerup == "Powerup 2") {
-    // (50 = 2 key) WILL BECOME BarrelPowerup = 2nd value
+  } else if (keyIsDown(50)) { // (50 = 2 key) WILL BECOME barrelPowerup == "Powerup 2"
     circleY = 150;
-  } else if (barrelData.barrelPowerup == "Powerup 3") {
-    // (51 = 3 key) WILL BECOME BarrelPowerup = 3rd value
+  } else if (keyIsDown(51)) { // (51 = 3 key) WILL BECOME barrelPowerup == "Powerup 3"
     circleY = 250;
   }
 }
 
 function squareIncrease() {
-  if (barrelData.barrelPressed == "Button Pressed") {
-    // (84 is T KEY) WILL BECOME BarrelPressed
+  if (keyIsDown(84)) {
+    // (84 is T KEY) WILL BECOME barrelPressed == "Button Pressed"
     squareA += 1;
   } else if (keyIsDown(89)) {
     // 89 is Y KEY
@@ -57,8 +53,8 @@ function squareIncrease() {
 }
 
 function circleIncrease() {
-  if (barrelData.barrelPowerupPressed == "Button Pressed") {
-    // (32 is spacebar) WILL BECOME BarrelPoweupPressed
+  if (keyIsDown(32)) {
+    // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
     circleD += 1;
   } else if (keyIsDown(16)) {
     // 16 is shift
