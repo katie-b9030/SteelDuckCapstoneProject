@@ -1,8 +1,9 @@
 import { Player } from "./player";
 
 export class BarrelPlayer extends Player {
-    constructor(team){
-        this.team = team;
+    constructor(teamType, game){
+        this.game = game;
+        this.team = teamType;
         this.state = IDLE;
         this.spinDirection = CLOCKWISE;
         this.speed = 0;
