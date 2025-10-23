@@ -1,19 +1,19 @@
-export class Player {
-    constructor(team, role) {
-        this.team = team;
-        this.role = role;
+// export class Player {
+//     constructor(team, role) {
+//         this.team = team;
+//         this.role = role;
 
-        this.state = WAITNG;
-        this.taskComplete = false;
-    }
+//         this.state = WAITNG;
+//         this.taskComplete = false;
+//     }
 
-    States = {
-        WAITNG: "waiting",
-        ACTIVE: "active",
-    }
+//     States = {
+//         WAITNG: "waiting",
+//         ACTIVE: "active",
+//     }
 
-    update() {
+//     update() {
         
-    }
-}
+//     }
+// }
 

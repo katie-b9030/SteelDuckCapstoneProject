@@ -24,11 +24,30 @@ export class BarrelPlayer extends Player {
     spinSequence = [];
 
     createSpinSequence() {
-        // choose a random number between 4-6 (# of spins)
-        // split up 10 seconds randomly among the number of spins
-        // choose a random spin direction for each spin
-        // create key/value for each spin (?)
-        // add each pair to arrayx
+        this.spinSequence = [];
+
+        const numSpins = Math.floor(Math.random() * 3) + 4; //choose a random number of spins between 4-6
+        const totalTime = 10;
+        let remainingTime = totalTime;
+
+        for (let i = 0; i < numSpins; i++) {
+            const direction = Math.random() > 0.5   // choose random direction
+                ? this.SpinDirections.CLOCKWISE 
+                : this.SpinDirections.COUNTER_CLOCKWISE;
+
+            // 
+            let duration;
+            if (i === numSpins - 1) {
+                duration = remainingTime;   // if it's the last spin give the rest of the time
+            } else {
+                const maxDuration = remainingTime - (numSpins - i - 1);     // leave at least 1 second for each spin
+                duration = +(Math.random() * (maxDuration - 1) + 1).toFixed(2);
+            }
+
+            remainingTime -= duration;
+
+            this.spinSequence.push({ direction, duration });
+        }
     }
 }
 
