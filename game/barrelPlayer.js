@@ -1,12 +1,13 @@
-import { Player } from "./player";
+//TODO: add way to select powerup
+//TODO: add way to handle spin sequence (track if spins have been completed)
 
-export class BarrelPlayer extends Player {
+export class BarrelPlayer {
     constructor(teamType, game){
         this.game = game;
         this.team = teamType;
         this.state = IDLE;
-        this.spinDirection = CLOCKWISE;
-        this.speed = 0;
+        this.spinSequence = []
+        // this.selectedPowerup = ?
     }
 
     States = {
@@ -20,8 +21,6 @@ export class BarrelPlayer extends Player {
         CLOCKWISE: "clockwise",
         COUNTER_CLOCKWISE: "counter-clockwise"
     }
-
-    spinSequence = [];
 
     createSpinSequence() {
         this.spinSequence = [];

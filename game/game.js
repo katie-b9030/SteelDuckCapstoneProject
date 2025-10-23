@@ -36,7 +36,4 @@ class Game {
         }
     }
 
-    logStatus() {
-        
-    }
 }
