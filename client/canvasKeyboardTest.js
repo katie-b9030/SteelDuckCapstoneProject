@@ -13,50 +13,63 @@
 ///  cannonData = data;
 ///});
 
+import { KeyboardController } from './KeyboardController.js';
+//const socket = io();
+//import { ArduinoController } from './ArduinoController.js';
+
 let squareX = 100;
 let squareY = 200;
 let circleX = 400;
 let circleY = 200;
 let circleD = 100;
 let squareA = 100;
+let barX = 10;
+let barY = 10;
+let bigBarW;
+let barH = 20;
+let barW = 1;
+
+
+const controller = new KeyboardController();
+
+
 
 let bubbleTroops = [];
 let dustTroops = [];
 
 function squareMove() {
   // Square is the Barrel Rotary Encoder
-
-  if (keyIsDown(RIGHT_ARROW)) { // barrelDirection == "Clockwise"
-    squareX += 5;
-  } else if (keyIsDown(LEFT_ARROW)) { // barrelDirection = "Counter-Clockwise"
-    squareX -= 5;
-  }
+  const dir = controller.getBarrerlDirection();
+  if (dir === "Clockwise") barW += 1;
+  else if (dir === "Counter-Clockwise") barW -= 1;
 }
 
 function circleMove() {
   // Circle is the Barrel Powerup Rotary Encoder
 
-  if (keyIsDown(49)) { // (49 = 1 key) WILL BECOME barrelPowerup == "Powerup 1"
-    circleY = 50;
-  } else if (keyIsDown(50)) { // (50 = 2 key) WILL BECOME barrelPowerup == "Powerup 2"
-    circleY = 150;
-  } else if (keyIsDown(51)) { // (51 = 3 key) WILL BECOME barrelPowerup == "Powerup 3"
-    circleY = 250;
-  }
+  const power = controller.getBarrelPowerup();
+  if (power === "Powerup 1") circleY = 50;
+  else if (power === "Powerup 2") circleY = 150;
+  else if (power === "Powerup 3") circleY = 250;
 }
 
 function squareIncrease() {
-  if (keyIsDown(84)) {
-    // (84 is T KEY) WILL BECOME barrelPressed == "Button Pressed"
-    squareA += 1;
-  } else if (keyIsDown(89)) {
-    // 89 is Y KEY
-    squareA -= 1;
+  const press = controller.getBarrelPowerupPressed();
+
+  if (press === "Button Pressed") {
+    // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
+    circleD += 1;
+  } else if (keyIsDown(16)) {
+    // 16 is shift
+    circleD -= 1;
   }
 }
 
+
 function circleIncrease() {
-  if (keyIsDown(32)) {
+  const press = controller.getBarrelPowerupPressed();
+
+  if (press === "Button Pressed") {
     // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
     circleD += 1;
   } else if (keyIsDown(16)) {
@@ -74,7 +87,10 @@ function mouseInLanes() {
 }
 
 window.setup = function () {
-  createCanvas(windowWidth - 20, windowHeight - 20);
+  //createCanvas(windowWidth - 20, windowHeight - 20);
+  createCanvas(windowWidth, windowHeight);
+  bigBarW = windowWidth / 2;
+
 };
 
 const spawnZoneWidth = 100;
@@ -125,6 +141,15 @@ window.draw = function () {
   rect(width - spawnZoneWidth, 350, spawnZoneWidth, 200);
   rect(width - spawnZoneWidth, 650, spawnZoneWidth, 200);
 
+  noFill();
+  rect(barX, barY, bigBarW, barH);
+
+  squareMove();
+
+  barW = constrain(barW, 0, bigBarW);
+  fill("red");
+  rect(barX, barY, barW, barH);
+
   //fill("red");
   //square(squareX, squareY, squareA);
 
@@ -143,3 +168,11 @@ window.draw = function () {
     circle(d.x, d.y, d.d);
   }
 };
+
+
+
+window.windowResized = function () {
+  resizeCanvas(windowWidth, windowHeight);
+  bigBarW = windowWidth / 2;
+};
+
