@@ -17,7 +17,7 @@ import { KeyboardController } from './KeyboardController.js';
 //const socket = io();
 //import { ArduinoController } from './ArduinoController.js';
 
-let squareX = 100;
+const spawnZoneWidth = 100;
 let squareY = 200;
 let circleX = 400;
 let circleY = 200;
@@ -32,7 +32,11 @@ let barW = 1;
 
 const controller = new KeyboardController();
 
-
+const lanes = [
+  { y: 50,  h: 200 },
+  { y: 350, h: 200 },
+  { y: 650, h: 200 }
+];
 
 let bubbleTroops = [];
 let dustTroops = [];
@@ -86,6 +90,24 @@ function mouseInLanes() {
   );
 }
 
+function drawLanesAndSpawns() {
+  noStroke();
+
+  for (let lane of lanes) {
+    // Actual Lanes
+    fill("grey");
+    rect(0, lane.y, width, lane.h);
+
+    //Bubble spawn
+    fill("rgba(0, 0, 255, 0.15)");
+    rect(0, lane.y, spawnZoneWidth, lane.h);
+
+    //Dust spawn
+    fill("rgba(255, 200, 0, 0.15)");
+    rect(width - spawnZoneWidth, lane.y, spawnZoneWidth, lane.h);
+  }
+}
+
 window.setup = function () {
   //createCanvas(windowWidth - 20, windowHeight - 20);
   createCanvas(windowWidth, windowHeight);
@@ -93,7 +115,6 @@ window.setup = function () {
 
 };
 
-const spawnZoneWidth = 100;
 
 window.mousePressed = function () { // Cannon shot
   if (mouseInLanes()) {
@@ -124,22 +145,7 @@ window.mousePressed = function () { // Cannon shot
 
 window.draw = function () {
   background("green");
-
-  fill("grey");
-  rect(0, 50, windowWidth, 200);
-  rect(0, 350, windowWidth, 200);
-  rect(0, 650, windowWidth, 200);
-
-  noStroke();
-  fill("rgba(0, 0, 255, 0.15)");
-  rect(0, 50, spawnZoneWidth, 200);
-  rect(0, 350, spawnZoneWidth, 200);
-  rect(0, 650, spawnZoneWidth, 200);
-
-  fill("rgba(255, 200, 0, 0.15)");
-  rect(width - spawnZoneWidth, 50, spawnZoneWidth, 200);
-  rect(width - spawnZoneWidth, 350, spawnZoneWidth, 200);
-  rect(width - spawnZoneWidth, 650, spawnZoneWidth, 200);
+  drawLanesAndSpawns()
 
   noFill();
   rect(barX, barY, bigBarW, barH);
