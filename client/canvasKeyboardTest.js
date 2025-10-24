@@ -20,6 +20,9 @@ let circleY = 200;
 let circleD = 100;
 let squareA = 100;
 
+let bubbleTroops = [];
+let dustTroops = [];
+
 function squareMove() {
   // Square is the Barrel Rotary Encoder
 
@@ -62,21 +65,75 @@ function circleIncrease() {
   }
 }
 
+function mouseInLanes() {
+  return (
+    (mouseY >= 50 && mouseY <= 250) || // Lane 1
+    (mouseY >= 350 && mouseY <= 550) || // Lane 2
+    (mouseY >= 650 && mouseY <= 850) // Lane 3
+  );
+}
+
 window.setup = function () {
   createCanvas(windowWidth - 20, windowHeight - 20);
 };
 
+const spawnZoneWidth = 100;
+
+window.mousePressed = function () { // Cannon shot
+  if (mouseInLanes()) {
+    if (mouseX <= spawnZoneWidth) {
+      let bubble = {
+        x: mouseX,
+        y: mouseY,
+        d: random(10, 15),
+        speed: random(2, 5),
+        dir: 1,
+        color: color("lightblue"),
+      };
+      bubbleTroops.push(bubble);
+    }
+    else if (mouseX >= width - spawnZoneWidth) {
+      let dust = {
+        x: mouseX,
+        y: mouseY,
+        d: random(10, 15),
+        speed: random(2, 5),
+        dir: -1,
+        color: color("tan"),
+      };
+      dustTroops.push(dust);
+    }
+  }
+}
+
 window.draw = function () {
-  background("black");
+  background("green");
+
+  fill("grey");
+  rect(0, 50, windowWidth, 200);
+  rect(0, 350, windowWidth, 200);
+  rect(0, 650, windowWidth, 200);
 
   squareMove();
   circleMove();
   circleIncrease();
   squareIncrease();
 
-  fill("red");
-  square(squareX, squareY, squareA);
+  //fill("red");
+  //square(squareX, squareY, squareA);
 
-  fill("yellow");
-  circle(circleX, circleY, circleD);
+  //fill("yellow");
+  //circle(circleX, circleY, circleD);
+
+  for (let b of bubbleTroops) {
+    b.x += b.speed * b.dir;
+    fill(b.color);
+    circle(b.x, b.y, b.d);
+  }
+
+  for (let d of dustTroops) {
+    d.x += d.speed * d.dir;
+    fill(d.color);
+    circle(d.x, d.y, d.d);
+  }
 };
