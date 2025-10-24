@@ -114,10 +114,16 @@ window.draw = function () {
   rect(0, 350, windowWidth, 200);
   rect(0, 650, windowWidth, 200);
 
-  squareMove();
-  circleMove();
-  circleIncrease();
-  squareIncrease();
+  noStroke();
+  fill("rgba(0, 0, 255, 0.15)");
+  rect(0, 50, spawnZoneWidth, 200);
+  rect(0, 350, spawnZoneWidth, 200);
+  rect(0, 650, spawnZoneWidth, 200);
+
+  fill("rgba(255, 200, 0, 0.15)");
+  rect(width - spawnZoneWidth, 50, spawnZoneWidth, 200);
+  rect(width - spawnZoneWidth, 350, spawnZoneWidth, 200);
+  rect(width - spawnZoneWidth, 650, spawnZoneWidth, 200);
 
   //fill("red");
   //square(squareX, squareY, squareA);
