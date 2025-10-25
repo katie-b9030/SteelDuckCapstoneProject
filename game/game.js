@@ -1,3 +1,6 @@
+import { Team } from "./team";
+import { Troop } from "./troop";
+
 class Game {
     constructor() {
         this.teams = [

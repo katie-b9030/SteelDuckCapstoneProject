@@ -1,4 +1,5 @@
 import { CannonPlayer } from "./cannonPlayer";
+import { BarrelPlayer } from "./barrelPlayer";
 
 export class Team {
     constructor(name, game) {

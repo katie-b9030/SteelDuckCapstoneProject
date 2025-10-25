@@ -1,6 +1,6 @@
 export class Powerup {
     constructor(type) {
-        this.type;
+        this.type = type;
     }
 
     types = {
