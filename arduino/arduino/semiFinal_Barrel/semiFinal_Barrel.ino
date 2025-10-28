@@ -41,6 +41,9 @@ void loop() {
     magnetDetected = true;
     spinCount++;
   }
+  else {
+    magnetDetected = false;
+  }
 
   if (!magnetDetected) {
     sinceLastSpin += 1;
