@@ -62,6 +62,18 @@ function increaseProgress() {
     }
     else {
       fillBarWidth = progressBar.width
+
+      if (!window.transitioning) {
+        window.transitioning = true;
+        setTimeout(() => {
+          // Mark down that we are intentionally changing pages
+          sessionStorage.setItem("fromBarrelScreen", "true");
+
+          // Go to the next page
+          window.location.href = "Capstone-Canvas-test.html";
+        }, 1000);
+        
+      }
     }
   }
 }
