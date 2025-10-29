@@ -23,11 +23,10 @@ let squareA = 100;
 function squareMove() {
   // Square is the Barrel Rotary Encoder
 
-  if (barrelData.spinCount <= 10 && barrelData.spinIncreasing) {
+  if (barrelData.spinCount <= 10) {
     squareX += 5;
-  } else if (barrelData.spinCount > 10) {
   } else {
-    squareX -= 5;
+    // TODO: Show that barrel is done
   }
 }
 

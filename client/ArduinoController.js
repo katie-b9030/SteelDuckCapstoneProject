@@ -18,8 +18,8 @@ export class ArduinoController {
 
     update() { }
 
-    getBarrelDirection() {
-        return this.barrelData.barrelDirection;
+    getBarrelSpins() {
+        return this.barrelData.barrelSpins;
     }
 
     getBarrelPowerUp() {

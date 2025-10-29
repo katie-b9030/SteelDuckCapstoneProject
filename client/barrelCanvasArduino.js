@@ -16,10 +16,12 @@
 // });
 
 
-import { BarrelKeyboardController } from "./barrelKeyboardController.js";
+import { ArduinoController } from "./ArduinoController.js";
 
-const controller = new BarrelKeyboardController();
+const controller = new ArduinoController();
 
+
+const SPIN_THRESHOLD = 20;
 
 let progressBar;
 let fillBar;
@@ -52,12 +54,24 @@ function fillBubbleBar(bubbleBar, x, y) {
 
 function increaseProgress() {
   if(locked) {    // only start this if powerup has been selected
-    spinCount = controller.getBarrelSpin();
-    if(spinCount < 10) {
-      fillBarWidth = (progressBar.width/10) * spinCount;
+    spinCount = controller.getBarrelSpins();
+    if(spinCount < SPIN_THRESHOLD) {
+      fillBarWidth = (progressBar.width/SPIN_THRESHOLD) * spinCount;
     }
     else {
       fillBarWidth = progressBar.width
+
+      if (!window.transitioning) {
+        window.transitioning = true;
+        setTimeout(() => {
+          // Mark down that we are intentionally changing pages
+          sessionStorage.setItem("fromBarrelScreen", "true");
+
+          // Go to the next page
+          window.location.href = "Capstone-Canvas-test.html";
+        }, 1000);
+        
+      }
     }
   }
 }

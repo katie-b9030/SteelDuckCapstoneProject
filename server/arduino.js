@@ -23,11 +23,10 @@ cannonPort.on("open", () => console.log("Cannon port open"));
 barrelParser.on("data", (data) => {
   barrelData = data.split(" | ").map((s) => s.trim());
   notify("barrel", {
-    barrelSpins: barrelData[0],
-    barrelSpinning: parseInt(barrelData[1]),
-    barrelPressed: barrelData[2],
-    barrelPowerup: barrelData[3],
-    barrelPowerupPressed: barrelData[4],
+    barrelSpins: parseInt(barrelData[0]),
+    barrelPressed: barrelData[1],
+    barrelPowerup: barrelData[2],
+    barrelPowerupPressed: barrelData[3],
   });
   console.log("Barrel output:", data);
 });

@@ -9,7 +9,6 @@ const int powerupBtn = 4;    // Rotary encoder SW (button)
 int spinCount = 0;
 int sinceLastSpin = 100;
 bool magnetDetected = false;
-bool spinIncreasing = false;
 
 //rotary encoder variables
 int powerupVal = 0;
@@ -44,21 +43,8 @@ void loop() {
   else {
     magnetDetected = false;
   }
-
-  if (!magnetDetected) {
-    sinceLastSpin += 1;
-  }
-
-    if (sinceLastSpin < 20) {
-      spinIncreasing = true;
-    }
-    else {
-      spinIncreasing = false;
-    }
   
   Serial.print(spinCount);
-  Serial.print(" | ");
-  Serial.print(spinIncreasing);
   Serial.print(" | ");
 
   //rotary encoder

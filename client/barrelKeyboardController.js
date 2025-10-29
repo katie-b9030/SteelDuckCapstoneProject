@@ -6,7 +6,7 @@ export class BarrelKeyboardController {
     spinCount = 0; 
     selectedPowerup = "None";
 
-    getBarrelSpin() {
+    getBarrelSpins() {
         if (keyIsDown(32)) this.spinCount++; //space
         return this.spinCount;
     }

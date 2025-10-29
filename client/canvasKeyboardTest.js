@@ -43,7 +43,7 @@ let dustTroops = [];
 
 function squareMove() {
   // Square is the Barrel Rotary Encoder
-  const dir = controller.getBarrerlDirection();
+  const dir = controller.getBarrelDirection();
   if (dir === "Clockwise") barW += 1;
   else if (dir === "Counter-Clockwise") barW -= 1;
 }
