@@ -122,6 +122,12 @@ window.setup = function () {
 window.mousePressed = function () {
   // Cannon shot
   if (mouseInLanes()) {
+    bubble_soldier_img = createImage(
+      "../media/assets/characters/bubble_empty.gif"
+    );
+    dust_soldier_img = createImage(
+      "../media/assets/characters/rabbit_empty.gif"
+    );
     if (mouseX <= spawnZoneWidth) {
       let bubble = {
         x: mouseX,
@@ -130,7 +136,7 @@ window.mousePressed = function () {
         speed: random(2, 5),
         dir: 1,
         color: color("lightblue"),
-        img: "../media/assets/characters/bubble_empty.gif",
+        img: bubble_soldier_img,
       };
       bubbleTroops.push(bubble);
     } else if (mouseX >= width - spawnZoneWidth) {
@@ -141,16 +147,11 @@ window.mousePressed = function () {
         speed: random(2, 5),
         dir: -1,
         color: color("tan"),
-        img: "../media/assets/characters/rabbit_empty.gif",
+        img: dust_soldier_img,
       };
       dustTroops.push(dust);
     }
   }
-};
-
-window.preload = function () {
-  bubble_soldier_img = loadImage("../media/assets/characters/bubble_empty.gif");
-  dust_soldier_img = loadImage("../media/assets/characters/rabbit_empty.gif");
 };
 
 window.draw = function () {
@@ -175,14 +176,16 @@ window.draw = function () {
 
   for (let b of bubbleTroops) {
     b.x += b.speed * b.dir;
-    fill(b.color);
-    circle(b.x, b.y, b.d);
+    // fill(b.color);
+    // circle(b.x, b.y, b.d);
+    bubble.img.position(b.x, b.y, b.dir);
   }
 
   for (let d of dustTroops) {
     d.x += d.speed * d.dir;
-    fill(d.color);
-    circle(d.x, d.y, d.d);
+    // fill(d.color);
+    // circle(d.x, d.y, d.d);
+    dust.img.position(d.x, d.y, d.dir);
   }
 };
 

@@ -9,7 +9,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="./p5.js"></script>
     <script type="module" src="./canvasKeyboardTest.js"></script>
-    
+
     <script>
         // Check if the page was refreshed or opened directly
         window.addEventListener("load", () => {
@@ -17,7 +17,7 @@
             const navType = performance.getEntriesByType("navigation")[0]?.type;
 
             //If the page was refreshed or loaded directly
-            if (navType === "reload" || !cameFromBarrel){
+            if (navType === "reload" || !cameFromBarrel) {
                 sessionStorage.removeItem("fromBarrelScreen"); //remove item so it's not always there 
                 // Go to the barrel screen page
                 window.location.replace("barrel-screen.html");
