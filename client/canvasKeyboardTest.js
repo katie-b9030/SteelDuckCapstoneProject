@@ -255,6 +255,17 @@ window.draw = function () {
     image(d.img, -d.x, d.y, DUST_TROOP_WIDTH, TROOP_HEIGHT);
     pop();
   }
+
+  // for (let i = bubbleTroops.length - 1; i >= 0; i--) {
+  //   let b = bubbleTroops[i];
+  //   for (let j = dustTroops.length - 1; j >= 0; j--) {
+  //     let d = dustTroops[i];
+  //     if (Math.abs(d.x - b.x) < 200 && Math.abs(d.y - b.y < 150)) {
+  //       bubbleTroops.splice(i, 1);
+  //       dustTroops.splice(i, 1);
+  //     }
+  //   }
+  // }
 };
 
 window.windowResized = function () {
