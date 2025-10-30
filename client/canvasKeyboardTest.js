@@ -13,29 +13,32 @@
 ///  cannonData = data;
 ///});
 
-import { KeyboardController } from './KeyboardController.js';
+import { KeyboardController } from "./KeyboardController.js";
 //const socket = io();
 //import { ArduinoController } from './ArduinoController.js';
 
 const spawnZoneWidth = 100;
-let squareY = 200;
-let circleX = 400;
-let circleY = 200;
-let circleD = 100;
-let squareA = 100;
+// let squareY = 200;
+// let circleX = 400;
+// let circleY = 200;
+// let circleD = 100;
+// let squareA = 100;
 let barX = 10;
 let barY = 10;
 let bigBarW;
 let barH = 20;
 let barW = 1;
 
+let bg_img;
+let bubble_soldier_img;
+let dust_soldier_img;
 
 const controller = new KeyboardController();
 
 const lanes = [
-  { y: 50,  h: 200 },
+  { y: 50, h: 200 },
   { y: 350, h: 200 },
-  { y: 650, h: 200 }
+  { y: 650, h: 200 },
 ];
 
 let bubbleTroops = [];
@@ -48,39 +51,38 @@ function squareMove() {
   else if (dir === "Counter-Clockwise") barW -= 1;
 }
 
-function circleMove() {
-  // Circle is the Barrel Powerup Rotary Encoder
+// function circleMove() {
+//   // Circle is the Barrel Powerup Rotary Encoder
 
-  const power = controller.getBarrelPowerup();
-  if (power === "Powerup 1") circleY = 50;
-  else if (power === "Powerup 2") circleY = 150;
-  else if (power === "Powerup 3") circleY = 250;
-}
+//   const power = controller.getBarrelPowerup();
+//   if (power === "Powerup 1") circleY = 50;
+//   else if (power === "Powerup 2") circleY = 150;
+//   else if (power === "Powerup 3") circleY = 250;
+// }
 
-function squareIncrease() {
-  const press = controller.getBarrelPowerupPressed();
+// function squareIncrease() {
+//   const press = controller.getBarrelPowerupPressed();
 
-  if (press === "Button Pressed") {
-    // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
-    circleD += 1;
-  } else if (keyIsDown(16)) {
-    // 16 is shift
-    circleD -= 1;
-  }
-}
+//   if (press === "Button Pressed") {
+//     // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
+//     circleD += 1;
+//   } else if (keyIsDown(16)) {
+//     // 16 is shift
+//     circleD -= 1;
+//   }
+// }
 
+// function circleIncrease() {
+//   const press = controller.getBarrelPowerupPressed();
 
-function circleIncrease() {
-  const press = controller.getBarrelPowerupPressed();
-
-  if (press === "Button Pressed") {
-    // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
-    circleD += 1;
-  } else if (keyIsDown(16)) {
-    // 16 is shift
-    circleD -= 1;
-  }
-}
+//   if (press === "Button Pressed") {
+//     // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
+//     circleD += 1;
+//   } else if (keyIsDown(16)) {
+//     // 16 is shift
+//     circleD -= 1;
+//   }
+// }
 
 function mouseInLanes() {
   return (
@@ -112,11 +114,13 @@ window.setup = function () {
   //createCanvas(windowWidth - 20, windowHeight - 20);
   createCanvas(windowWidth, windowHeight);
   bigBarW = windowWidth / 2;
-
+  bg_img = loadImage(
+    "../media/assets/background/modeled_background_no_color.png"
+  );
 };
 
-
-window.mousePressed = function () { // Cannon shot
+window.mousePressed = function () {
+  // Cannon shot
   if (mouseInLanes()) {
     if (mouseX <= spawnZoneWidth) {
       let bubble = {
@@ -126,10 +130,10 @@ window.mousePressed = function () { // Cannon shot
         speed: random(2, 5),
         dir: 1,
         color: color("lightblue"),
+        img: "../media/assets/characters/bubble_empty.gif",
       };
       bubbleTroops.push(bubble);
-    }
-    else if (mouseX >= width - spawnZoneWidth) {
+    } else if (mouseX >= width - spawnZoneWidth) {
       let dust = {
         x: mouseX,
         y: mouseY,
@@ -137,15 +141,22 @@ window.mousePressed = function () { // Cannon shot
         speed: random(2, 5),
         dir: -1,
         color: color("tan"),
+        img: "../media/assets/characters/rabbit_empty.gif",
       };
       dustTroops.push(dust);
     }
   }
-}
+};
+
+window.preload = function () {
+  bubble_soldier_img = loadImage("../media/assets/characters/bubble_empty.gif");
+  dust_soldier_img = loadImage("../media/assets/characters/rabbit_empty.gif");
+};
 
 window.draw = function () {
-  background("green");
-  drawLanesAndSpawns()
+  // background("green");
+  background(bg_img);
+  drawLanesAndSpawns();
 
   noFill();
   rect(barX, barY, bigBarW, barH);
@@ -175,10 +186,7 @@ window.draw = function () {
   }
 };
 
-
-
 window.windowResized = function () {
   resizeCanvas(windowWidth, windowHeight);
   bigBarW = windowWidth / 2;
 };
-
