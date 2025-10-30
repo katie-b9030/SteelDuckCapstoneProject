@@ -18,7 +18,8 @@ import { KeyboardController } from "./KeyboardController.js";
 //import { ArduinoController } from './ArduinoController.js';
 
 const spawnZoneWidth = 100;
-const TROOP_WIDTH = 500;
+const BUBBLE_TROOP_WIDTH = 500;
+const DUST_TROOP_WIDTH = 400;
 const TROOP_HEIGHT = 350;
 // let squareY = 200;
 // let circleX = 400;
@@ -99,7 +100,7 @@ function drawLanesAndSpawns() {
 
   for (let lane of lanes) {
     // Actual Lanes
-    fill("grey");
+    fill("rgba(100, 100, 100, 0.5)");
     rect(0, lane.y, width, lane.h);
 
     //Bubble spawn
@@ -124,7 +125,7 @@ window.mousePressed = function () {
   if (mouseInLanes()) {
     if (mouseX <= spawnZoneWidth) {
       let bubble = {
-        x: mouseX - TROOP_WIDTH / 2,
+        x: mouseX - BUBBLE_TROOP_WIDTH / 2,
         y: mouseY - TROOP_HEIGHT / 2,
         d: random(10, 15),
         speed: random(0.2, 0.5),
@@ -135,7 +136,7 @@ window.mousePressed = function () {
       bubbleTroops.push(bubble);
     } else if (mouseX >= width - spawnZoneWidth) {
       let dust = {
-        x: mouseX + TROOP_WIDTH / 2,
+        x: mouseX + DUST_TROOP_WIDTH / 2,
         y: mouseY - TROOP_HEIGHT / 2,
         d: random(10, 15),
         speed: random(-0.2, -0.5),
@@ -180,7 +181,7 @@ window.draw = function () {
     b.x += b.speed * b.d;
     // fill(b.color);
     // circle(b.x, b.y, b.d);
-    image(b.img, b.x, b.y, TROOP_WIDTH, TROOP_HEIGHT);
+    image(b.img, b.x, b.y, BUBBLE_TROOP_WIDTH, TROOP_HEIGHT);
   }
 
   for (let d of dustTroops) {
@@ -189,7 +190,7 @@ window.draw = function () {
     // circle(d.x, d.y, d.d);
     push();
     scale(-1, 1);
-    image(d.img, -d.x, d.y, TROOP_WIDTH, TROOP_HEIGHT);
+    image(d.img, -d.x, d.y, DUST_TROOP_WIDTH, TROOP_HEIGHT);
     pop();
   }
 };
