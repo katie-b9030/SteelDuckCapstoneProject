@@ -2,8 +2,9 @@ const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
 
 // const barrelPort = new SerialPort({ path: "COM5", baudRate: 9600 });
-const barrelPort = new SerialPort({ path: "COM3", baudRate: 9600 });
-const cannonPort = new SerialPort({ path: "COM4", baudRate: 9600 });
+const barrelPort = new SerialPort({ path: "COM4", baudRate: 9600 });
+// const cannonPort = new SerialPort({ path: "COM4", baudRate: 9600 });
+const cannonPort = new SerialPort({ path: "COM3", baudRate: 9600 });
 const barrelParser = barrelPort.pipe(new ReadlineParser({ delimiter: "\n" }));
 const cannonParser = cannonPort.pipe(new ReadlineParser({ delimiter: "\n" }));
 
@@ -24,9 +25,9 @@ barrelParser.on("data", (data) => {
   barrelData = data.split(" | ").map((s) => s.trim());
   notify("barrel", {
     barrelSpins: parseInt(barrelData[0]),
-    barrelPressed: barrelData[1],
-    barrelPowerup: barrelData[2],
-    barrelPowerupPressed: barrelData[3],
+    //barrelPressed: barrelData[1],
+    barrelPowerup: barrelData[1],
+    barrelPowerupPressed: barrelData[2],
   });
   console.log("Barrel output:", data);
 });

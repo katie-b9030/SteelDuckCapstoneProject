@@ -40,7 +40,7 @@ void loop() {
     magnetDetected = true;
     spinCount++;
   }
-  else {
+  else if (state == HIGH && magnetDetected) {
     magnetDetected = false;
   }
   
@@ -60,13 +60,13 @@ void loop() {
 
   powerupVal_mod = abs(powerupVal % 6); 
 
-  Serial.print("Power-up Selected: ");
+  // Serial.print("Power-up Selected: ");
   if (powerupVal_mod < 2) {
-    Serial.print("Power-up 1 | ");
+    Serial.print("Powerup 1 | ");
   } else if (powerupVal_mod < 4) {
-    Serial.print("Power-up 2 | ");
+    Serial.print("Powerup 2 | ");
   } else {
-    Serial.print("Power-up 3 | ");
+    Serial.print("Powerup 3 | ");
   }
 
   //encoder button press
