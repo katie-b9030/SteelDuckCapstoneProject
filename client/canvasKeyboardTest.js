@@ -18,6 +18,8 @@ import { KeyboardController } from "./KeyboardController.js";
 //import { ArduinoController } from './ArduinoController.js';
 
 const spawnZoneWidth = 100;
+const TROOP_WIDTH = 500;
+const TROOP_HEIGHT = 350;
 // let squareY = 200;
 // let circleX = 400;
 // let circleY = 200;
@@ -30,8 +32,8 @@ let barH = 20;
 let barW = 1;
 
 let bg_img;
-let bubble_soldier_img;
-let dust_soldier_img;
+let bubble_soldier_gif;
+let dust_soldier_gif;
 
 const controller = new KeyboardController();
 
@@ -112,46 +114,46 @@ function drawLanesAndSpawns() {
 
 window.setup = function () {
   //createCanvas(windowWidth - 20, windowHeight - 20);
-  createCanvas(windowWidth, windowHeight);
+  let canvas = createCanvas(windowWidth, windowHeight);
+  canvas.drawingContext.willReadFrequently = true;
   bigBarW = windowWidth / 2;
-  bg_img = loadImage(
-    "../media/assets/background/modeled_background_no_color.png"
-  );
 };
 
 window.mousePressed = function () {
   // Cannon shot
   if (mouseInLanes()) {
-    bubble_soldier_img = createImage(
-      "../media/assets/characters/bubble_empty.gif"
-    );
-    dust_soldier_img = createImage(
-      "../media/assets/characters/rabbit_empty.gif"
-    );
     if (mouseX <= spawnZoneWidth) {
       let bubble = {
-        x: mouseX,
-        y: mouseY,
+        x: mouseX - TROOP_WIDTH / 2,
+        y: mouseY - TROOP_HEIGHT / 2,
         d: random(10, 15),
-        speed: random(2, 5),
+        speed: random(0.2, 0.5),
         dir: 1,
         color: color("lightblue"),
-        img: bubble_soldier_img,
+        img: bubble_soldier_gif,
       };
       bubbleTroops.push(bubble);
     } else if (mouseX >= width - spawnZoneWidth) {
       let dust = {
-        x: mouseX,
-        y: mouseY,
+        x: mouseX + TROOP_WIDTH / 2,
+        y: mouseY - TROOP_HEIGHT / 2,
         d: random(10, 15),
-        speed: random(2, 5),
+        speed: random(-0.2, -0.5),
         dir: -1,
         color: color("tan"),
-        img: dust_soldier_img,
+        img: dust_soldier_gif,
       };
       dustTroops.push(dust);
     }
   }
+};
+
+window.preload = function () {
+  bg_img = loadImage(
+    "../media/assets/background/modeled_background_no_color.png"
+  );
+  bubble_soldier_gif = loadImage("../media/assets/characters/bubble_empty.gif");
+  dust_soldier_gif = loadImage("../media/assets/characters/rabbit_empty.gif");
 };
 
 window.draw = function () {
@@ -175,17 +177,20 @@ window.draw = function () {
   //circle(circleX, circleY, circleD);
 
   for (let b of bubbleTroops) {
-    b.x += b.speed * b.dir;
+    b.x += b.speed * b.d;
     // fill(b.color);
     // circle(b.x, b.y, b.d);
-    bubble.img.position(b.x, b.y, b.dir);
+    image(b.img, b.x, b.y, TROOP_WIDTH, TROOP_HEIGHT);
   }
 
   for (let d of dustTroops) {
-    d.x += d.speed * d.dir;
+    d.x += d.speed * d.d;
     // fill(d.color);
     // circle(d.x, d.y, d.d);
-    dust.img.position(d.x, d.y, d.dir);
+    push();
+    scale(-1, 1);
+    image(d.img, -d.x, d.y, TROOP_WIDTH, TROOP_HEIGHT);
+    pop();
   }
 };
 
