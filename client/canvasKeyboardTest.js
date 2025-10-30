@@ -138,9 +138,9 @@ function selectBubbleSoldier() {
   if (powerup == "Powerup 1") {
     return bubble_soldier_shield_gif;
   } else if (powerup == "Powerup 2") {
-    return bubble_soldier_helmet_gif;
-  } else if (powerup == "Powerup 3") {
     return bubble_soldier_chestplate_gif;
+  } else if (powerup == "Powerup 3") {
+    return bubble_soldier_helmet_gif;
   } else {
     return bubble_soldier_plain_gif;
   }
@@ -150,9 +150,9 @@ function selectDustSoldier() {
   if (powerup == "Powerup 1") {
     return dust_soldier_shield_gif;
   } else if (powerup == "Powerup 2") {
-    return dust_soldier_helmet_gif;
-  } else if (powerup == "Powerup 3") {
     return dust_soldier_cloak_gif;
+  } else if (powerup == "Powerup 3") {
+    return dust_soldier_helmet_gif;
   } else {
     return dust_soldier_plain_gif;
   }

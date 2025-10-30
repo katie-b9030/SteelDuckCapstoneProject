@@ -22,8 +22,8 @@ const controller = new ArduinoController();
 const SPIN_THRESHOLD = 5;
 
 let progressBar;
-let fillBar;
 let barrel_img;
+let barrelScreenVisible = false;
 
 let spinCount;
 let powerup;
@@ -48,15 +48,15 @@ let circleColor = "#2355ddff";
 let squareColor = "#2355ddff";
 let triColor = "#2355ddff";
 
-function preload() {
+window.preload = function () {
   progressBar = loadImage("../media/assets/Bubble_Bar_Empty.png"); // path to your image
   barrel_img = loadImage("../media/assets/barrel.png");
-}
+};
 
 function fillBubbleBar(bubbleBar, x, y) {
   noStroke();
   fill("#02c3d1");
-  fillBar = rect(x, y, fillBarWidth, bubbleBar.height, 50);
+  rect(x, y, fillBarWidth, bubbleBar.height, 50);
 }
 
 function increaseProgress() {
@@ -101,24 +101,30 @@ function selectPowerUp() {
     if (selectedShape === "triangle") triColor = "#c23fd1";
 
     sessionStorage.setItem("selectedPowerup", powerup);
+
+    setTimeout(() => {
+      barrelScreenVisible = true;
+    }, 1000);
   }
 }
 
 window.setup = function () {
   sessionStorage.removeItem("selectedPowerup");
   createCanvas(1500, 650);
-  preload();
 };
 
 window.draw = function () {
-  background("#363947");
+  if (barrelScreenVisible) {
+    background("#363947");
 
-  let x = (width - progressBar.width) / 2;
-  let y = 20;
+    let x = (width - progressBar.width) / 2;
+    let y = 20;
+    fillBubbleBar(progressBar, x, y);
 
-  fillBubbleBar(progressBar, x, y);
+    image(progressBar, x, y);
 
-  image(progressBar, x, y);
+    image(barrel_img, width / 2, height / 2);
+  }
 
   fill(circleColor);
   let cSize =
