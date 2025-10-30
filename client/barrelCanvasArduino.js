@@ -49,8 +49,8 @@ let squareColor = "#2355ddff";
 let triColor = "#2355ddff";
 
 window.preload = function () {
-  progressBar = loadImage("../media/assets/Bubble_Bar_Empty.png"); // path to your image
-  barrel_img = loadImage("../media/assets/barrel.png");
+  progressBar = loadImage("../media/assets/ui/Bubble_Bar_Empty.png"); // path to your image
+  // barrel_img = loadImage("../media/assets/ui/barrel.png");
 };
 
 function fillBubbleBar(bubbleBar, x, y) {
@@ -102,9 +102,10 @@ function selectPowerUp() {
 
     sessionStorage.setItem("selectedPowerup", powerup);
 
+    // setTimeout(() => { barrelScreenVisible = true; }, 1000);
     setTimeout(() => {
-      barrelScreenVisible = true;
-    }, 1000);
+      text("Spin the Barrel!", 200, 300);
+    }, 500);
   }
 }
 
@@ -114,17 +115,15 @@ window.setup = function () {
 };
 
 window.draw = function () {
-  if (barrelScreenVisible) {
-    background("#363947");
+  background("#363947");
 
-    let x = (width - progressBar.width) / 2;
-    let y = 20;
-    fillBubbleBar(progressBar, x, y);
+  let x = (width - progressBar.width) / 2;
+  let y = 20;
+  fillBubbleBar(progressBar, x, y);
 
-    image(progressBar, x, y);
+  image(progressBar, x, y);
 
-    image(barrel_img, width / 2, height / 2);
-  }
+  // image(barrel_img, width / 2, height / 2);
 
   fill(circleColor);
   let cSize =
