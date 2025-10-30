@@ -23,6 +23,7 @@ const SPIN_THRESHOLD = 5;
 
 let progressBar;
 let fillBar;
+let barrel_img;
 
 let spinCount;
 let powerup;
@@ -49,6 +50,7 @@ let triColor = "#2355ddff";
 
 function preload() {
   progressBar = loadImage("../media/assets/Bubble_Bar_Empty.png"); // path to your image
+  barrel_img = loadImage("../media/assets/barrel.png");
 }
 
 function fillBubbleBar(bubbleBar, x, y) {
@@ -58,7 +60,7 @@ function fillBubbleBar(bubbleBar, x, y) {
 }
 
 function increaseProgress() {
-  if (locked) {
+  if (locked && controller.getBarrelSpins()) {
     // only start this if powerup has been selected
     spinCount = controller.getBarrelSpins();
     if (spinCount < SPIN_THRESHOLD) {
@@ -97,10 +99,13 @@ function selectPowerUp() {
     if (selectedShape === "circle") circleColor = "#c23fd1";
     if (selectedShape === "square") squareColor = "#c23fd1";
     if (selectedShape === "triangle") triColor = "#c23fd1";
+
+    sessionStorage.setItem("selectedPowerup", powerup);
   }
 }
 
 window.setup = function () {
+  sessionStorage.removeItem("selectedPowerup");
   createCanvas(1500, 650);
   preload();
 };

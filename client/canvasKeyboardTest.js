@@ -49,6 +49,8 @@ let dust_soldier_shield_gif;
 
 const controller = new KeyboardController();
 
+let powerup;
+
 const lanes = [
   { y: 50, h: 200 },
   { y: 350, h: 200 },
@@ -128,6 +130,7 @@ window.setup = function () {
   //createCanvas(windowWidth - 20, windowHeight - 20);
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.drawingContext.willReadFrequently = true;
+  powerup = sessionStorage.getItem("selectedPowerup") || "None";
   bigBarW = windowWidth / 2;
 };
 
@@ -166,7 +169,7 @@ window.mousePressed = function () {
         speed: random(0.2, 0.5),
         dir: 1,
         color: color("lightblue"),
-        img: bubble_soldier_plain_gif,
+        img: selectBubbleSoldier(),
       };
       bubbleTroops.push(bubble);
     } else if (mouseX >= width - spawnZoneWidth) {
@@ -177,7 +180,7 @@ window.mousePressed = function () {
         speed: random(-0.2, -0.5),
         dir: -1,
         color: color("tan"),
-        img: dust_soldier_plain_gif,
+        img: selectDustSoldier(),
       };
       dustTroops.push(dust);
     }
