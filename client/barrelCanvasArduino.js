@@ -25,7 +25,7 @@ let progressBar;
 let barrel_img;
 let barrelScreenVisible = false;
 
-let spinCount;
+let spinCount =0;
 let powerup;
 let fillBarWidth = 0;
 
@@ -111,7 +111,7 @@ function selectPowerUp() {
 
 window.setup = function () {
   sessionStorage.removeItem("selectedPowerup");
-  createCanvas(1500, 650);
+  createCanvas(1560, 850);
 };
 
 window.draw = function () {

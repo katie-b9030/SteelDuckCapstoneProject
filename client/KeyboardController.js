@@ -1,6 +1,7 @@
 export class KeyboardController {
   update() {}
 
+  // being used in CanvasKeyboardTest.js to control score bar
   getBarrelDirection() {
     if (keyIsDown(RIGHT_ARROW)) return "Clockwise";
     if (keyIsDown(LEFT_ARROW)) return "Counter-Clockwise";

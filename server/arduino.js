@@ -1,8 +1,8 @@
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
 
-// const barrelPort = new SerialPort({ path: "COM5", baudRate: 9600 });
-const barrelPort = new SerialPort({ path: "COM4", baudRate: 9600 });
+const barrelPort = new SerialPort({ path: "COM6", baudRate: 9600 });
+// const barrelPort = new SerialPort({ path: "COM4", baudRate: 9600 });
 // const cannonPort = new SerialPort({ path: "COM4", baudRate: 9600 });
 const cannonPort = new SerialPort({ path: "COM3", baudRate: 9600 });
 const barrelParser = barrelPort.pipe(new ReadlineParser({ delimiter: "\n" }));
