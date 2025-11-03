@@ -1,0 +1,28 @@
+1. General File and Folder Naming
+    - Folders:                  lowercase-with-hyphens
+    - JavaScript files:         camelCase.js
+    - HTML files:               lowercase-with-hyphens.html 
+    - Arduino files:            camelCase.ino
+    - Media files:              lowercase-with-hyphens
+
+
+2. JavaScript Naming Conventions
+    - Variables:                camelCase
+    - Constants:                UPPER_SNAKE_CASE
+    - Enum Values:              UPPER_SNAKE_CASE
+    - Functions:                camelCase()
+    - Clases:                   UpperCamelCase
+
+
+3. Arduino Naming Conventions
+    - Variables:                camelCase
+    - Constants:                UPPER_SNAKE_CASE
+    - Functions:                camelCase()
+
+4. Other formatting
+    - braces on same line, i.e.
+        void function() {
+            return
+        }
+
+

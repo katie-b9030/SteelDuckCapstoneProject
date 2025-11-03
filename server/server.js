@@ -27,6 +27,7 @@ const port = process.env.PORT || process.env.NODE_PORT || 3000;
 // };
 
 app.use(express.static("client"));
+app.use("/media", express.static("media"));
 
 arduinoParser.subscribe("barrel", (data) => io.emit("barrelData", data));
 arduinoParser.subscribe("cannon", (data) => io.emit("cannonData", data));
