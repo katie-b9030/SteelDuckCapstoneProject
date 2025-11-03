@@ -22,10 +22,6 @@ export class BarrelKeyboardController {
     return this.selectedPowerup;
   }
 
-  // getBarrelPressed() {
-  //     return keyIsDown(84) ? "Button Pressed" : "Button Released"; // T key
-  // }
-
   getBarrelPowerupPressed() {
     return keyIsDown(13) ? "Button Pressed" : "Button Released"; // enter
   }

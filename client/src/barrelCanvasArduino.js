@@ -1,6 +1,6 @@
 "use strict";
 
-import { ArduinoController } from "./ArduinoController.js";
+import { ArduinoController } from "../controllers/ArduinoController.js";
 
 const controller = new ArduinoController();
 
@@ -10,7 +10,7 @@ let progressBar;
 let barrel_img;
 let barrelScreenVisible = false;
 
-let spinCount =0;
+let spinCount = 0;
 let powerup;
 let fillBarWidth = 0;
 
@@ -34,7 +34,7 @@ let squareColor = "#2355ddff";
 let triColor = "#2355ddff";
 
 window.preload = function () {
-  progressBar = loadImage("../media/assets/ui/Bubble_Bar_Empty.png"); 
+  progressBar = loadImage("../media/assets/ui/Bubble_Bar_Empty.png");
   // barrel_img = loadImage("../media/assets/ui/barrel.png");
 };
 
