@@ -12,6 +12,27 @@ export class Troop {
         this.direction = team === "Bubble Brigade" ? 1 : -1;
     }
 
+    powerup = {
+        ROCK: 'rock',
+        PAPER: 'paper',
+        SCISSORS: 'scissors'
+    }
+
+    rules = {
+        rock: { beats: 'scissors', losesTo: 'paper' },
+        paper: { beats: 'rock', losesTo: 'scissors' },
+        scissors: { beats: 'paper', losesTo: 'rock' }
+    }
+    
+    compare(other) {
+    if (this.powerup === other.powerup) return 'draw';
+
+    const { beats, losesTo } = rules[this.powerup];
+
+    if (other.powerup === beats) return 'win';
+    if (other.powerup === losesTo) return 'lose';
+   }
+
     update() {
         if(!this.isAlive) {return}
 
