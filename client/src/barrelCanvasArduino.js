@@ -15,7 +15,7 @@
 //   cannonData = data;
 // });
 
-import { ArduinoController } from "./ArduinoController.js";
+import { ArduinoController } from "../controllers/ArduinoController.js";
 
 const controller = new ArduinoController();
 
@@ -25,7 +25,7 @@ let progressBar;
 let barrel_img;
 let barrelScreenVisible = false;
 
-let spinCount =0;
+let spinCount = 0;
 let powerup;
 let fillBarWidth = 0;
 

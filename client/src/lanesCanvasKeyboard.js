@@ -13,7 +13,7 @@
 ///  cannonData = data;
 ///});
 
-import { KeyboardController } from "./KeyboardController.js";
+import { KeyboardController } from "../controllers/KeyboardController.js";
 //const socket = io();
 //import { ArduinoController } from './ArduinoController.js';
 
