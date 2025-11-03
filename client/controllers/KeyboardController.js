@@ -4,9 +4,15 @@ export class BarrelKeyboardController {
   spinCount = 0;
   selectedPowerup = "None";
 
-  getBarrelDirection() {
+  getBarrelSpins() {
     if (keyIsDown(32)) this.spinCount++; //space
     return this.spinCount;
+  }
+
+  getBarrelDirection() {
+    if (keyIsDown(RIGHT_ARROW)) return "Clockwise";
+    if (keyIsDown(LEFT_ARROW)) return "Counter-Clockwise";
+    return "None";
   }
 
   getBarrelPowerup() {
