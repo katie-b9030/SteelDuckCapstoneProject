@@ -40,7 +40,7 @@ export class Troop {
     }
 
     battle(other) {
-        const result = this.powerup.compare(other.powerup);     // need to write compare method in powerup class when created
+        const result = compare(other.powerup);     // need to write compare method in powerup class when created
 
         if (result === "win") {
             other.die();
