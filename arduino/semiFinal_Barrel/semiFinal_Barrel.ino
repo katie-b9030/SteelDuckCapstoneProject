@@ -62,11 +62,11 @@ void loop() {
 
   // Serial.print("Power-up Selected: ");
   if (powerupVal_mod < 2) {
-    Serial.print("Powerup 1 | ");
+    Serial.print("SHIELD | ");
   } else if (powerupVal_mod < 4) {
-    Serial.print("Powerup 2 | ");
+    Serial.print("CHEST | ");
   } else {
-    Serial.print("Powerup 3 | ");
+    Serial.print("HELMET | ");
   }
 
   //encoder button press
