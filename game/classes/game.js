@@ -37,7 +37,7 @@ class Game {
           a.isAlive &&
           b.isAlive
         ) {
-          a.fight(b);
+          a.battle(b);
         }
       }
     }
