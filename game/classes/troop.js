@@ -51,7 +51,7 @@ export class Troop {
   };
 
   rules = {
-    sheild: { beats: "helmet", losesTo: "chest" },
+    shield: { beats: "helmet", losesTo: "chest" },
     chest: { beats: "shield", losesTo: "helmet" },
     helmet: { beats: "chest", losesTo: "shield" },
   };
