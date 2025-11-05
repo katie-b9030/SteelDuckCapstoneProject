@@ -21,8 +21,8 @@ class Game {
     this.handleCollisions();
   }
 
-  spawnTroop(teamType, powerup, lane) {
-    const troop = new Troop(teamType, powerup, lane);
+  spawnTroop(teamType, powerup,) {
+    const troop = new Troop(teamType, powerup);
     this.troops.push(troop);
   }
 
@@ -33,7 +33,6 @@ class Game {
         const b = this.troops[j];
         if (
           a.teamType !== b.teamType &&
-          a.lane === b.lane &&
           a.isAlive &&
           b.isAlive
         ) {
