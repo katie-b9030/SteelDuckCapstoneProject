@@ -1,6 +1,8 @@
 import { Team } from "./team";
 import { Troop } from "./troop";
 
+import { ArduinoController } from "../controllers/ArduinoController.js";
+
 class Game {
   constructor() {
     this.teams = [
@@ -8,11 +10,16 @@ class Game {
       new Team("Dust Dominion", this),
     ];
     this.troops = [];
-    this.time = 0;
+    this.timeRemaining = 90;
+
+    this.arduinoController = new ArduinoController();
+    this.spinThreshold = 5;
+    this.bubbleScore = 0;
+    this.dustScore = 0;
   }
 
   update() {
-    this.time++;
+    this.timeRemaining++;
 
     for (const team of this.teams) team.update();
 
