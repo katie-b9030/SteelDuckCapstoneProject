@@ -6,7 +6,6 @@ export class Troop {
     this.isAlive = true;
     this.speed = 0;
 
-
     this.xPos = teamType === "Bubble Brigade" ? 50 : windowWidth - 50; // change based on size of canvas
     this.direction = teamType === "Bubble Brigade" ? 1 : -1;
 
@@ -42,7 +41,6 @@ export class Troop {
       }
     }
   }
-
 
   // chooseImage() {
   //   if (this.teamType === "Bubble Brigade") {
@@ -120,8 +118,8 @@ export class Troop {
   }
 
   checkCollision(other) {
-    if (this.troopType === "Bubble Brigade") {
-      
+    if (Math.abs(this.xPos - other.xPos) <= 250) {
+      this.battle(other);
     }
   }
 }
