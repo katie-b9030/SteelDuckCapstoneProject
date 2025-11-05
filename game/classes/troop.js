@@ -6,13 +6,12 @@ export class Troop {
     this.isAlive = true;
     this.speed = 0;
 
-    this.lane = "None";
-    this.xPos = team === "Bubble Brigade" ? 50 : windowWidth - 50; // change based on size of canvas
-    this.yPos = 0; // change based off lane height
-    this.direction = team === "Bubble Brigade" ? 1 : -1;
+
+    this.xPos = teamType === "Bubble Brigade" ? 50 : windowWidth - 50; // change based on size of canvas
+    this.direction = teamType === "Bubble Brigade" ? 1 : -1;
 
     this.img = this.chooseImage();
-    this.width = team === "Bubble Brigade" ? 250 : 150;
+    this.width = teamType === "Bubble Brigade" ? 250 : 150;
     this.height = 350;
 
     this.troopCollision = false;
@@ -23,23 +22,23 @@ export class Troop {
   chooseImage() {
     if (this.teamType === "Bubble Brigade") {
       if (this.powerup === SHIELD) {
-        img = "../../media/assets/characters/bubble_shield.gif";
+        return "Bubble Shield";
       } else if (this.powerup === CHEST) {
-        img = "../../media/assets/characters/bubble_chestplate.gif";
+        return "Bubble Chest";
       } else if (this.powerup === HELMET) {
-        img = "../../media/assets/characters/bubble_helmet.gif";
+        return "Bubble Helmet";
       } else {
-        img = "../../media/assets/characters/bubble_empty.gif";
+        return "Bubble";
       }
     } else {
       if (this.powerup === SHIELD) {
-        img = "../../media/assets/characters/rabbit_shield.gif";
+        return "Rabbit Shield";
       } else if (this.powerup === CHEST) {
-        img = "../../media/assets/characters/rabbit_cloak.gif";
+        return "Rabbit Chest";
       } else if (this.powerup === HELMET) {
-        img = "../../media/assets/characters/rabbit_helmet.gif";
+        return "Rabbit Helmet";
       } else {
-        img = "../../media/assets/characters/rabbit_empty.gif";
+        return "Rabbit";
       }
     }
   }
