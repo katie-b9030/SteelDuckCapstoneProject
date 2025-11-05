@@ -3,7 +3,7 @@ import { Troop } from "./troop";
 
 import { ArduinoController } from "../controllers/ArduinoController.js";
 
-class Game {
+export class Game {
   constructor() {
     this.teams = [
       new Team("Bubble Brigade", this),
