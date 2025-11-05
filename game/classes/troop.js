@@ -117,9 +117,10 @@ export class Troop {
     this.isAlive = false;
   }
 
-  checkCollision(other) {
+  checkTroopCollision(other) {
     if (Math.abs(this.xPos - other.xPos) <= 250) {
-      this.battle(other);
+      this.troopCollision = true;
+      this.collidedWith = other;
     }
   }
 }

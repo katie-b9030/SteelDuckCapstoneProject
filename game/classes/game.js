@@ -1,5 +1,5 @@
 import { Team } from "./team";
-import { Troop } from "../troop";
+import { Troop } from "./troop";
 
 class Game {
   constructor() {
@@ -21,22 +21,30 @@ class Game {
     this.handleCollisions();
   }
 
-  spawnTroop(teamType, powerup,) {
+  spawnTroop(teamType, powerup) {
     const troop = new Troop(teamType, powerup);
     this.troops.push(troop);
   }
 
+  // TODO: check for end collison and figure out how to safely remove items
   handleCollisions() {
     for (let i = 0; i < this.troops.length; i++) {
       for (let j = i + 1; j < this.troops.length; j++) {
         const a = this.troops[i];
         const b = this.troops[j];
-        if (
-          a.teamType !== b.teamType &&
-          a.isAlive &&
-          b.isAlive
-        ) {
-          a.battle(b);
+        if (a.teamType !== b.teamType) {
+          a.checkTroopCollision(b);
+          if (a.troopCollision && a.collidedWith === b) {
+            a.battle(b);
+          }
+        }
+        if (!a.isAlive) {
+          // TODO: remove a from troops
+          this.troops.splice(a, 1);
+        }
+        if (!b.isAlive) {
+          // TODO: remove b from troops
+          this.troops.splice(a, 1);
         }
       }
     }
