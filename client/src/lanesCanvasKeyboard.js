@@ -187,11 +187,12 @@ window.mousePressed = function () {
   }
 };
 
+
 window.preload = function () {
   bg_img = loadImage(
     "../media/assets/background/modeled_background_no_color.png"
   );
-  
+
 
   bubble_soldier_plain_gif = loadImage(
     "../media/assets/characters/bubble_empty.gif"

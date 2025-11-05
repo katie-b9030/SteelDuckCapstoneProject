@@ -22,26 +22,51 @@ export class Troop {
   chooseImage() {
     if (this.teamType === "Bubble Brigade") {
       if (this.powerup === SHIELD) {
-        return "Bubble Shield";
+        return bubble_solider_shield_gif;
       } else if (this.powerup === CHEST) {
-        return "Bubble Chest";
+        return bubble_solider_chestplate_gif;
       } else if (this.powerup === HELMET) {
-        return "Bubble Helmet";
+        return bubble_solider_helmet_gif;
       } else {
-        return "Bubble";
+        return bubble_solider_plain_gif;
       }
     } else {
       if (this.powerup === SHIELD) {
-        return "Rabbit Shield";
+        return dust_solider_shield_gif;
       } else if (this.powerup === CHEST) {
-        return "Rabbit Chest";
+        return dust_solider_cloak_gif;
       } else if (this.powerup === HELMET) {
-        return "Rabbit Helmet";
+        return dust_solider_helmet_gif;
       } else {
-        return "Rabbit";
+        return dust_solider_plain_gif;
       }
     }
   }
+
+
+  // chooseImage() {
+  //   if (this.teamType === "Bubble Brigade") {
+  //     if (this.powerup === SHIELD) {
+  //       return "Bubble Shield";
+  //     } else if (this.powerup === CHEST) {
+  //       return "Bubble Chest";
+  //     } else if (this.powerup === HELMET) {
+  //       return "Bubble Helmet";
+  //     } else {
+  //       return "Bubble";
+  //     }
+  //   } else {
+  //     if (this.powerup === SHIELD) {
+  //       return "Rabbit Shield";
+  //     } else if (this.powerup === CHEST) {
+  //       return "Rabbit Chest";
+  //     } else if (this.powerup === HELMET) {
+  //       return "Rabbit Helmet";
+  //     } else {
+  //       return "Rabbit";
+  //     }
+  //   }
+  // }
 
   powerup = {
     SHIELD: "shield",
@@ -57,6 +82,7 @@ export class Troop {
 
   setPowerup(powerup) {
     this.powerup = powerup;
+    this.img = this.chooseImage();
   }
 
   compare(other) {
@@ -95,6 +121,7 @@ export class Troop {
 
   checkCollision(other) {
     if (this.troopType === "Bubble Brigade") {
+      
     }
   }
 }
