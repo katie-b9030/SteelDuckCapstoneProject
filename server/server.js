@@ -5,7 +5,7 @@ const ARDUINO_PARSER = require("./arduino");
 
 const APP = EXPRESS();
 const SERVER = HTTP.createServer(APP);
-const io = new io(SERVER);
+const io = new Server(SERVER);
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
