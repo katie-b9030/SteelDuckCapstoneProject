@@ -13,7 +13,7 @@ let bubbleHelmet;
 let bubbleShield;
 let barrelScreenVisible = false;
 
-let spinCount =0;
+let spinCount = 0;
 let powerup;
 let fillBarWidth = 0;
 
@@ -23,11 +23,11 @@ let scaleFactor = 0.5;
 let selectedScaleFactor = 0.8;
 
 window.preload = function () {
-  progressBar = loadImage("../media/assets/ui/Bubble_Bar_Empty.png"); 
+  progressBar = loadImage("../media/assets/ui/bubble-bar-empty.png");
   barrelImg = loadImage("../media/assets/ui/barrel.png");
-  bubbleChestplate = loadImage("../media/assets/armor/bubble_chestplate.png");
-  bubbleHelmet = loadImage("../media/assets/armor/bubble_helmet.png");
-  bubbleShield = loadImage("../media/assets/armor/bubble_shield.png");
+  bubbleChestplate = loadImage("../media/assets/armor/bubble-chestplate.png");
+  bubbleHelmet = loadImage("../media/assets/armor/bubble-helmet.png");
+  bubbleShield = loadImage("../media/assets/armor/bubble-shield.png");
 };
 
 function fillBubbleBar(bubbleBar, x, y) {
@@ -52,7 +52,7 @@ function increaseProgress() {
           sessionStorage.setItem("fromBarrelScreen", "true");
 
           // Go to the next page
-          window.location.href = "Capstone-Canvas-test.html";
+          window.location.href = "capstone-canvas-test.html";
         }, 1000);
       }
     }
@@ -65,8 +65,8 @@ function selectPowerUp() {
   powerup = controller.getBarrelPowerup();
 
   if (powerup == "Powerup 1") selectedPowerup = "bubbleShield";
-  else if (powerup == "Powerup 2") selectedPowerup = "square";
-  else if (powerup == "Powerup 3") selectedPowerup = "triangle";
+  else if (powerup == "Powerup 2") selectedPowerup = "bubbleChestplate";
+  else if (powerup == "Powerup 3") selectedPowerup = "bubbleHelmet";
 
   if (
     controller.getBarrelPowerupPressed() == "Button Pressed" &&
@@ -74,7 +74,7 @@ function selectPowerUp() {
   ) {
     locked = true;
     // add a glow around image?
-    
+
     // if (selectedPowerup === "bubbleShield") bubbleShieldColor = "#c23fd1";
     // if (selectedPowerup === "square") squareColor = "#c23fd1";
     // if (selectedPowerup === "triangle") triColor = "#c23fd1";
@@ -97,25 +97,42 @@ window.setup = function () {
 window.draw = function () {
   background("#363947");
 
-  let bubbleShieldX = windowWidth * 1/4;    
-  let bubbleChestplateX = windowWidth * 2/4; 
-  let bubbleHelmetX = windowWidth * 3/4;     
+  let bubbleShieldX = (windowWidth * 1) / 4;
+  let bubbleChestplateX = (windowWidth * 2) / 4;
+  let bubbleHelmetX = (windowWidth * 3) / 4;
   let bubbleShieldY = windowHeight / 2;
   let bubbleChestplateY = windowHeight / 2;
   let bubbleHelmetY = windowHeight / 2;
 
-
   let x = windowWidth / 2;
-  let y = windowHeight * 1/10;
+  let y = (windowHeight * 1) / 10;
   fillBubbleBar(progressBar, x, y);
 
   image(progressBar, x, y);
 
   // image(barrelImg, width / 2, height / 2);
 
-  image(bubbleShield, bubbleShieldX, bubbleShieldY, bubbleShield.width * scaleFactor, bubbleShield.height * scaleFactor);
-  image(bubbleChestplate, bubbleChestplateX, bubbleChestplateY, bubbleChestplate.width * scaleFactor, bubbleChestplate.height * scaleFactor);
-  image(bubbleHelmet, bubbleHelmetX, bubbleHelmetY, bubbleHelmet.width * scaleFactor, bubbleHelmet.height * scaleFactor);
+  image(
+    bubbleShield,
+    bubbleShieldX,
+    bubbleShieldY,
+    bubbleShield.width * scaleFactor,
+    bubbleShield.height * scaleFactor
+  );
+  image(
+    bubbleChestplate,
+    bubbleChestplateX,
+    bubbleChestplateY,
+    bubbleChestplate.width * scaleFactor,
+    bubbleChestplate.height * scaleFactor
+  );
+  image(
+    bubbleHelmet,
+    bubbleHelmetX,
+    bubbleHelmetY,
+    bubbleHelmet.width * scaleFactor,
+    bubbleHelmet.height * scaleFactor
+  );
 
   selectPowerUp();
   increaseProgress();

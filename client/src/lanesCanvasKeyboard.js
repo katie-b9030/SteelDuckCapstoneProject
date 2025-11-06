@@ -154,37 +154,35 @@ window.mousePressed = function () {
   }
 };
 
-
 window.preload = function () {
   bg_img = loadImage(
-    "../media/assets/background/modeled_background_no_color.png"
+    "../media/assets/background/modeled-background-no-color.png"
   );
-
 
   bubble_soldier_plain_gif = loadImage(
-    "../media/assets/characters/bubble_empty.gif"
+    "../media/assets/characters/bubble-empty.gif"
   );
   bubble_soldier_helmet_gif = loadImage(
-    "../media/assets/characters/bubble_helmet.gif"
+    "../media/assets/characters/bubble-helmet.gif"
   );
   bubble_soldier_chestplate_gif = loadImage(
-    "../media/assets/characters/bubble_chestplate.gif"
+    "../media/assets/characters/bubble-chestplate.gif"
   );
   bubble_soldier_shield_gif = loadImage(
-    "../media/assets/characters/bubble_shield.gif"
+    "../media/assets/characters/bubble-shield.gif"
   );
 
   dust_soldier_plain_gif = loadImage(
-    "../media/assets/characters/rabbit_empty.gif"
+    "../media/assets/characters/dust-empty.gif"
   );
   dust_soldier_helmet_gif = loadImage(
-    "../media/assets/characters/rabbit_helmet.gif"
+    "../media/assets/characters/dust-helmet.gif"
   );
   dust_soldier_cloak_gif = loadImage(
-    "../media/assets/characters/rabbit_cloak.gif"
+    "../media/assets/characters/dust-cloak.gif"
   );
   dust_soldier_shield_gif = loadImage(
-    "../media/assets/characters/rabbit_shield.gif"
+    "../media/assets/characters/dust-shield.gif"
   );
 };
 
@@ -224,17 +222,6 @@ window.draw = function () {
     image(d.img, -d.x, d.y, DUST_TROOP_WIDTH, TROOP_HEIGHT);
     pop();
   }
-
-  // for (let i = bubbleTroops.length - 1; i >= 0; i--) {
-  //   let b = bubbleTroops[i];
-  //   for (let j = dustTroops.length - 1; j >= 0; j--) {
-  //     let d = dustTroops[i];
-  //     if (Math.abs(d.x - b.x) < 200 && Math.abs(d.y - b.y < 150)) {
-  //       bubbleTroops.splice(i, 1);
-  //       dustTroops.splice(i, 1);
-  //     }
-  //   }
-  // }
 };
 
 window.windowResized = function () {
