@@ -1,21 +1,7 @@
 "use strict";
 
-//const socket = io();
-
-//let barrelData = {};
-//let cannonData = {};
-
-///socket.on("barrelData", (data) => {
-/// barrelData = data;
-///});
-
-///socket.on("cannonData", (data) => {
-///  cannonData = data;
-///});
-
 import { KeyboardController } from "../controllers/KeyboardController.js";
-//const socket = io();
-//import { ArduinoController } from './ArduinoController.js';
+
 
 // global consts
 const SPAWN_ZONE_WIDTH = 100;
@@ -31,11 +17,6 @@ const LANES = [
   { y: 650, h: 200 },
 ];
 
-// let squareY = 200;
-// let circleX = 400;
-// let circleY = 200;
-// let circleD = 100;
-// let squareA = 100;
 let barX = 10;
 let barY = 10;
 let bigBarW;
@@ -69,9 +50,9 @@ function squareMove() {
 
 function mouseInLanes() {
   return (
-    (mouseY >= 50 && mouseY <= 250) || // Lane 1
-    (mouseY >= 350 && mouseY <= 550) || // Lane 2
-    (mouseY >= 650 && mouseY <= 850) // Lane 3
+    //(mouseY >= 50 && mouseY <= 250) || // Lane 1
+    (mouseY >= 350 && mouseY <= 550)  // Lane 2
+    //(mouseY >= 650 && mouseY <= 850) // Lane 3
   );
 }
 
@@ -183,7 +164,6 @@ window.preload = function () {
 };
 
 window.draw = function () {
-  // background("green");
   background(backgroundImage);
   drawLanesAndSpawns();
 
@@ -196,23 +176,13 @@ window.draw = function () {
   fill("red");
   rect(barX, barY, barW, barH);
 
-  //fill("red");
-  //square(squareX, squareY, squareA);
-
-  //fill("yellow");
-  //circle(circleX, circleY, circleD);
-
   for (let b of bubbleTroops) {
     b.x += b.speed * b.d;
-    // fill(b.color);
-    // circle(b.x, b.y, b.d);
     image(b.img, b.x, b.y, BUBBLE_TROOP_WIDTH, TROOP_HEIGHT);
   }
 
   for (let d of dustTroops) {
     d.x += d.speed * d.d;
-    // fill(d.color);
-    // circle(d.x, d.y, d.d);
     push();
     scale(-1, 1);
     image(d.img, -d.x, d.y, DUST_TROOP_WIDTH, TROOP_HEIGHT);
