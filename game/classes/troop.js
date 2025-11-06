@@ -104,10 +104,16 @@ export class Troop {
     const result = compare(other.powerup); // need to write compare method in powerup class when created
 
     if (result === "win") {
+      this.troopCollision = true;
       other.die();
     } else if (result === "lose") {
+      this.troopCollision = true;
+      this.die();
+    } else if (result === "end") {
+      this.endCollision = true;
       this.die();
     } else {
+      this.troopCollision = true;
       this.die();
       other.die();
     }
@@ -119,8 +125,7 @@ export class Troop {
 
   checkTroopCollision(other) {
     if (Math.abs(this.xPos - other.xPos) <= 250) {
-      this.troopCollision = true;
-      this.collidedWith = other;
+      return true;
     }
   }
 }

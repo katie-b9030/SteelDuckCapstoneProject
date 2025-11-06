@@ -14,32 +14,21 @@ export class Game {
   update() {
     this.timeRemaining++;
 
-    for (const team of this.teams) team.update();
-
-    for (const troop of this.troops) troop.update();
+    for (const TEAM of this.teams) TEAM.update();
 
     this.handleCollisions();
   }
 
   // TODO: check for end collison and figure out how to safely remove items
   handleCollisions() {
-    for (let i = 0; i < this.troops.length; i++) {
-      for (let j = i + 1; j < this.troops.length; j++) {
-        const a = this.troops[i];
-        const b = this.troops[j];
-        if (a.teamType !== b.teamType) {
-          a.checkTroopCollision(b);
-          if (a.troopCollision && a.collidedWith === b) {
-            a.battle(b);
+    for (let i = 0; i < this.teams[0].length; i++) {
+      for (let j = i + 1; j < this.teams[1].length; j++) {
+        const b = this.teams[0].troops[i];
+        const d = this.teams[1].troops[j];
+        if (b.teamType !== d.teamType) {
+          if (b.checkTroopCollision(d)) {
+            b.battle(d);
           }
-        }
-        if (!a.isAlive) {
-          // TODO: remove a from troops
-          this.troops.splice(a, 1);
-        }
-        if (!b.isAlive) {
-          // TODO: remove b from troops
-          this.troops.splice(a, 1);
         }
       }
     }
