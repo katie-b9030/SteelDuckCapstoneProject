@@ -7,35 +7,27 @@ const controller = new ArduinoController();
 const SPIN_THRESHOLD = 5;
 
 let progressBar;
-let barrel_img;
+let barrelImg;
+let bubbleChestplate;
+let bubbleHelmet;
+let bubbleShield;
 let barrelScreenVisible = false;
 
-let spinCount = 0;
+let spinCount =0;
 let powerup;
 let fillBarWidth = 0;
 
-let circleX = 250,
-  circleY = 350,
-  circleSize = 200;
-let squareX = 650,
-  squareY = 250,
-  squareSize = 200;
-let triCenterX = 1250,
-  triCenterY = 350,
-  triWidth = 200,
-  triHeight = 200;
-
-let selectedShape; // 'circle', 'square', 'triangle'
+let selectedPowerup; // 'bubbleShield', 'square', 'triangle'
 let locked = false;
-let scaleFactor = 1.5;
-
-let circleColor = "#2355ddff";
-let squareColor = "#2355ddff";
-let triColor = "#2355ddff";
+let scaleFactor = 0.5;
+let selectedScaleFactor = 0.8;
 
 window.preload = function () {
-  progressBar = loadImage("../media/assets/ui/Bubble_Bar_Empty.png");
-  // barrel_img = loadImage("../media/assets/ui/barrel.png");
+  progressBar = loadImage("../media/assets/ui/Bubble_Bar_Empty.png"); 
+  barrelImg = loadImage("../media/assets/ui/barrel.png");
+  bubbleChestplate = loadImage("../media/assets/armor/bubble_chestplate.png");
+  bubbleHelmet = loadImage("../media/assets/armor/bubble_helmet.png");
+  bubbleShield = loadImage("../media/assets/armor/bubble_shield.png");
 };
 
 function fillBubbleBar(bubbleBar, x, y) {
@@ -72,18 +64,20 @@ function selectPowerUp() {
 
   powerup = controller.getBarrelPowerup();
 
-  if (powerup == "Powerup 1") selectedShape = "circle";
-  else if (powerup == "Powerup 2") selectedShape = "square";
-  else if (powerup == "Powerup 3") selectedShape = "triangle";
+  if (powerup == "Powerup 1") selectedPowerup = "bubbleShield";
+  else if (powerup == "Powerup 2") selectedPowerup = "square";
+  else if (powerup == "Powerup 3") selectedPowerup = "triangle";
 
   if (
     controller.getBarrelPowerupPressed() == "Button Pressed" &&
-    selectedShape
+    selectedPowerup
   ) {
     locked = true;
-    if (selectedShape === "circle") circleColor = "#c23fd1";
-    if (selectedShape === "square") squareColor = "#c23fd1";
-    if (selectedShape === "triangle") triColor = "#c23fd1";
+    // add a glow around image?
+    
+    // if (selectedPowerup === "bubbleShield") bubbleShieldColor = "#c23fd1";
+    // if (selectedPowerup === "square") squareColor = "#c23fd1";
+    // if (selectedPowerup === "triangle") triColor = "#c23fd1";
 
     sessionStorage.setItem("selectedPowerup", powerup);
 
@@ -96,43 +90,32 @@ function selectPowerUp() {
 
 window.setup = function () {
   sessionStorage.removeItem("selectedPowerup");
-  createCanvas(1560, 850);
+  createCanvas(windowWidth, windowHeight);
+  imageMode(CENTER);
 };
 
 window.draw = function () {
   background("#363947");
 
-  let x = (width - progressBar.width) / 2;
-  let y = 20;
+  let bubbleShieldX = windowWidth * 1/4;    
+  let bubbleChestplateX = windowWidth * 2/4; 
+  let bubbleHelmetX = windowWidth * 3/4;     
+  let bubbleShieldY = windowHeight / 2;
+  let bubbleChestplateY = windowHeight / 2;
+  let bubbleHelmetY = windowHeight / 2;
+
+
+  let x = windowWidth / 2;
+  let y = windowHeight * 1/10;
   fillBubbleBar(progressBar, x, y);
 
   image(progressBar, x, y);
 
-  // image(barrel_img, width / 2, height / 2);
+  // image(barrelImg, width / 2, height / 2);
 
-  fill(circleColor);
-  let cSize =
-    selectedShape === "circle" ? circleSize * scaleFactor : circleSize;
-  circle(circleX, circleY, cSize);
-
-  fill(squareColor);
-  let sSize =
-    selectedShape === "square" ? squareSize * scaleFactor : squareSize;
-  let offsetX = selectedShape === "square" ? -50 : 0;
-  let offsetY = selectedShape === "square" ? -50 : 0;
-  square(squareX + offsetX, squareY + offsetY, sSize);
-
-  fill(triColor);
-  let tW = selectedShape === "triangle" ? triWidth * scaleFactor : triWidth;
-  let tH = selectedShape === "triangle" ? triHeight * scaleFactor : triHeight;
-  triangle(
-    triCenterX,
-    triCenterY - tH / 2,
-    triCenterX - tW / 2,
-    triCenterY + tH / 2,
-    triCenterX + tW / 2,
-    triCenterY + tH / 2
-  );
+  image(bubbleShield, bubbleShieldX, bubbleShieldY, bubbleShield.width * scaleFactor, bubbleShield.height * scaleFactor);
+  image(bubbleChestplate, bubbleChestplateX, bubbleChestplateY, bubbleChestplate.width * scaleFactor, bubbleChestplate.height * scaleFactor);
+  image(bubbleHelmet, bubbleHelmetX, bubbleHelmetY, bubbleHelmet.width * scaleFactor, bubbleHelmet.height * scaleFactor);
 
   selectPowerUp();
   increaseProgress();
