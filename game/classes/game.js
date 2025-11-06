@@ -1,7 +1,4 @@
 import { Team } from "./team";
-import { Troop } from "./troop";
-
-import { ArduinoController } from "../controllers/ArduinoController.js";
 
 export class Game {
   constructor() {
@@ -9,10 +6,8 @@ export class Game {
       new Team("Bubble Brigade", this),
       new Team("Dust Dominion", this),
     ];
-    this.troops = [];
     this.timeRemaining = 90;
 
-    this.arduinoController = new ArduinoController();
     this.spinThreshold = 5;
   }
 
@@ -24,11 +19,6 @@ export class Game {
     for (const troop of this.troops) troop.update();
 
     this.handleCollisions();
-  }
-
-  spawnTroop(teamType, powerup) {
-    const troop = new Troop(teamType, powerup);
-    this.troops.push(troop);
   }
 
   // TODO: check for end collison and figure out how to safely remove items
@@ -55,20 +45,13 @@ export class Game {
     }
   }
 
-  endGame() {
+  endGame() {}
 
-  }
-
-  startGame() {
-
-  }
+  startGame() {}
 
   modifyTroop(troop, newPowerup) {
     troop.setPowerup(newPowerup);
   }
 
-  troopCreationProgress(barrelSpins) {
-
-  }
-
+  troopCreationProgress(barrelSpins) {}
 }

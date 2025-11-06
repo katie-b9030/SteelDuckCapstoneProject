@@ -1,4 +1,7 @@
 const { subscribe } = require("./serialHandler");
+import { ArduinoController } from "../controllers/ArduinoController.js";
+
+const ARDUINO_CONTROLLER = new ArduinoController();
 
 var timer = 0;
 
@@ -7,7 +10,7 @@ var dustScore = 0;
 
 var Troops = [];
 
-const States = {
+const STATES = {
   MENU: "menu",
   ONGOING: "ongoing",
   GAMEOVER: "gameover",
@@ -42,7 +45,7 @@ subscribe("barrel", (data) => {
 });
 
 function mainGameLoop() {
-  if (gameState === States.ONGOING) {
+  if (gameState === STATES.ONGOING) {
     update();
   }
 
