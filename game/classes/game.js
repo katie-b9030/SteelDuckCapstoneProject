@@ -14,8 +14,6 @@ export class Game {
 
     this.arduinoController = new ArduinoController();
     this.spinThreshold = 5;
-    this.bubbleScore = 0;
-    this.dustScore = 0;
   }
 
   update() {
@@ -56,4 +54,21 @@ export class Game {
       }
     }
   }
+
+  endGame() {
+
+  }
+
+  startGame() {
+
+  }
+
+  modifyTroop(troop, newPowerup) {
+    troop.setPowerup(newPowerup);
+  }
+
+  troopCreationProgress(barrelSpins) {
+
+  }
+
 }
