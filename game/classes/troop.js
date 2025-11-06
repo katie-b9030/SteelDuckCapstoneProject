@@ -6,13 +6,11 @@ export class Troop {
     this.isAlive = true;
     this.speed = 0;
 
-    this.lane = "None";
-    this.xPos = team === "Bubble Brigade" ? 50 : windowWidth - 50; // change based on size of canvas
-    this.yPos = 0; // change based off lane height
-    this.direction = team === "Bubble Brigade" ? 1 : -1;
+    this.xPos = teamType === "Bubble Brigade" ? 50 : windowWidth - 50; // change based on size of canvas
+    this.direction = teamType === "Bubble Brigade" ? 1 : -1;
 
     this.img = this.chooseImage();
-    this.width = team === "Bubble Brigade" ? 250 : 150;
+    this.width = teamType === "Bubble Brigade" ? 250 : 150;
     this.height = 350;
 
     this.troopCollision = false;
@@ -23,26 +21,50 @@ export class Troop {
   chooseImage() {
     if (this.teamType === "Bubble Brigade") {
       if (this.powerup === SHIELD) {
-        img = "../../media/assets/characters/bubble_shield.gif";
+        return bubble_solider_shield_gif;
       } else if (this.powerup === CHEST) {
-        img = "../../media/assets/characters/bubble_chestplate.gif";
+        return bubble_solider_chestplate_gif;
       } else if (this.powerup === HELMET) {
-        img = "../../media/assets/characters/bubble_helmet.gif";
+        return bubble_solider_helmet_gif;
       } else {
-        img = "../../media/assets/characters/bubble_empty.gif";
+        return bubble_solider_plain_gif;
       }
     } else {
       if (this.powerup === SHIELD) {
-        img = "../../media/assets/characters/rabbit_shield.gif";
+        return dust_solider_shield_gif;
       } else if (this.powerup === CHEST) {
-        img = "../../media/assets/characters/rabbit_cloak.gif";
+        return dust_solider_cloak_gif;
       } else if (this.powerup === HELMET) {
-        img = "../../media/assets/characters/rabbit_helmet.gif";
+        return dust_solider_helmet_gif;
       } else {
-        img = "../../media/assets/characters/rabbit_empty.gif";
+        return dust_solider_plain_gif;
       }
     }
   }
+
+  // chooseImage() {
+  //   if (this.teamType === "Bubble Brigade") {
+  //     if (this.powerup === SHIELD) {
+  //       return "Bubble Shield";
+  //     } else if (this.powerup === CHEST) {
+  //       return "Bubble Chest";
+  //     } else if (this.powerup === HELMET) {
+  //       return "Bubble Helmet";
+  //     } else {
+  //       return "Bubble";
+  //     }
+  //   } else {
+  //     if (this.powerup === SHIELD) {
+  //       return "Rabbit Shield";
+  //     } else if (this.powerup === CHEST) {
+  //       return "Rabbit Chest";
+  //     } else if (this.powerup === HELMET) {
+  //       return "Rabbit Helmet";
+  //     } else {
+  //       return "Rabbit";
+  //     }
+  //   }
+  // }
 
   powerup = {
     SHIELD: "shield",
@@ -51,13 +73,14 @@ export class Troop {
   };
 
   rules = {
-    sheild: { beats: "helmet", losesTo: "chest" },
+    shield: { beats: "helmet", losesTo: "chest" },
     chest: { beats: "shield", losesTo: "helmet" },
     helmet: { beats: "chest", losesTo: "shield" },
   };
 
   setPowerup(powerup) {
     this.powerup = powerup;
+    this.img = this.chooseImage();
   }
 
   compare(other) {
@@ -94,8 +117,10 @@ export class Troop {
     this.isAlive = false;
   }
 
-  checkCollision(other) {
-    if (this.troopType === "Bubble Brigade") {
+  checkTroopCollision(other) {
+    if (Math.abs(this.xPos - other.xPos) <= 250) {
+      this.troopCollision = true;
+      this.collidedWith = other;
     }
   }
 }

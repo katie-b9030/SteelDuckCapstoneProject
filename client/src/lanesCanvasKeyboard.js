@@ -67,39 +67,6 @@ function squareMove() {
   else if (dir === "Counter-Clockwise") barW -= 1;
 }
 
-// function circleMove() {
-//   // Circle is the Barrel Powerup Rotary Encoder
-
-//   const power = controller.getBarrelPowerup();
-//   if (power === "Powerup 1") circleY = 50;
-//   else if (power === "Powerup 2") circleY = 150;
-//   else if (power === "Powerup 3") circleY = 250;
-// }
-
-// function squareIncrease() {
-//   const press = controller.getBarrelPowerupPressed();
-
-//   if (press === "Button Pressed") {
-//     // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
-//     circleD += 1;
-//   } else if (keyIsDown(16)) {
-//     // 16 is shift
-//     circleD -= 1;
-//   }
-// }
-
-// function circleIncrease() {
-//   const press = controller.getBarrelPowerupPressed();
-
-//   if (press === "Button Pressed") {
-//     // (32 is spacebar) WILL BECOME barrelPoweupPressed == "Button Pressed"
-//     circleD += 1;
-//   } else if (keyIsDown(16)) {
-//     // 16 is shift
-//     circleD -= 1;
-//   }
-// }
-
 function mouseInLanes() {
   return (
     (mouseY >= 50 && mouseY <= 250) || // Lane 1
@@ -187,10 +154,12 @@ window.mousePressed = function () {
   }
 };
 
+
 window.preload = function () {
   bg_img = loadImage(
     "../media/assets/background/modeled_background_no_color.png"
   );
+
 
   bubble_soldier_plain_gif = loadImage(
     "../media/assets/characters/bubble_empty.gif"
