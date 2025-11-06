@@ -97,20 +97,21 @@ window.setup = function () {
 window.draw = function () {
   background("#363947");
 
-  let bubbleShieldX = (windowWidth * 1) / 4;
-  let bubbleChestplateX = (windowWidth * 2) / 4;
-  let bubbleHelmetX = (windowWidth * 3) / 4;
-  let bubbleShieldY = windowHeight / 2;
-  let bubbleChestplateY = windowHeight / 2;
-  let bubbleHelmetY = windowHeight / 2;
+  let bubbleShieldX = windowWidth  / 2;
+  let bubbleChestplateX = windowWidth / 2;
+  let bubbleHelmetX = windowWidth / 2;
+  let bubbleShieldY =(windowHeight * 2) / 8;
+  let bubbleChestplateY = (windowHeight * 3) / 8;
+  let bubbleHelmetY = (windowHeight* 4) / 8;
+
+  let barrelX = windowWidth / 2;
+  let barrelY = (windowHeight * 6) / 8;
 
   let x = windowWidth / 2;
   let y = (windowHeight * 1) / 10;
   fillBubbleBar(progressBar, x, y);
 
   image(progressBar, x, y);
-
-  // image(barrelImg, width / 2, height / 2);
 
   image(
     bubbleShield,
@@ -132,6 +133,14 @@ window.draw = function () {
     bubbleHelmetY,
     bubbleHelmet.width * scaleFactor,
     bubbleHelmet.height * scaleFactor
+  );
+
+  image(
+    barrelImg, 
+    barrelX, 
+    barrelY, 
+    barrelImg.width * scaleFactor, 
+    barrelImg.height * scaleFactor
   );
 
   selectPowerUp();
