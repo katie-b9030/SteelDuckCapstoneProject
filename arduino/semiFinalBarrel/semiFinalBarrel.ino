@@ -1,9 +1,9 @@
 
-const int magneticPin = 9;  
+const int MAGNETIC_PIN = 9;  
 
-const int powerupPinA = 5;   // Rotary encoder CLK
-const int powerupPinB = 6;   // Rotary encoder DT
-const int powerupBtn = 4;    // Rotary encoder SW (button)
+const int POWERUP_PIN_A = 5;   // Rotary encoder CLK
+const int POWERUP_PIN_B = 6;   // Rotary encoder DT
+const int POWERUP_BTN = 4;    // Rotary encoder SW (button)
 
 //Vars
 int spinCount = 0;
@@ -12,29 +12,29 @@ bool magnetDetected = false;
 
 //rotary encoder variables
 int powerupVal = 0;
-int powerupVal_mod = 0;
+int powerupValMod = 0;
 int powerupState;
-int powerupState_prev;
-bool bool_powerup_CW = false;
+int powerupStatePrev;
+bool boolPowerupCW = false;
 
 void setup() {
   Serial.begin(9600);
 
   //magnet sensor setup
-  pinMode(magneticPin, INPUT_PULLUP);
+  pinMode(MAGNETIC_PIN, INPUT_PULLUP);
 
   //power-up encoder setup
-  pinMode(powerupPinA, INPUT);
-  pinMode(powerupPinB, INPUT);
-  pinMode(powerupBtn, INPUT_PULLUP);
+  pinMode(POWERUP_PIN_A, INPUT);
+  pinMode(POWERUP_PIN_B, INPUT);
+  pinMode(POWERUP_BTN, INPUT_PULLUP);
 
-  powerupState_prev = digitalRead(powerupPinA);
+  powerupStatePrev = digitalRead(POWERUP_PIN_A);
 
 }
 
 void loop() {
   //magnet spin
-  int state = digitalRead(magneticPin);
+  int state = digitalRead(MAGNETIC_PIN);
 
   if (state == LOW && !magnetDetected) {
     magnetDetected = true;
@@ -48,29 +48,29 @@ void loop() {
   Serial.print(" | ");
 
   //rotary encoder
-  powerupState = digitalRead(powerupPinA);
+  powerupState = digitalRead(POWERUP_PIN_A);
 
-  if (powerupState != powerupState_prev && powerupState == HIGH) {
-    if (digitalRead(powerupPinB) != powerupState) {
+  if (powerupState != powerupStatePrev && powerupState == HIGH) {
+    if (digitalRead(POWERUP_PIN_B) != powerupState) {
       powerupVal++;
     } else {
       powerupVal--;
     }
   }
 
-  powerupVal_mod = abs(powerupVal % 6); 
+  powerupValMod = abs(powerupVal % 6); 
 
   // Serial.print("Power-up Selected: ");
-  if (powerupVal_mod < 2) {
+  if (powerupValMod < 2) {
     Serial.print("shield | ");
-  } else if (powerupVal_mod < 4) {
+  } else if (powerupValMod < 4) {
     Serial.print("chest | ");
   } else {
     Serial.print("helmet | ");
   }
 
   //encoder button press
-  if (digitalRead(powerupBtn) == LOW) {
+  if (digitalRead(POWERUP_BTN) == LOW) {
     Serial.println("Button Pressed");
   } else {
     Serial.println("Button Released");
@@ -78,5 +78,5 @@ void loop() {
 
 
   delay(100);
-  powerupState_prev = powerupState;
+  powerupStatePrev = powerupState;
 }

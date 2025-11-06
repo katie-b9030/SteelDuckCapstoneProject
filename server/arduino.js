@@ -1,27 +1,27 @@
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
 
-const barrelPort = new SerialPort({ path: "COM6", baudRate: 9600 });
-// const barrelPort = new SerialPort({ path: "COM4", baudRate: 9600 });
-// const cannonPort = new SerialPort({ path: "COM4", baudRate: 9600 });
-const cannonPort = new SerialPort({ path: "COM3", baudRate: 9600 });
-const barrelParser = barrelPort.pipe(new ReadlineParser({ delimiter: "\n" }));
-const cannonParser = cannonPort.pipe(new ReadlineParser({ delimiter: "\n" }));
+const BARREL_PORT = new SerialPort({ path: "COM6", baudRate: 9600 });
+// const BARREL_PORT = new SerialPort({ path: "COM4", baudRate: 9600 });
+// const CANNON_PORT = new SerialPort({ path: "COM4", baudRate: 9600 });
+const CANNON_PORT = new SerialPort({ path: "COM3", baudRate: 9600 });
+const BARREL_PARSER = BARREL_PORT.pipe(new ReadlineParser({ delimiter: "\n" }));
+const CANNON_PARSER = CANNON_PORT.pipe(new ReadlineParser({ delimiter: "\n" }));
 
-const subscribers = { barrel: [], cannon: [] };
+const SUBSCRIBERS = { barrel: [], cannon: [] };
 
 function notify(type, data) {
-  subscribers[type].forEach((callback) => callback(data));
+  SUBSCRIBERS[type].forEach((callback) => callback(data));
 }
 
 function subscribe(type, callback) {
-  subscribers[type].push(callback);
+  SUBSCRIBERS[type].push(callback);
 }
 
-barrelPort.on("open", () => console.log("Barrel port open"));
-cannonPort.on("open", () => console.log("Cannon port open"));
+BARREL_PORT.on("open", () => console.log("Barrel port open"));
+CANNON_PORT.on("open", () => console.log("Cannon port open"));
 
-barrelParser.on("data", (data) => {
+BARREL_PARSER.on("data", (data) => {
   barrelData = data.split(" | ").map((s) => s.trim());
   notify("barrel", {
     barrelSpins: parseInt(barrelData[0]),
@@ -32,7 +32,7 @@ barrelParser.on("data", (data) => {
   console.log("Barrel output:", data);
 });
 
-cannonParser.on("data", (data) => {
+CANNON_PARSER.on("data", (data) => {
   cannonData = data.split(" | ").map((s) => s.trim());
   notify("cannon", {
     cannonLoadCount: cannonData[0],
@@ -43,10 +43,10 @@ cannonParser.on("data", (data) => {
   console.log("Cannon output:", data);
 });
 
-barrelPort.on("error", (err) =>
+BARREL_PORT.on("error", (err) =>
   console.error("Barrel port error:", err.message)
 );
-cannonPort.on("error", (err) =>
+CANNON_PORT.on("error", (err) =>
   console.error("Cannon port error:", err.message)
 );
 

@@ -18,10 +18,18 @@ import { KeyboardController } from "../controllers/KeyboardController.js";
 //import { ArduinoController } from './ArduinoController.js';
 
 // global consts
-const spawnZoneWidth = 100;
+const SPAWN_ZONE_WIDTH = 100;
 const BUBBLE_TROOP_WIDTH = 500;
 const DUST_TROOP_WIDTH = 400;
 const TROOP_HEIGHT = 350;
+
+const CONTROLLER = new KeyboardController();
+
+const LANES = [
+  { y: 50, h: 200 },
+  { y: 350, h: 200 },
+  { y: 650, h: 200 },
+];
 
 // let squareY = 200;
 // let circleX = 400;
@@ -35,36 +43,28 @@ let barH = 20;
 let barW = 1;
 
 // images
-let bg_img;
+let backgroundImage;
 // bubble soldiers
-let bubble_soldier_plain_gif;
-let bubble_soldier_helmet_gif;
-let bubble_soldier_chestplate_gif;
-let bubble_soldier_shield_gif;
+let bubbleSoldierPlainGif;
+let bubbleSoldierHelmetGif;
+let bubbleSoldierChestplateGif;
+let bubbleSoldierShieldGif;
 // dust soldiers
-let dust_soldier_plain_gif;
-let dust_soldier_helmet_gif;
-let dust_soldier_cloak_gif;
-let dust_soldier_shield_gif;
-
-const controller = new KeyboardController();
+let dustSoldierPlainGif;
+let dustSoldierHelmetGif;
+let dustSoldierCloakGif;
+let dustSoldierShieldGif;
 
 let powerup;
-
-const lanes = [
-  { y: 50, h: 200 },
-  { y: 350, h: 200 },
-  { y: 650, h: 200 },
-];
 
 let bubbleTroops = [];
 let dustTroops = [];
 
 function squareMove() {
   // Square is the Barrel Rotary Encoder
-  const dir = controller.getBarrelDirection();
-  if (dir === "Clockwise") barW += 1;
-  else if (dir === "Counter-Clockwise") barW -= 1;
+  const DIR = CONTROLLER.getBarrelDirection();
+  if (DIR === "Clockwise") barW += 1;
+  else if (DIR === "Counter-Clockwise") barW -= 1;
 }
 
 function mouseInLanes() {
@@ -78,18 +78,18 @@ function mouseInLanes() {
 function drawLanesAndSpawns() {
   noStroke();
 
-  for (let lane of lanes) {
+  for (let lane of LANES) {
     // Actual Lanes
     fill("rgba(100, 100, 100, 0.5)");
     rect(0, lane.y, width, lane.h);
 
     //Bubble spawn
     fill("rgba(35, 85, 221, 0.15)");
-    rect(0, lane.y, spawnZoneWidth, lane.h);
+    rect(0, lane.y, SPAWN_ZONE_WIDTH, lane.h);
 
     //Dust spawn
     fill("rgba(50, 19, 58, 0.15)");
-    rect(width - spawnZoneWidth, lane.y, spawnZoneWidth, lane.h);
+    rect(width - SPAWN_ZONE_WIDTH, lane.y, SPAWN_ZONE_WIDTH, lane.h);
   }
 }
 
@@ -103,32 +103,32 @@ window.setup = function () {
 
 function selectBubbleSoldier() {
   if (powerup == "Powerup 1") {
-    return bubble_soldier_shield_gif;
+    return bubbleSoldierShieldGif;
   } else if (powerup == "Powerup 2") {
-    return bubble_soldier_chestplate_gif;
+    return bubbleSoldierChestplateGif;
   } else if (powerup == "Powerup 3") {
-    return bubble_soldier_helmet_gif;
+    return bubbleSoldierHelmetGif;
   } else {
-    return bubble_soldier_plain_gif;
+    return bubbleSoldierPlainGif;
   }
 }
 
 function selectDustSoldier() {
   if (powerup == "Powerup 1") {
-    return dust_soldier_shield_gif;
+    return dustSoldierShieldGif;
   } else if (powerup == "Powerup 2") {
-    return dust_soldier_cloak_gif;
+    return dustSoldierCloakGif;
   } else if (powerup == "Powerup 3") {
-    return dust_soldier_helmet_gif;
+    return dustSoldierHelmetGif;
   } else {
-    return dust_soldier_plain_gif;
+    return dustSoldierPlainGif;
   }
 }
 
 window.mousePressed = function () {
   // Cannon shot
   if (mouseInLanes()) {
-    if (mouseX <= spawnZoneWidth) {
+    if (mouseX <= SPAWN_ZONE_WIDTH) {
       let bubble = {
         x: mouseX - BUBBLE_TROOP_WIDTH / 2,
         y: mouseY - TROOP_HEIGHT / 2,
@@ -139,7 +139,7 @@ window.mousePressed = function () {
         img: selectBubbleSoldier(),
       };
       bubbleTroops.push(bubble);
-    } else if (mouseX >= width - spawnZoneWidth) {
+    } else if (mouseX >= width - SPAWN_ZONE_WIDTH) {
       let dust = {
         x: mouseX + DUST_TROOP_WIDTH / 2,
         y: mouseY - TROOP_HEIGHT / 2,
@@ -155,40 +155,36 @@ window.mousePressed = function () {
 };
 
 window.preload = function () {
-  bg_img = loadImage(
+  backgroundImage = loadImage(
     "../media/assets/background/modeled-background-no-color.png"
   );
 
-  bubble_soldier_plain_gif = loadImage(
+  bubbleSoldierPlainGif = loadImage(
     "../media/assets/characters/bubble-empty.gif"
   );
-  bubble_soldier_helmet_gif = loadImage(
+  bubbleSoldierHelmetGif = loadImage(
     "../media/assets/characters/bubble-helmet.gif"
   );
-  bubble_soldier_chestplate_gif = loadImage(
+  bubbleSoldierChestplateGif = loadImage(
     "../media/assets/characters/bubble-chestplate.gif"
   );
-  bubble_soldier_shield_gif = loadImage(
+  bubbleSoldierShieldGif = loadImage(
     "../media/assets/characters/bubble-shield.gif"
   );
 
-  dust_soldier_plain_gif = loadImage(
-    "../media/assets/characters/dust-empty.gif"
-  );
-  dust_soldier_helmet_gif = loadImage(
+  dustSoldierPlainGif = loadImage("../media/assets/characters/dust-empty.gif");
+  dustSoldierHelmetGif = loadImage(
     "../media/assets/characters/dust-helmet.gif"
   );
-  dust_soldier_cloak_gif = loadImage(
-    "../media/assets/characters/dust-cloak.gif"
-  );
-  dust_soldier_shield_gif = loadImage(
+  dustSoldierCloakGif = loadImage("../media/assets/characters/dust-cloak.gif");
+  dustSoldierShieldGif = loadImage(
     "../media/assets/characters/dust-shield.gif"
   );
 };
 
 window.draw = function () {
   // background("green");
-  background(bg_img);
+  background(backgroundImage);
   drawLanesAndSpawns();
 
   noFill();

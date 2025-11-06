@@ -21,23 +21,23 @@ export class Troop {
   chooseImage() {
     if (this.teamType === "Bubble Brigade") {
       if (this.powerup === SHIELD) {
-        return bubble_solider_shield_gif;
+        return bubbleSoldierShieldGif;
       } else if (this.powerup === CHEST) {
-        return bubble_solider_chestplate_gif;
+        return bubbleSoldierChestplateGif;
       } else if (this.powerup === HELMET) {
-        return bubble_solider_helmet_gif;
+        return bubbleSoldierHelmetGif;
       } else {
-        return bubble_solider_plain_gif;
+        return bubbleSoldierPlainGif;
       }
     } else {
       if (this.powerup === SHIELD) {
-        return dust_solider_shield_gif;
+        return dustSoldierShieldGif;
       } else if (this.powerup === CHEST) {
-        return dust_solider_cloak_gif;
+        return dustSoldierCloakGif;
       } else if (this.powerup === HELMET) {
-        return dust_solider_helmet_gif;
+        return dustSoldierHelmetGif;
       } else {
-        return dust_solider_plain_gif;
+        return dustSoldierPlainGif;
       }
     }
   }
@@ -55,13 +55,13 @@ export class Troop {
   //     }
   //   } else {
   //     if (this.powerup === SHIELD) {
-  //       return "Rabbit Shield";
+  //       return "Dust Shield";
   //     } else if (this.powerup === CHEST) {
-  //       return "Rabbit Chest";
+  //       return "Dust Chest";
   //     } else if (this.powerup === HELMET) {
-  //       return "Rabbit Helmet";
+  //       return "Dust Helmet";
   //     } else {
-  //       return "Rabbit";
+  //       return "Dust";
   //     }
   //   }
   // }

@@ -2,7 +2,7 @@
 
 import { ArduinoController } from "../controllers/ArduinoController.js";
 
-const controller = new ArduinoController();
+const CONTROLLER = new ArduinoController();
 
 const SPIN_THRESHOLD = 5;
 
@@ -37,9 +37,9 @@ function fillBubbleBar(bubbleBar, x, y) {
 }
 
 function increaseProgress() {
-  if (locked && controller.getBarrelSpins()) {
+  if (locked && CONTROLLER.getBarrelSpins()) {
     // only start this if powerup has been selected
-    spinCount = controller.getBarrelSpins();
+    spinCount = CONTROLLER.getBarrelSpins();
     if (spinCount < SPIN_THRESHOLD) {
       fillBarWidth = (progressBar.width / SPIN_THRESHOLD) * spinCount;
     } else {
@@ -62,14 +62,14 @@ function increaseProgress() {
 function selectPowerUp() {
   if (locked) return;
 
-  powerup = controller.getBarrelPowerup();
+  powerup = CONTROLLER.getBarrelPowerup();
 
   if (powerup == "Powerup 1") selectedPowerup = "bubbleShield";
   else if (powerup == "Powerup 2") selectedPowerup = "bubbleChestplate";
   else if (powerup == "Powerup 3") selectedPowerup = "bubbleHelmet";
 
   if (
-    controller.getBarrelPowerupPressed() == "Button Pressed" &&
+    CONTROLLER.getBarrelPowerupPressed() == "Button Pressed" &&
     selectedPowerup
   ) {
     locked = true;

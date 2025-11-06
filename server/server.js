@@ -1,20 +1,20 @@
-const express = require("express");
-const http = require("http");
+const EXPRESS = require("express");
+const HTTP = require("http");
 const { io } = require("socket.io");
-const arduinoParser = require("./arduino");
+const ARDUINO_PARSER = require("./arduino");
 
-const app = express();
-const server = http.createServer(app);
-const socket = new io(server);
+const APP = EXPRESS();
+const SERVER = HTTP.createServer(APP);
+const SOCKET = new io(SERVER);
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-app.use(express.static("client"));
-app.use("/media", express.static("media"));
+APP.use(EXPRESS.static("client"));
+APP.use("/media", EXPRESS.static("media"));
 
-arduinoParser.subscribe("barrel", (data) => socket.emit("barrelData", data));
-arduinoParser.subscribe("cannon", (data) => socket.emit("cannonData", data));
+ARDUINO_PARSER.subscribe("barrel", (data) => SOCKET.emit("barrelData", data));
+ARDUINO_PARSER.subscribe("cannon", (data) => SOCKET.emit("cannonData", data));
 
-server.listen(port, () => {
+SERVER.listen(port, () => {
   console.log(`Listening on 127.0.0.1: ${port}`);
 });

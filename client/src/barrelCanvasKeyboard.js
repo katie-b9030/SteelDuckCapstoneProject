@@ -22,7 +22,7 @@
 
 import { BarrelKeyboardController } from "../controllers/KeyboardController";
 
-const controller = new BarrelKeyboardController();
+const CONTROLLER = new BarrelKeyboardController();
 
 let progressBar;
 let fillBar;
@@ -63,7 +63,7 @@ function fillBubbleBar(bubbleBar, x, y) {
 function increaseProgress() {
   if (locked) {
     // only start this if powerup has been selected
-    spinCount = controller.getBarrelSpin();
+    spinCount = CONTROLLER.getBarrelSpin();
     if (spinCount < 10) {
       fillBarWidth = (progressBar.width / 10) * spinCount;
     } else {
@@ -86,14 +86,14 @@ function increaseProgress() {
 function selectPowerUp() {
   if (locked) return;
 
-  powerup = controller.getBarrelPowerup();
+  powerup = CONTROLLER.getBarrelPowerup();
 
   if (powerup == "Powerup 1") selectedShape = "circle";
   else if (powerup == "Powerup 2") selectedShape = "square";
   else if (powerup == "Powerup 3") selectedShape = "triangle";
 
   if (
-    controller.getBarrelPowerupPressed() == "Button Pressed" &&
+    CONTROLLER.getBarrelPowerupPressed() == "Button Pressed" &&
     selectedShape
   ) {
     locked = true;
