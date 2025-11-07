@@ -20,9 +20,9 @@
 // let circleD = 100;
 // let squareA = 100;
 
-import { BarrelKeyboardController } from "../controllers/KeyboardController";
+import { KeyboardController } from "../controllers/KeyboardController";
 
-const CONTROLLER = new BarrelKeyboardController();
+const CONTROLLER = new KeyboardController();
 
 let progressBar;
 let fillBar;
