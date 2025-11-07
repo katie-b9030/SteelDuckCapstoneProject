@@ -84,6 +84,7 @@ export class Troop {
   }
 
   compare(other) {
+    if (other.powerup === null) return "end";
     if (this.powerup === other.powerup) return "draw";
 
     const { beats, losesTo } = rules[this.powerup];
@@ -104,16 +105,12 @@ export class Troop {
     const result = compare(other.powerup); // need to write compare method in powerup class when created
 
     if (result === "win") {
-      this.troopCollision = true;
       other.die();
     } else if (result === "lose") {
-      this.troopCollision = true;
       this.die();
     } else if (result === "end") {
-      this.endCollision = true;
       this.die();
     } else {
-      this.troopCollision = true;
       this.die();
       other.die();
     }
@@ -125,6 +122,20 @@ export class Troop {
 
   checkTroopCollision(other) {
     if (Math.abs(this.xPos - other.xPos) <= 250) {
+      this.troopCollision = true;
+      other.troopCollision = true;
+      this.collidedWith = other;
+      other.collidedWith = this;
+      return true;
+    }
+  }
+
+  checkEndCollision() {
+    if (this.troopType === "Bubble Brigade" && this.xPos >= windowWidth - 100) {
+      this.endCollision = true;
+      return true;
+    } else if (this.troopType === "Dust Dominion" && this.xPos <= 100) {
+      this.endCollision = true;
       return true;
     }
   }
