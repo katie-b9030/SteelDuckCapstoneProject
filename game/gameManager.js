@@ -1,26 +1,26 @@
 const { subscribe } = require("./serialHandler");
-import { ArduinoController } from "../controllers/ArduinoController.js";
+const { ArduinoController } = require("../controllers/ArduinoController");
 
 const ARDUINO_CONTROLLER = new ArduinoController();
 
 const GAME = new Game();
 
-const STATES = {
-  MENU: "menu",
-  ONGOING: "ongoing",
-  GAMEOVER: "gameover",
-};
+// const STATES = {
+//   MENU: "menu",
+//   ONGOING: "ongoing",
+//   GAMEOVER: "gameover",
+// };
 
-var gameState = MENU;
+// var gameState = MENU;
 
 function init() {}
 
 // function update() {}
 
-window.onload = function () {
-  init();
-  mainGameLoop();
-};
+// window.onload = function () {
+//   init();
+//   mainGameLoop();
+// };
 
 subscribe("barrel", (data) => {
   console.log("Barrel data:", data);
@@ -30,10 +30,22 @@ subscribe("barrel", (data) => {
   // }
 });
 
-function mainGameLoop() {
-  if (gameState === STATES.ONGOING) {
-    GAME.update();
-  }
+function mainGameLoop(io) {
+  GAME.startGame();
+  // if (GAME.gameState === GAME.STATES) {
+  GAME.update();
+  // }
 
-  requestAnimationFrame(mainGameLoop);
+  io.emit("timeUpdate", GAME.timeRemaining);
+
+  setTimeout(() => mainGameLoop(io), 1000 / 60);
+
+  // requestAnimationFrame(mainGameLoop);
 }
+
+function startGameLoop(io) {
+  init();
+  mainGameLoop(io);
+}
+
+module.exports = { GAME, startGameLoop };
