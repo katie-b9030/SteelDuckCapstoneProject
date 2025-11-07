@@ -2,6 +2,13 @@
 
 import { BarrelKeyboardController } from "../controllers/KeyboardController.js";
 
+const socket = io();
+
+let gameTime = 90;
+
+socket.on("timeUpdate", (time) => {
+  gameTime = time;
+});
 
 // global consts
 const SPAWN_ZONE_WIDTH = 100;
@@ -163,6 +170,21 @@ window.preload = function () {
 
 window.draw = function () {
   background(backgroundImage);
+
+  textSize(32);
+  fill(255);
+  textAlign(CENTER, TOP);
+  text(`Time: ${gameTime.toFixed(1)}s`, width - 20, 20);
+
+  if (GAME.gameState === GAME.STATES.GAMEOVER) {
+    textAlign(CENTER, CENTER);
+    textSize(64);
+    fill(255);
+    text("GAME OVER", windowWidth / 2, windowHeight / 2);
+
+    return;
+  }
+
   drawLanesAndSpawns();
 
   noFill();
