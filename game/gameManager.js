@@ -3,12 +3,7 @@ import { ArduinoController } from "../controllers/ArduinoController.js";
 
 const ARDUINO_CONTROLLER = new ArduinoController();
 
-var timer = 0;
-
-var bubbleScore = 0;
-var dustScore = 0;
-
-var Troops = [];
+const GAME = new Game();
 
 const STATES = {
   MENU: "menu",
@@ -18,18 +13,9 @@ const STATES = {
 
 var gameState = MENU;
 
-function init() {
-  timer = 0;
+function init() {}
 
-  bubbleScore = 0;
-  dustScore = 0;
-
-  Troops = [];
-
-  gameState = ONGOING; // set to ONGOING for demo purposes, will probably set to menu for regular gameplay
-}
-
-function update() {}
+// function update() {}
 
 window.onload = function () {
   init();
@@ -46,7 +32,7 @@ subscribe("barrel", (data) => {
 
 function mainGameLoop() {
   if (gameState === STATES.ONGOING) {
-    update();
+    GAME.update();
   }
 
   requestAnimationFrame(mainGameLoop);

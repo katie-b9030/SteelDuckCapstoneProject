@@ -9,10 +9,12 @@ export class Game {
     this.timeRemaining = 90;
 
     this.spinThreshold = 5;
+
+    this.winner = null;
   }
 
   update() {
-    this.timeRemaining++;
+    this.timeRemaining -= int(millis() / 1000);
 
     for (const TEAM of this.teams) TEAM.update();
 
@@ -34,13 +36,23 @@ export class Game {
     }
   }
 
-  endGame() {}
-
-  startGame() {}
-
-  modifyTroop(troop, newPowerup) {
-    troop.setPowerup(newPowerup);
+  startGame() {
+    // TODO: Show Start screen
   }
 
-  troopCreationProgress(barrelSpins) {}
+  endGame() {
+    if (this.teams[0].score > this.teams[1].score) {
+      // Bubble wins
+    } else if (this.teams[0].score < this.teams[1].score) {
+      // Dust wins
+    } else {
+      // They tie
+    }
+
+    // TODO: Show End Screen
+  }
+
+  troopCreationProgress(barrelSpins) {
+    // create troops
+  }
 }

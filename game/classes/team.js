@@ -48,4 +48,8 @@ export class Team {
 
     this.troops = currentLiveTroops;
   }
+
+  modifyTroop(troop, newPowerup) {
+    troop.setPowerup(newPowerup);
+  }
 }
