@@ -11,14 +11,27 @@ export class Game {
     this.spinThreshold = 5;
 
     this.winner = null;
+
+    this.gameState = this.STATES.MENU;
   }
 
+  STATES = {
+    MENU: "menu",
+    ONGOING: "ongoing",
+    GAMEOVER: "gameover",
+  };
+
   update() {
-    this.timeRemaining -= int(millis() / 1000);
+    this.timeRemaining -= deltaTime / 1000;
 
     for (const TEAM of this.teams) TEAM.update();
 
     this.handleCollisions();
+
+    if(this.timeRemaining < 0) {
+      this.timeRemaining = 0;
+      this.endGame();
+    }
   }
 
   // TODO: check for end collison and figure out how to safely remove items
@@ -38,9 +51,12 @@ export class Game {
 
   startGame() {
     // TODO: Show Start screen
+    this.gameState = this.STATES.ONGOING;
   }
 
   endGame() {
+    this.gameState = this.STATES.GAMEOVER;
+
     if (this.teams[0].score > this.teams[1].score) {
       // Bubble wins
     } else if (this.teams[0].score < this.teams[1].score) {
