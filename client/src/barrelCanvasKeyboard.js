@@ -1,5 +1,3 @@
-//TODO: get this working with arduino
-
 "use strict";
 
 // const socket = io();
@@ -15,17 +13,21 @@
 //   cannonData = data;
 // });
 
-import { ArduinoController } from "./ArduinoController.js";
+// let squareX = 100;
+// let squareY = 200;
+// let circleX = 400;
+// let circleY = 200;
+// let circleD = 100;
+// let squareA = 100;
 
-const controller = new ArduinoController();
+import { BarrelKeyboardController } from "../controllers/KeyboardController";
 
-const SPIN_THRESHOLD = 5;
+const CONTROLLER = new BarrelKeyboardController();
 
 let progressBar;
-let barrel_img;
-let barrelScreenVisible = false;
+let fillBar;
 
-let spinCount =0;
+let spinCount;
 let powerup;
 let fillBarWidth = 0;
 
@@ -48,23 +50,22 @@ let circleColor = "#2355ddff";
 let squareColor = "#2355ddff";
 let triColor = "#2355ddff";
 
-window.preload = function () {
-  progressBar = loadImage("../media/assets/ui/Bubble_Bar_Empty.png"); // path to your image
-  // barrel_img = loadImage("../media/assets/ui/barrel.png");
-};
+function preload() {
+  progressBar = loadImage("../media/assets/Bubble_Bar_Empty.png"); // path to your image
+}
 
 function fillBubbleBar(bubbleBar, x, y) {
   noStroke();
   fill("#02c3d1");
-  rect(x, y, fillBarWidth, bubbleBar.height, 50);
+  fillBar = rect(x, y, fillBarWidth, bubbleBar.height, 50);
 }
 
 function increaseProgress() {
-  if (locked && controller.getBarrelSpins()) {
+  if (locked) {
     // only start this if powerup has been selected
-    spinCount = controller.getBarrelSpins();
-    if (spinCount < SPIN_THRESHOLD) {
-      fillBarWidth = (progressBar.width / SPIN_THRESHOLD) * spinCount;
+    spinCount = CONTROLLER.getBarrelSpin();
+    if (spinCount < 10) {
+      fillBarWidth = (progressBar.width / 10) * spinCount;
     } else {
       fillBarWidth = progressBar.width;
 
@@ -85,33 +86,26 @@ function increaseProgress() {
 function selectPowerUp() {
   if (locked) return;
 
-  powerup = controller.getBarrelPowerup();
+  powerup = CONTROLLER.getBarrelPowerup();
 
   if (powerup == "Powerup 1") selectedShape = "circle";
   else if (powerup == "Powerup 2") selectedShape = "square";
   else if (powerup == "Powerup 3") selectedShape = "triangle";
 
   if (
-    controller.getBarrelPowerupPressed() == "Button Pressed" &&
+    CONTROLLER.getBarrelPowerupPressed() == "Button Pressed" &&
     selectedShape
   ) {
     locked = true;
     if (selectedShape === "circle") circleColor = "#c23fd1";
     if (selectedShape === "square") squareColor = "#c23fd1";
     if (selectedShape === "triangle") triColor = "#c23fd1";
-
-    sessionStorage.setItem("selectedPowerup", powerup);
-
-    // setTimeout(() => { barrelScreenVisible = true; }, 1000);
-    setTimeout(() => {
-      text("Spin the Barrel!", 200, 300);
-    }, 500);
   }
 }
 
 window.setup = function () {
-  sessionStorage.removeItem("selectedPowerup");
-  createCanvas(1560, 850);
+  createCanvas(1500, 650);
+  preload();
 };
 
 window.draw = function () {
@@ -119,11 +113,10 @@ window.draw = function () {
 
   let x = (width - progressBar.width) / 2;
   let y = 20;
+
   fillBubbleBar(progressBar, x, y);
 
   image(progressBar, x, y);
-
-  // image(barrel_img, width / 2, height / 2);
 
   fill(circleColor);
   let cSize =

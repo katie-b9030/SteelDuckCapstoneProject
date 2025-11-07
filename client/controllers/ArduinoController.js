@@ -24,10 +24,6 @@ export class ArduinoController {
     return this.barrelData.barrelPowerup;
   }
 
-  // getBarrelPressed() {
-  //     return this.barrelData.barrelPressed;
-  // }
-
   getBarrelPowerupPressed() {
     return this.barrelData.barrelPowerupPressed;
   }

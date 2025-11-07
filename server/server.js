@@ -1,37 +1,20 @@
-const express = require("express");
-const http = require("http");
+const EXPRESS = require("express");
+const HTTP = require("http");
 const { Server } = require("socket.io");
-const arduinoParser = require("./arduino");
+const ARDUINO_PARSER = require("./arduino");
 
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
+const APP = EXPRESS();
+const SERVER = HTTP.createServer(APP);
+const io = new Server(SERVER);
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
-// const urlStruct = {
-// //   '/': htmlHandler.getIndex,
-// //   '/bundle.js': htmlHandler.getBundle,
-// };
+APP.use(EXPRESS.static("client"));
+APP.use("/media", EXPRESS.static("media"));
 
-// const onRequest = (request, response) => {
-//   const protocol = request.connection.encrypted ? 'https' : 'http';
-//   const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
-//   request.query = Object.fromEntries(parsedUrl.searchParams);
+ARDUINO_PARSER.subscribe("barrel", (data) => io.emit("barrelData", data));
+ARDUINO_PARSER.subscribe("cannon", (data) => io.emit("cannonData", data));
 
-//   if (urlStruct[parsedUrl.pathname]) {
-//     urlStruct[parsedUrl.pathname](request, response);
-//   } else {
-//     urlStruct.notFound(request, response);
-//   }
-// };
-
-app.use(express.static("client"));
-app.use("/media", express.static("media"));
-
-arduinoParser.subscribe("barrel", (data) => io.emit("barrelData", data));
-arduinoParser.subscribe("cannon", (data) => io.emit("cannonData", data));
-
-server.listen(port, () => {
+SERVER.listen(port, () => {
   console.log(`Listening on 127.0.0.1: ${port}`);
 });
