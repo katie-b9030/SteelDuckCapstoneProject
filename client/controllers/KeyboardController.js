@@ -1,4 +1,4 @@
-export class BarrelKeyboardController {
+export class KeyboardController {
   update() {}
 
   spinCount = 0;

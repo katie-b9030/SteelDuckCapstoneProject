@@ -1,15 +1,13 @@
 const { subscribe } = require("./serialHandler");
-import { ArduinoController } from "../controllers/ArduinoController.js";
+//import { ArduinoController } from "../controllers/ArduinoController.js";
+import { KeyboardController } from "../controllers/KeyboardController.js";
+import { Game } from "./classes/game.js";
+import { Troop } from "./classes/troop.js";
 
-const ARDUINO_CONTROLLER = new ArduinoController();
+//const ARDUINO_CONTROLLER = new ArduinoController();
+const KEYBOARD_CONTROLLER = new KeyboardController();
 
 const GAME = new Game();
-
-const STATES = {
-  MENU: "menu",
-  ONGOING: "ongoing",
-  GAMEOVER: "gameover",
-};
 
 var gameState = MENU;
 
@@ -22,13 +20,15 @@ window.onload = function () {
   mainGameLoop();
 };
 
-subscribe("barrel", (data) => {
-  console.log("Barrel data:", data);
-
-  // if(data.barrelSpun === "1") {            // this is just an example until the data in arduino.js is changed to accomodate the contact magnets
-  //     console.log("Barrel spun!");
-  // }
-});
+window.mousePressed = function () {
+  if (mouseY >= 500 && mouseY <= 700) {
+    if (mouseX <= SPAWN_ZONE_WIDTH) {
+      GAME.teams[0].spawnTroop(Troop.powerup.SHIELD);
+    } else if (mouseX >= windowWidth - SPAWN_ZONE_WIDTH) {
+      GAME.teams[1].spawnTroop(Troop.powerup.SHIELD);
+    }
+  }
+};
 
 function mainGameLoop() {
   if (gameState === STATES.ONGOING) {

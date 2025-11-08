@@ -6,6 +6,9 @@ export class Game {
       new Team("Bubble Brigade", this),
       new Team("Dust Dominion", this),
     ];
+
+    this.state = this.states.ONGOING;
+
     this.timeRemaining = 90;
 
     this.spinThreshold = 5;
@@ -13,12 +16,18 @@ export class Game {
     this.winner = null;
   }
 
+  states = {
+    MENU: "menu",
+    ONGOING: "ongoing",
+    GAMEOVER: "gameover",
+  };
+
   update() {
     this.timeRemaining -= int(millis() / 1000);
 
-    for (const TEAM of this.teams) TEAM.update();
-
     this.handleCollisions();
+
+    for (const TEAM of this.teams) TEAM.update();
   }
 
   // TODO: check for end collison and figure out how to safely remove items
