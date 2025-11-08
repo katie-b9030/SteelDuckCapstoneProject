@@ -1,4 +1,4 @@
-import { Team } from "./team";
+import { Team } from "./team.js";
 
 export class Game {
   constructor() {
@@ -7,7 +7,7 @@ export class Game {
       new Team("Dust Dominion", this),
     ];
 
-    this.state = this.states.ONGOING;
+    this.state = this.STATES.ONGOING;
 
     this.timeRemaining = 90;
 
@@ -16,7 +16,7 @@ export class Game {
     this.winner = null;
   }
 
-  states = {
+  STATES = {
     MENU: "menu",
     ONGOING: "ongoing",
     GAMEOVER: "gameover",

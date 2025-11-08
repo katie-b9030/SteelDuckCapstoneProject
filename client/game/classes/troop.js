@@ -1,4 +1,16 @@
 export class Troop {
+  static POWERUP = {
+    SHIELD: "shield",
+    CHEST: "chest",
+    HELMET: "helmet",
+  };
+
+  static rules = {
+    shield: { beats: "helmet", losesTo: "chest" },
+    chest: { beats: "shield", losesTo: "helmet" },
+    helmet: { beats: "chest", losesTo: "shield" },
+  };
+
   constructor(teamType, powerup) {
     this.teamType = teamType; // bubble brigade or dust dominion
     this.powerup = powerup;
@@ -20,21 +32,21 @@ export class Troop {
 
   chooseImage() {
     if (this.teamType === "Bubble Brigade") {
-      if (this.powerup === SHIELD) {
+      if (this.powerup === Troop.POWERUP.SHIELD) {
         return bubbleSoldierShieldGif;
-      } else if (this.powerup === CHEST) {
+      } else if (this.powerup === Troop.POWERUP.CHEST) {
         return bubbleSoldierChestplateGif;
-      } else if (this.powerup === HELMET) {
+      } else if (this.powerup === Troop.POWERUP.HELMET) {
         return bubbleSoldierHelmetGif;
       } else {
         return bubbleSoldierPlainGif;
       }
     } else {
-      if (this.powerup === SHIELD) {
+      if (this.powerup === Troop.POWERUP.SHIELD) {
         return dustSoldierShieldGif;
-      } else if (this.powerup === CHEST) {
+      } else if (this.powerup === Troop.POWERUP.CHEST) {
         return dustSoldierCloakGif;
-      } else if (this.powerup === HELMET) {
+      } else if (this.powerup === Troop.POWERUP.HELMET) {
         return dustSoldierHelmetGif;
       } else {
         return dustSoldierPlainGif;
@@ -65,18 +77,6 @@ export class Troop {
   //     }
   //   }
   // }
-
-  powerup = {
-    SHIELD: "shield",
-    CHEST: "chest",
-    HELMET: "helmet",
-  };
-
-  rules = {
-    shield: { beats: "helmet", losesTo: "chest" },
-    chest: { beats: "shield", losesTo: "helmet" },
-    helmet: { beats: "chest", losesTo: "shield" },
-  };
 
   setPowerup(powerup) {
     this.powerup = powerup;

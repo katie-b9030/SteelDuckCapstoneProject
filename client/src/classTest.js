@@ -1,22 +1,22 @@
 "use strict";
 
-import { KeyboardController } from "../controllers/KeyboardController";
+import { KeyboardController } from "../controllers/KeyboardController.js";
 
-const SPAWN_ZONE_WIDTH = 100;
+window.SPAWN_ZONE_WIDTH = 100;
 const CONTROLLER = new KeyboardController();
 
 // images
 let backgroundImage;
 // bubble soldiers
-let bubbleSoldierPlainGif;
-let bubbleSoldierHelmetGif;
-let bubbleSoldierChestplateGif;
-let bubbleSoldierShieldGif;
+window.bubbleSoldierPlainGif;
+window.bubbleSoldierHelmetGif;
+window.bubbleSoldierChestplateGif;
+window.bubbleSoldierShieldGif;
 // dust soldiers
-let dustSoldierPlainGif;
-let dustSoldierHelmetGif;
-let dustSoldierCloakGif;
-let dustSoldierShieldGif;
+window.dustSoldierPlainGif;
+window.dustSoldierHelmetGif;
+window.dustSoldierCloakGif;
+window.dustSoldierShieldGif;
 
 function drawLaneAndSpawns() {
   // Actual Lane
@@ -71,7 +71,7 @@ window.draw = function () {
 
   for (let team of GAME.teams) {
     for (let troop of team.troops) {
-      Image(troop.image, troop.xPos, 600, troop.width, troop.height);
+      image(troop.image, troop.xPos, 600, troop.width, troop.height);
     }
   }
 };

@@ -1,6 +1,6 @@
-import { CannonPlayer } from "../players/cannonPlayer";
-import { BarrelPlayer } from "../players/barrelPlayer";
-import { Troop } from "./troop";
+import { CannonPlayer } from "./cannonPlayer.js";
+import { BarrelPlayer } from "./barrelPlayer.js";
+import { Troop } from "./troop.js";
 
 export class Team {
   constructor(name, game) {
@@ -14,8 +14,8 @@ export class Team {
   }
 
   update() {
-    this.barrel.update();
-    this.cannon.update();
+    // this.barrel.update();
+    // this.cannon.update();
 
     this.checkForScore();
     this.filterDeaths();

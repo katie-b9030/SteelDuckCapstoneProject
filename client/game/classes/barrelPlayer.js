@@ -5,12 +5,12 @@ export class BarrelPlayer {
   constructor(teamType, game) {
     this.game = game;
     this.team = teamType;
-    this.state = IDLE;
+    this.state = this.STATES.IDLE;
     this.spinSequence = [];
-    this.selectedPowerup = 1;
+    this.selectedPowerup = this.Powerups.SHIELD;
   }
 
-  States = {
+  STATES = {
     IDLE: "idle",
     SELECTING_POWERUP: "powerup selection",
     WASHING: "washing",
@@ -23,9 +23,9 @@ export class BarrelPlayer {
   };
 
   Powerups = {
-    1: 1,
-    2: 2,
-    3: 3,
+    SHIELD: "shield",
+    CHEST: "chest",
+    HELMET: "helmet",
   };
 
   createSpinSequence() {
