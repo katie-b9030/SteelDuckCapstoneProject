@@ -33,23 +33,23 @@ export class Troop {
   chooseImage() {
     if (this.teamType === "Bubble Brigade") {
       if (this.powerup === Troop.POWERUP.SHIELD) {
-        return bubbleSoldierShieldGif;
+        return window.IMAGES.bubbleSoldierShieldGif;
       } else if (this.powerup === Troop.POWERUP.CHEST) {
-        return bubbleSoldierChestplateGif;
+        return window.IMAGES.bubbleSoldierChestplateGif;
       } else if (this.powerup === Troop.POWERUP.HELMET) {
-        return bubbleSoldierHelmetGif;
+        return window.IMAGES.bubbleSoldierHelmetGif;
       } else {
-        return bubbleSoldierPlainGif;
+        return window.IMAGES.bubbleSoldierPlainGif;
       }
     } else {
       if (this.powerup === Troop.POWERUP.SHIELD) {
-        return dustSoldierShieldGif;
+        return window.IMAGES.dustSoldierShieldGif;
       } else if (this.powerup === Troop.POWERUP.CHEST) {
-        return dustSoldierCloakGif;
+        return window.IMAGES.dustSoldierCloakGif;
       } else if (this.powerup === Troop.POWERUP.HELMET) {
-        return dustSoldierHelmetGif;
+        return window.IMAGES.dustSoldierHelmetGif;
       } else {
-        return dustSoldierPlainGif;
+        return window.IMAGES.dustSoldierPlainGif;
       }
     }
   }

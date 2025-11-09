@@ -24,7 +24,7 @@ export class Team {
   }
 
   spawnTroop(powerup) {
-    const TROOP = new Troop("Bubble Brigade", powerup);
+    const TROOP = new Troop(this.name, powerup);
     this.troops.push(TROOP);
   }
 
@@ -43,9 +43,7 @@ export class Team {
   }
 
   filterDeaths() {
-    let currentLiveTroops = this.troops.filter((troop) => {
-      !troop.isAlive;
-    });
+    let currentLiveTroops = this.troops.filter((troop) => troop.isAlive);
 
     this.troops = currentLiveTroops;
   }

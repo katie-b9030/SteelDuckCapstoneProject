@@ -1,22 +1,10 @@
 "use strict";
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
+import { preloadImages } from "../game/asset-management/soldierAssets.js";
 
 window.SPAWN_ZONE_WIDTH = 100;
 const CONTROLLER = new KeyboardController();
-
-// images
-let backgroundImage;
-// bubble soldiers
-window.bubbleSoldierPlainGif;
-window.bubbleSoldierHelmetGif;
-window.bubbleSoldierChestplateGif;
-window.bubbleSoldierShieldGif;
-// dust soldiers
-window.dustSoldierPlainGif;
-window.dustSoldierHelmetGif;
-window.dustSoldierCloakGif;
-window.dustSoldierShieldGif;
 
 function drawLaneAndSpawns() {
   // Actual Lane
@@ -38,40 +26,16 @@ window.setup = function () {
 };
 
 window.preload = function () {
-  backgroundImage = loadImage(
-    "../media/assets/background/modeled-background-no-color.png"
-  );
-
-  bubbleSoldierPlainGif = loadImage(
-    "../media/assets/characters/bubble-empty.gif"
-  );
-  bubbleSoldierHelmetGif = loadImage(
-    "../media/assets/characters/bubble-helmet.gif"
-  );
-  bubbleSoldierChestplateGif = loadImage(
-    "../media/assets/characters/bubble-chestplate.gif"
-  );
-  bubbleSoldierShieldGif = loadImage(
-    "../media/assets/characters/bubble-shield.gif"
-  );
-
-  dustSoldierPlainGif = loadImage("../media/assets/characters/dust-empty.gif");
-  dustSoldierHelmetGif = loadImage(
-    "../media/assets/characters/dust-helmet.gif"
-  );
-  dustSoldierCloakGif = loadImage("../media/assets/characters/dust-cloak.gif");
-  dustSoldierShieldGif = loadImage(
-    "../media/assets/characters/dust-shield.gif"
-  );
+  preloadImages();
 };
 
 window.draw = function () {
-  background(backgroundImage);
+  background(window.IMAGES.backgroundImage);
   drawLaneAndSpawns();
 
-  for (let team of GAME.teams) {
+  for (let team of window.GAME.teams) {
     for (let troop of team.troops) {
-      image(troop.image, troop.xPos, 600, troop.width, troop.height);
+      image(troop.img, troop.xPos, 600, troop.width, troop.height);
     }
   }
 };
