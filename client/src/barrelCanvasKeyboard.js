@@ -40,7 +40,7 @@ let powerup;
 let fillBarWidth = 0;
 
 
-let selectedPowerup; // 'bubbleShield', 'square', 'triangle'
+let selectedPowerup; // 'bubbleShield', 'bubbleChestplate', 'bubbleHelmet'
 let locked = false;
 let scaleFactor = 0.5;
 let selectedScaleFactor = 0.8;
@@ -80,7 +80,7 @@ function increaseProgress() {
           sessionStorage.setItem("fromBarrelScreen", "true");
 
           // Go to the next page
-          window.location.href = "capstone-canvas-test.html";
+          window.location.href = "lanes-screen.html";
         }, 1000);
       }
     }
@@ -104,12 +104,7 @@ function selectPowerUp() {
     selectedPowerup
   ) {
     locked = true;
-    // add a glow around image?
-
-    // if (selectedPowerup === "bubbleShield") bubbleShieldColor = "#c23fd1";
-    // if (selectedPowerup === "square") squareColor = "#c23fd1";
-    // if (selectedPowerup === "triangle") triColor = "#c23fd1";
-
+    
     sessionStorage.setItem("selectedPowerup", powerup);
 
     // setTimeout(() => { barrelScreenVisible = true; }, 1000);
@@ -119,6 +114,8 @@ function selectPowerUp() {
   }
 }
 
+const getScale = (powerupName) =>
+  selectedPowerup === powerupName ? selectedScaleFactor : scaleFactor;
 
 
 window.setup = function () {
@@ -142,7 +139,7 @@ window.draw = function () {
 
   let x = windowWidth / 2;
   let y = (windowHeight * 1) / 10;
-  fillBubbleBar(progressBar, x, y);
+  fillBubbleBar(progressBar, x-430, y-48);
 
   image(progressBar, x, y);
 
@@ -150,22 +147,22 @@ window.draw = function () {
     bubbleShield,
     bubbleShieldX,
     bubbleShieldY,
-    bubbleShield.width * scaleFactor,
-    bubbleShield.height * scaleFactor
+    bubbleShield.width * getScale("bubbleShield"),
+    bubbleShield.height * getScale("bubbleShield")
   );
   image(
     bubbleChestplate,
     bubbleChestplateX,
     bubbleChestplateY,
-    bubbleChestplate.width * scaleFactor,
-    bubbleChestplate.height * scaleFactor
+    bubbleChestplate.width * getScale("bubbleChestplate"),
+    bubbleChestplate.height * getScale("bubbleChestplate")
   );
   image(
     bubbleHelmet,
     bubbleHelmetX,
     bubbleHelmetY,
-    bubbleHelmet.width * scaleFactor,
-    bubbleHelmet.height * scaleFactor
+    bubbleHelmet.width * getScale("bubbleHelmet"),
+    bubbleHelmet.height * getScale("bubbleHelmet")
   );
 
   image(
