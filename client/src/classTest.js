@@ -9,15 +9,15 @@ const CONTROLLER = new KeyboardController();
 function drawLaneAndSpawns() {
   // Actual Lane
   fill("rgba(0, 0, 0, 0.5)");
-  rect(0, 500, width, 200);
+  rect(0, 500, width, 250);
 
   //Bubble spawn
   fill("rgba(35, 85, 221, 0.5)");
-  rect(0, 500, SPAWN_ZONE_WIDTH, 200);
+  rect(0, 500, SPAWN_ZONE_WIDTH, 250);
 
   //Dust spawn
   fill("rgba(50, 19, 58, 0.5)");
-  rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 200);
+  rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 250);
 }
 
 window.setup = function () {
@@ -35,7 +35,15 @@ window.draw = function () {
 
   for (let team of window.GAME.teams) {
     for (let troop of team.troops) {
-      image(troop.img, troop.xPos, 600, troop.width, troop.height);
+      push();
+      scale(troop.direction, 1);
+      image(
+        troop.img,
+        troop.direction * troop.xPos,
+        525,
+        troop.width,
+        troop.height
+      );
     }
   }
 };

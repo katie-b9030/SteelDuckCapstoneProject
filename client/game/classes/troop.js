@@ -16,14 +16,14 @@ export class Troop {
     this.powerup = powerup;
 
     this.isAlive = true;
-    this.speed = 0;
-
-    this.xPos = teamType === "Bubble Brigade" ? 50 : windowWidth - 50; // change based on size of canvas
-    this.direction = teamType === "Bubble Brigade" ? 1 : -1;
+    this.speed = this.chooseSpeed();
 
     this.img = this.chooseImage();
-    this.width = teamType === "Bubble Brigade" ? 250 : 150;
-    this.height = 350;
+    this.width = 125;
+    this.height = 200;
+
+    this.xPos = teamType === "Bubble Brigade" ? 0 : windowWidth; // change based on size of canvas
+    this.direction = teamType === "Bubble Brigade" ? 1 : -1;
 
     this.troopCollision = false;
     this.collidedWith = null;
@@ -54,33 +54,22 @@ export class Troop {
     }
   }
 
-  // chooseImage() {
-  //   if (this.teamType === "Bubble Brigade") {
-  //     if (this.powerup === SHIELD) {
-  //       return "Bubble Shield";
-  //     } else if (this.powerup === CHEST) {
-  //       return "Bubble Chest";
-  //     } else if (this.powerup === HELMET) {
-  //       return "Bubble Helmet";
-  //     } else {
-  //       return "Bubble";
-  //     }
-  //   } else {
-  //     if (this.powerup === SHIELD) {
-  //       return "Dust Shield";
-  //     } else if (this.powerup === CHEST) {
-  //       return "Dust Chest";
-  //     } else if (this.powerup === HELMET) {
-  //       return "Dust Helmet";
-  //     } else {
-  //       return "Dust";
-  //     }
-  //   }
-  // }
+  chooseSpeed() {
+    if (this.powerup === Troop.POWERUP.SHIELD) {
+      return 1;
+    } else if (this.powerup === Troop.POWERUP.CHEST) {
+      return 0.75;
+    } else if (this.powerup === Troop.POWERUP.HELMET) {
+      return 1.25;
+    } else {
+      return 1;
+    }
+  }
 
   setPowerup(powerup) {
     this.powerup = powerup;
     this.img = this.chooseImage();
+    this.speed = this.chooseSpeed();
   }
 
   compare(other) {
