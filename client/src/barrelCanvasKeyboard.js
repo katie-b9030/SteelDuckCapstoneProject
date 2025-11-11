@@ -21,11 +21,18 @@
 // let squareA = 100;
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
+import { Rive } from "@rive-app/canvas";
 
 const CONTROLLER = new KeyboardController();
+const RIVE = new Rive({
+  src: "https://cdn.rive.app/animations/vehicles.riv",
+  autoplay: true,
+  onLoad: () => {
+    RIVE.resizeDrawingSurfaceToCanvas();
+  },
+});
 
 const SPIN_THRESHOLD = 5;
-
 
 let progressBar;
 let barrelImg;
@@ -34,18 +41,14 @@ let bubbleHelmet;
 let bubbleShield;
 let barrelScreenVisible = false;
 
-
 let spinCount = 0;
 let powerup;
 let fillBarWidth = 0;
-
 
 let selectedPowerup; // 'bubbleShield', 'bubbleChestplate', 'bubbleHelmet'
 let locked = false;
 let scaleFactor = 0.5;
 let selectedScaleFactor = 0.8;
-
-
 
 window.preload = function () {
   progressBar = loadImage("../media/assets/ui/bubble-bar-empty.png");
@@ -55,14 +58,11 @@ window.preload = function () {
   bubbleShield = loadImage("../media/assets/armor/bubble-shield.png");
 };
 
-
-
 function fillBubbleBar(bubbleBar, x, y) {
   noStroke();
   fill("#02c3d1");
   rect(x, y, fillBarWidth, bubbleBar.height, 50);
 }
-
 
 function increaseProgress() {
   if (locked && CONTROLLER.getBarrelSpins()) {
@@ -87,9 +87,6 @@ function increaseProgress() {
   }
 }
 
-
-
-
 function selectPowerUp() {
   if (locked) return;
 
@@ -104,7 +101,7 @@ function selectPowerUp() {
     selectedPowerup
   ) {
     locked = true;
-    
+
     sessionStorage.setItem("selectedPowerup", powerup);
 
     // setTimeout(() => { barrelScreenVisible = true; }, 1000);
@@ -116,7 +113,6 @@ function selectPowerUp() {
 
 const getScale = (powerupName) =>
   selectedPowerup === powerupName ? selectedScaleFactor : scaleFactor;
-
 
 window.setup = function () {
   sessionStorage.removeItem("selectedPowerup");
@@ -139,37 +135,37 @@ window.draw = function () {
 
   let x = windowWidth / 2;
   let y = (windowHeight * 1) / 10;
-  fillBubbleBar(progressBar, x-430, y-48);
+  fillBubbleBar(progressBar, x - 430, y - 48);
 
   image(progressBar, x, y);
 
   if (!locked || selectedPowerup === "bubbleShield") {
-  image(
-    bubbleShield,
-    windowWidth / 2,
-    (windowHeight * 2) / 8,
-    bubbleShield.width * getScale("bubbleShield"),
-    bubbleShield.height * getScale("bubbleShield")
-  );
-}
+    image(
+      bubbleShield,
+      windowWidth / 2,
+      (windowHeight * 2) / 8,
+      bubbleShield.width * getScale("bubbleShield"),
+      bubbleShield.height * getScale("bubbleShield")
+    );
+  }
   if (!locked || selectedPowerup === "bubbleChestplate") {
-  image(
-    bubbleChestplate,
-    windowWidth / 2,
-    (windowHeight * 3) / 8,
-    bubbleChestplate.width * getScale("bubbleChestplate"),
-    bubbleChestplate.height * getScale("bubbleChestplate")
-  );
-}
+    image(
+      bubbleChestplate,
+      windowWidth / 2,
+      (windowHeight * 3) / 8,
+      bubbleChestplate.width * getScale("bubbleChestplate"),
+      bubbleChestplate.height * getScale("bubbleChestplate")
+    );
+  }
   if (!locked || selectedPowerup === "bubbleHelmet") {
-  image(
-    bubbleHelmet,
-    windowWidth / 2,
-    (windowHeight * 4) / 8,
-    bubbleHelmet.width * getScale("bubbleHelmet"),
-    bubbleHelmet.height * getScale("bubbleHelmet")
-  );
-}
+    image(
+      bubbleHelmet,
+      windowWidth / 2,
+      (windowHeight * 4) / 8,
+      bubbleHelmet.width * getScale("bubbleHelmet"),
+      bubbleHelmet.height * getScale("bubbleHelmet")
+    );
+  }
 
   image(
     barrelImg,
@@ -182,14 +178,6 @@ window.draw = function () {
   selectPowerUp();
   increaseProgress();
 };
-
-
-
-
-
-
-
-
 
 // let progressBar;
 // let fillBar;
