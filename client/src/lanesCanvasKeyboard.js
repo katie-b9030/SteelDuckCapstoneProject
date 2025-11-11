@@ -1,6 +1,7 @@
 "use strict";
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
+import { Rive } from "@rive-app/canvas";
 
 // global consts
 const SPAWN_ZONE_WIDTH = 100;
@@ -9,6 +10,9 @@ const DUST_TROOP_WIDTH = 400;
 const TROOP_HEIGHT = 350;
 
 const CONTROLLER = new KeyboardController();
+const RIVE = new Rive({
+  src: "https://cdn.rive.app/animations/vehicles.riv",
+});
 
 const LANES = [
   { y: 50, h: 200 },
