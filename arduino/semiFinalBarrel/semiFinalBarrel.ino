@@ -1,21 +1,21 @@
-
 const int MAGNETIC_PIN = 9;  
+const int POWERUP_BTN = 10;    // Arcade button
+const char* POWERUPS[] = {
+  "shield",
+  "chest",
+  "helmet"
+};
+const int MAX_SPINS = 10;
 
-const int POWERUP_PIN_A = 5;   // Rotary encoder CLK
-const int POWERUP_PIN_B = 6;   // Rotary encoder DT
-const int POWERUP_BTN = 4;    // Rotary encoder SW (button)
 
 //Vars
 int spinCount = 0;
-int sinceLastSpin = 100;
+int selectSpins = 0;
 bool magnetDetected = false;
+bool powerupSelected = false;
+int i = 0;
+String selectedPowerup = POWERUPS[i];
 
-//rotary encoder variables
-int powerupVal = 0;
-int powerupValMod = 0;
-int powerupState;
-int powerupStatePrev;
-bool boolPowerupCW = false;
 
 void setup() {
   Serial.begin(9600);
@@ -23,60 +23,76 @@ void setup() {
   //magnet sensor setup
   pinMode(MAGNETIC_PIN, INPUT_PULLUP);
 
-  //power-up encoder setup
-  pinMode(POWERUP_PIN_A, INPUT);
-  pinMode(POWERUP_PIN_B, INPUT);
+  // arcade button setup
   pinMode(POWERUP_BTN, INPUT_PULLUP);
 
-  powerupStatePrev = digitalRead(POWERUP_PIN_A);
 
 }
 
 void loop() {
-  //magnet spin
-  int state = digitalRead(MAGNETIC_PIN);
+  if(powerupSelected == false) {
+    spinCount = 0;
+    Serial.print(spinCount);
+    Serial.print(" | ");
 
-  if (state == LOW && !magnetDetected) {
-    magnetDetected = true;
-    spinCount++;
-  }
-  else if (state == HIGH && magnetDetected) {
-    magnetDetected = false;
-  }
-  
-  Serial.print(spinCount);
-  Serial.print(" | ");
+    int state = digitalRead(MAGNETIC_PIN);
 
-  //rotary encoder
-  powerupState = digitalRead(POWERUP_PIN_A);
+    if (state == LOW && !magnetDetected) {
+      magnetDetected = true;
+      i = (i == 2) ? 0 : i + 1;
+    }
+    else if (state == HIGH && magnetDetected) {
+      magnetDetected = false;
+    }
 
-  if (powerupState != powerupStatePrev && powerupState == HIGH) {
-    if (digitalRead(POWERUP_PIN_B) != powerupState) {
-      powerupVal++;
+    selectedPowerup = POWERUPS[i];
+
+    Serial.print(selectedPowerup);
+    Serial.print(" | ");
+
+    if (digitalRead(POWERUP_BTN) == LOW) {
+      Serial.println("Button Pressed");
+      powerupSelected = true;
     } else {
-      powerupVal--;
+      Serial.println("Button Released");
+    }
+  }
+  else {
+    //magnet spin
+    int state = digitalRead(MAGNETIC_PIN);
+
+    if (state == LOW && !magnetDetected) {
+      magnetDetected = true;
+      spinCount++;
+    }
+    else if (state == HIGH && magnetDetected) {
+      magnetDetected = false;
+    }
+    
+    Serial.print(spinCount);
+    Serial.print(" | ");
+
+    Serial.print(selectedPowerup);
+    Serial.print( " | ");  
+
+    if(spinCount >= MAX_SPINS) spinCount = MAX_SPINS;
+
+    //arcade button press
+    if (digitalRead(POWERUP_BTN) == LOW && spinCount == MAX_SPINS) {
+      Serial.println("Button Pressed");
+      powerupSelected = false;
+      i = 0;
+    } else {
+      Serial.println("Button Released");
     }
   }
 
-  powerupValMod = abs(powerupVal % 6); 
-
-  // Serial.print("Power-up Selected: ");
-  if (powerupValMod < 2) {
-    Serial.print("shield | ");
-  } else if (powerupValMod < 4) {
-    Serial.print("chest | ");
-  } else {
-    Serial.print("helmet | ");
-  }
-
-  //encoder button press
-  if (digitalRead(POWERUP_BTN) == LOW) {
-    Serial.println("Button Pressed");
-  } else {
-    Serial.println("Button Released");
-  }
 
 
-  delay(100);
-  powerupStatePrev = powerupState;
+
+
+  
+
+
+  
 }
