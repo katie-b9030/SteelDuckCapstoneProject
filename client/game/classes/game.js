@@ -1,4 +1,4 @@
-import { Team } from "./team";
+import { Team } from "./team.js";
 
 export class Game {
   constructor() {
@@ -6,6 +6,9 @@ export class Game {
       new Team("Bubble Brigade", this),
       new Team("Dust Dominion", this),
     ];
+
+    this.state = this.STATES.ONGOING;
+
     this.timeRemaining = 90;
 
     this.spinThreshold = 5;
@@ -13,18 +16,24 @@ export class Game {
     this.winner = null;
   }
 
+  STATES = {
+    MENU: "menu",
+    ONGOING: "ongoing",
+    GAMEOVER: "gameover",
+  };
+
   update() {
     this.timeRemaining -= int(millis() / 1000);
 
-    for (const TEAM of this.teams) TEAM.update();
-
     this.handleCollisions();
+
+    for (const TEAM of this.teams) TEAM.update();
   }
 
   // TODO: check for end collison and figure out how to safely remove items
   handleCollisions() {
-    for (let i = 0; i < this.teams[0].length; i++) {
-      for (let j = i + 1; j < this.teams[1].length; j++) {
+    for (let i = 0; i < this.teams[0].troops.length; i++) {
+      for (let j = 0; j < this.teams[1].troops.length; j++) {
         const b = this.teams[0].troops[i];
         const d = this.teams[1].troops[j];
         if (b.teamType !== d.teamType && b.isAlive && d.isAlive) {

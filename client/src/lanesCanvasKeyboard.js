@@ -55,6 +55,7 @@ function mouseInLanes() {
   return (
     //(mouseY >= 50 && mouseY <= 250) || // Lane 1
     mouseY >= 500 && mouseY <= 700 // Lane 2
+    mouseY >= 500 && mouseY <= 700 // Lane 2
     //(mouseY >= 650 && mouseY <= 850) // Lane 3
   );
 }
@@ -64,11 +65,20 @@ function drawLanesAndSpawns() {
   // Actual Lane
   fill("rgba(0, 0, 0, 0.5)");
   rect(0, 500, width, 200);
+  // Actual Lane
+  fill("rgba(0, 0, 0, 0.5)");
+  rect(0, 500, width, 200);
 
   //Bubble spawn
   fill("rgba(35, 85, 221, 0.5)");
   rect(0, 500, SPAWN_ZONE_WIDTH, 200);
+  //Bubble spawn
+  fill("rgba(35, 85, 221, 0.5)");
+  rect(0, 500, SPAWN_ZONE_WIDTH, 200);
 
+  //Dust spawn
+  fill("rgba(50, 19, 58, 0.5)");
+  rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 200);
   //Dust spawn
   fill("rgba(50, 19, 58, 0.5)");
   rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 200);
