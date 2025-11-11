@@ -143,27 +143,33 @@ window.draw = function () {
 
   image(progressBar, x, y);
 
+  if (!locked || selectedPowerup === "bubbleShield") {
   image(
     bubbleShield,
-    bubbleShieldX,
-    bubbleShieldY,
+    windowWidth / 2,
+    (windowHeight * 2) / 8,
     bubbleShield.width * getScale("bubbleShield"),
     bubbleShield.height * getScale("bubbleShield")
   );
+}
+  if (!locked || selectedPowerup === "bubbleChestplate") {
   image(
     bubbleChestplate,
-    bubbleChestplateX,
-    bubbleChestplateY,
+    windowWidth / 2,
+    (windowHeight * 3) / 8,
     bubbleChestplate.width * getScale("bubbleChestplate"),
     bubbleChestplate.height * getScale("bubbleChestplate")
   );
+}
+  if (!locked || selectedPowerup === "bubbleHelmet") {
   image(
     bubbleHelmet,
-    bubbleHelmetX,
-    bubbleHelmetY,
+    windowWidth / 2,
+    (windowHeight * 4) / 8,
     bubbleHelmet.width * getScale("bubbleHelmet"),
     bubbleHelmet.height * getScale("bubbleHelmet")
   );
+}
 
   image(
     barrelImg,
