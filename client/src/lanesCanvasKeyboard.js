@@ -55,7 +55,6 @@ function mouseInLanes() {
   return (
     //(mouseY >= 50 && mouseY <= 250) || // Lane 1
     mouseY >= 500 && mouseY <= 700 // Lane 2
-    mouseY >= 500 && mouseY <= 700 // Lane 2
     //(mouseY >= 650 && mouseY <= 850) // Lane 3
   );
 }
