@@ -27,7 +27,7 @@ export class Game {
       for (let j = i + 1; j < this.teams[1].length; j++) {
         const b = this.teams[0].troops[i];
         const d = this.teams[1].troops[j];
-        if (b.teamType !== d.teamType) {
+        if (b.teamType !== d.teamType && b.isAlive && d.isAlive) {
           if (b.checkTroopCollision(d)) {
             b.battle(d);
           }

@@ -8,6 +8,7 @@
   },
   "author": "Katie Bogart / Autumn Derhammer / Colin Moore / Tommy Seternus / Kristin Yap",
   "dependencies": {
+    "@rive-app/canvas": "^2.32.1",
     "express": "^5.1.0",
     "serialport": "^13.0.0",
     "socket.io": "^4.8.1"

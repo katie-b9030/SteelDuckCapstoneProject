@@ -37,6 +37,7 @@ export class Team {
       }
 
       troop.troopCollision = false;
+      troop.collidedWith = false;
       troop.endCollision = false;
     }
   }

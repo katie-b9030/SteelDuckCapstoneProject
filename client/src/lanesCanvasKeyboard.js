@@ -1,7 +1,7 @@
 "use strict";
 
-import { BarrelKeyboardController } from "../controllers/KeyboardController.js";
-
+import { KeyboardController } from "../controllers/KeyboardController.js";
+import { Rive } from "@rive-app/canvas";
 
 // global consts
 const SPAWN_ZONE_WIDTH = 100;
@@ -9,7 +9,10 @@ const BUBBLE_TROOP_WIDTH = 500;
 const DUST_TROOP_WIDTH = 400;
 const TROOP_HEIGHT = 350;
 
-const CONTROLLER = new BarrelKeyboardController();
+const CONTROLLER = new KeyboardController();
+const RIVE = new Rive({
+  src: "https://cdn.rive.app/animations/vehicles.riv",
+});
 
 const LANES = [
   { y: 50, h: 200 },
@@ -51,25 +54,24 @@ function squareMove() {
 function mouseInLanes() {
   return (
     //(mouseY >= 50 && mouseY <= 250) || // Lane 1
-    (mouseY >= 500 && mouseY <= 700)  // Lane 2
+    mouseY >= 500 && mouseY <= 700 // Lane 2
     //(mouseY >= 650 && mouseY <= 850) // Lane 3
   );
 }
 
 function drawLanesAndSpawns() {
   noStroke();
-    // Actual Lane
-    fill("rgba(0, 0, 0, 0.5)");
-    rect(0, 500, width, 200);
+  // Actual Lane
+  fill("rgba(0, 0, 0, 0.5)");
+  rect(0, 500, width, 200);
 
-    //Bubble spawn
-    fill("rgba(35, 85, 221, 0.5)");
-    rect(0, 500, SPAWN_ZONE_WIDTH, 200);
+  //Bubble spawn
+  fill("rgba(35, 85, 221, 0.5)");
+  rect(0, 500, SPAWN_ZONE_WIDTH, 200);
 
-    //Dust spawn
-    fill("rgba(50, 19, 58, 0.5)");
-    rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 200);
-  
+  //Dust spawn
+  fill("rgba(50, 19, 58, 0.5)");
+  rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 200);
 }
 
 window.setup = function () {
