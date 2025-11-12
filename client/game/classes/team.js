@@ -1,6 +1,6 @@
-import { CannonPlayer } from "../players/cannonPlayer";
-import { BarrelPlayer } from "../players/barrelPlayer";
-import { Troop } from "./troop";
+import { CannonPlayer } from "./cannonPlayer.js";
+import { BarrelPlayer } from "./barrelPlayer.js";
+import { Troop } from "./troop.js";
 
 export class Team {
   constructor(name, game) {
@@ -14,8 +14,8 @@ export class Team {
   }
 
   update() {
-    this.barrel.update();
-    this.cannon.update();
+    // this.barrel.update();
+    // this.cannon.update();
 
     this.checkForScore();
     this.filterDeaths();
@@ -24,7 +24,7 @@ export class Team {
   }
 
   spawnTroop(powerup) {
-    const TROOP = new Troop("Bubble Brigade", powerup);
+    const TROOP = new Troop(this.name, powerup);
     this.troops.push(TROOP);
   }
 
@@ -43,9 +43,7 @@ export class Team {
   }
 
   filterDeaths() {
-    let currentLiveTroops = this.troops.filter((troop) => {
-      !troop.isAlive;
-    });
+    let currentLiveTroops = this.troops.filter((troop) => troop.isAlive);
 
     this.troops = currentLiveTroops;
   }
