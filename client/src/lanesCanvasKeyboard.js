@@ -5,6 +5,7 @@ import { KeyboardController } from "../controllers/KeyboardController.js";
 
 // global consts
 const SPAWN_ZONE_WIDTH = 100;
+const LANE_HEIGHT = 200;
 const BUBBLE_TROOP_WIDTH = 500;
 const DUST_TROOP_WIDTH = 400;
 const TROOP_HEIGHT = 350;
@@ -54,7 +55,7 @@ function squareMove() {
 function mouseInLanes() {
   return (
     //(mouseY >= 50 && mouseY <= 250) || // Lane 1
-    mouseY >= 500 && mouseY <= 700 // Lane 2
+    mouseY >= windowHeight -225 && mouseY <= windowHeight - 25 // Lane 2
     //(mouseY >= 650 && mouseY <= 850) // Lane 3
   );
 }
@@ -63,15 +64,15 @@ function drawLanesAndSpawns() {
   noStroke();
   // Actual Lane
   fill("rgba(0, 0, 0, 0.5)");
-  rect(0, windowHeight - 225, width, 200);
+  rect(0, windowHeight - 225, width, LANE_HEIGHT);
 
   //Bubble spawn
   fill("rgba(35, 85, 221, 0.5)");
-  rect(0, windowHeight - 225, SPAWN_ZONE_WIDTH, 200);
+  rect(0, windowHeight - 225, SPAWN_ZONE_WIDTH, LANE_HEIGHT);
 
   //Dust spawn
   fill("rgba(50, 19, 58, 0.5)");
-  rect(width - SPAWN_ZONE_WIDTH, windowHeight - 225, SPAWN_ZONE_WIDTH, 200);
+  rect(width - SPAWN_ZONE_WIDTH, windowHeight - 225, SPAWN_ZONE_WIDTH, LANE_HEIGHT);
 }
 
 window.setup = function () {
@@ -111,8 +112,8 @@ window.mousePressed = function () {
   if (mouseInLanes()) {
     if (mouseX <= SPAWN_ZONE_WIDTH) {
       let bubble = {
-        x: mouseX - BUBBLE_TROOP_WIDTH / 2,
-        y: mouseY - TROOP_HEIGHT / 2,
+        x: mouseX - selectBubbleSoldier().width / 2,
+        y: mouseY - selectBubbleSoldier().height / 2,
         d: random(10, 15),
         speed: random(0.2, 0.5),
         dir: 1,
@@ -122,8 +123,8 @@ window.mousePressed = function () {
       bubbleTroops.push(bubble);
     } else if (mouseX >= width - SPAWN_ZONE_WIDTH) {
       let dust = {
-        x: mouseX + DUST_TROOP_WIDTH / 2,
-        y: mouseY - TROOP_HEIGHT / 2,
+        x: mouseX + selectBubbleSoldier().width / 2,
+        y: mouseY - selectBubbleSoldier().height / 2,
         d: random(10, 15),
         speed: random(-0.2, -0.5),
         dir: -1,
@@ -197,14 +198,14 @@ window.draw = function () {
 
   for (let b of bubbleTroops) {
     b.x += b.speed * b.d;
-    image(b.img, b.x, b.y, BUBBLE_TROOP_WIDTH, TROOP_HEIGHT);
+    image(b.img, b.x, (windowHeight - 225), b.width, b.height);
   }
 
   for (let d of dustTroops) {
     d.x += d.speed * d.d;
     push();
     scale(-1, 1);
-    image(d.img, -d.x, d.y, DUST_TROOP_WIDTH, TROOP_HEIGHT);
+    image(d.img, -d.x, (windowHeight - 225), d.width, d.height);
     pop();
   }
 };

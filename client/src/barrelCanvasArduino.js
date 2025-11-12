@@ -11,6 +11,7 @@ let barrelImg;
 let bubbleChestplate;
 let bubbleHelmet;
 let bubbleShield;
+let backgroundImage;
 let barrelScreenVisible = false;
 
 let spinCount = 0;
@@ -23,6 +24,7 @@ let scaleFactor = 0.5;
 let selectedScaleFactor = 0.8;
 
 window.preload = function () {
+  backgroundImage = loadImage("../media/assets/background/layout-clean.png")
   progressBar = loadImage("../media/assets/ui/bubble-bar-empty.png");
   barrelImg = loadImage("../media/assets/ui/barrel.png");
   bubbleChestplate = loadImage("../media/assets/armor/bubble-chestplate.png");
@@ -88,6 +90,28 @@ function selectPowerUp() {
   }
 }
 
+function drawBackground() {
+  let imgAspect = backgroundImage.width / backgroundImage.height;
+  let canvasAspect = width / height;
+
+  let drawWidth, drawHeight;
+
+  if (canvasAspect > imgAspect) {
+    drawWidth = width;
+    drawHeight = width / imgAspect;
+  } else {
+    drawHeight = height;
+    drawWidth = height * imgAspect;
+  }
+
+  imageMode(CENTER);
+  image(backgroundImage, width / 2, height / 2, drawWidth, drawHeight);
+  filter(BLUR, 5);
+  
+  // fill(255, 255, 255, 25);
+  // rect(0, 0, windowWidth, windowHeight);
+}
+
 window.setup = function () {
   sessionStorage.removeItem("selectedPowerup");
   createCanvas(windowWidth, windowHeight);
@@ -95,7 +119,7 @@ window.setup = function () {
 };
 
 window.draw = function () {
-  background("#363947");
+  drawBackground();
 
   let bubbleShieldX = windowWidth  / 2;
   let bubbleChestplateX = windowWidth / 2;
