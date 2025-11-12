@@ -1,7 +1,7 @@
 "use strict";
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
-import { Rive } from "@rive-app/canvas";
+// import { Rive } from "../@rive-app/canvas";
 
 // global consts
 const SPAWN_ZONE_WIDTH = 100;
@@ -10,9 +10,9 @@ const DUST_TROOP_WIDTH = 400;
 const TROOP_HEIGHT = 350;
 
 const CONTROLLER = new KeyboardController();
-const RIVE = new Rive({
-  src: "https://cdn.rive.app/animations/vehicles.riv",
-});
+// const RIVE = new Rive({
+//   src: "https://cdn.rive.app/animations/vehicles.riv",
+// });
 
 const LANES = [
   { y: 50, h: 200 },
@@ -63,24 +63,15 @@ function drawLanesAndSpawns() {
   noStroke();
   // Actual Lane
   fill("rgba(0, 0, 0, 0.5)");
-  rect(0, 500, width, 200);
-  // Actual Lane
-  fill("rgba(0, 0, 0, 0.5)");
-  rect(0, 500, width, 200);
+  rect(0, windowHeight - 225, width, 200);
 
   //Bubble spawn
   fill("rgba(35, 85, 221, 0.5)");
-  rect(0, 500, SPAWN_ZONE_WIDTH, 200);
-  //Bubble spawn
-  fill("rgba(35, 85, 221, 0.5)");
-  rect(0, 500, SPAWN_ZONE_WIDTH, 200);
+  rect(0, windowHeight - 225, SPAWN_ZONE_WIDTH, 200);
 
   //Dust spawn
   fill("rgba(50, 19, 58, 0.5)");
-  rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 200);
-  //Dust spawn
-  fill("rgba(50, 19, 58, 0.5)");
-  rect(width - SPAWN_ZONE_WIDTH, 500, SPAWN_ZONE_WIDTH, 200);
+  rect(width - SPAWN_ZONE_WIDTH, windowHeight - 225, SPAWN_ZONE_WIDTH, 200);
 }
 
 window.setup = function () {
@@ -146,7 +137,7 @@ window.mousePressed = function () {
 
 window.preload = function () {
   backgroundImage = loadImage(
-    "../media/assets/background/modeled-background-no-color.png"
+    "../media/assets/background/bg-zoom-static.png"
   );
 
   bubbleSoldierPlainGif = loadImage(
@@ -172,8 +163,27 @@ window.preload = function () {
   );
 };
 
+function drawBackground() {
+  let imgAspect = backgroundImage.width / backgroundImage.height;
+  let canvasAspect = width / height;
+
+  let drawWidth, drawHeight;
+
+  if (canvasAspect > imgAspect) {
+    drawWidth = width;
+    drawHeight = width / imgAspect;
+  } else {
+    drawHeight = height;
+    drawWidth = height * imgAspect;
+  }
+
+  imageMode(CENTER);
+  image(backgroundImage, width / 2, height / 2, drawWidth, drawHeight);
+}
+
+
 window.draw = function () {
-  background(backgroundImage);
+  drawBackground();
   drawLanesAndSpawns();
 
   noFill();
@@ -200,7 +210,7 @@ window.draw = function () {
 };
 
 window.windowResized = function () {
-  rive.resizeDrawingSurfaceToCanvas();
+  // RIVE.resizeDrawingSurfaceToCanvas();
   resizeCanvas(windowWidth, windowHeight);
   bigBarW = windowWidth / 2;
 };
