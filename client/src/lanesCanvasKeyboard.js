@@ -1,7 +1,7 @@
 "use strict";
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
-import { preloadImages } from "../game/asset-management/soldierAssets.js";
+import { preloadImages } from "../game/asset-management/imageAssets.js";
 import { mainGameLoop } from "../game/gameManager.js";
 
 // import { Rive } from "../@rive-app/canvas";
@@ -13,7 +13,7 @@ const LANE_HEIGHT = 200;
 // const DUST_TROOP_WIDTH = 400;
 // const TROOP_HEIGHT = 350;
 
-const CONTROLLER = new KeyboardController();
+// const CONTROLLER = new KeyboardController();
 // const RIVE = new Rive({
 //   src: "https://cdn.rive.app/animations/vehicles.riv",
 // });
@@ -50,7 +50,7 @@ let barW = 1;
 //   );
 // }
 
-function drawLaneAndSpawns() {
+function drawUIItems() {
   noStroke();
   // Actual Lane
   fill("rgba(0, 0, 0, 0.5)");
@@ -68,6 +68,10 @@ function drawLaneAndSpawns() {
     SPAWN_ZONE_WIDTH,
     LANE_HEIGHT
   );
+
+  fill("#FFFFFF");
+  textSize(24);
+  text(window.GAME.timeRemaining, windowWidth / 2, 100);
 }
 
 window.setup = function () {
@@ -189,7 +193,7 @@ window.draw = function () {
   mainGameLoop();
 
   drawBackground();
-  drawLaneAndSpawns();
+  drawUIItems();
 
   if (!window.GAME || !window.GAME.teams) return;
   for (let team of window.GAME.teams) {

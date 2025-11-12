@@ -1,7 +1,7 @@
 "use strict";
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
-import { preloadImages } from "../game/asset-management/soldierAssets.js";
+import { preloadImages } from "../game/asset-management/imageAssets.js";
 
 window.SPAWN_ZONE_WIDTH = 100;
 const CONTROLLER = new KeyboardController();

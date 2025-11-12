@@ -2,7 +2,7 @@ window.IMAGES = {};
 
 export function preloadImages() {
   window.IMAGES.backgroundImage = loadImage(
-    "../../../media/assets/background/modeled-background-no-color.png"
+    "../../../media/assets/background/bg-zoom-static.png"
   );
 
   window.IMAGES.bubbleSoldierPlainGif = loadImage(
