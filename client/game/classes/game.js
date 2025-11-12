@@ -11,7 +11,7 @@ export class Game {
 
     this.timeRemaining = 90;
 
-    this.spinThreshold = 5;
+    this.spinThreshold = 10;
 
     this.winner = null;
   }
@@ -68,14 +68,6 @@ export class Game {
       this.state = Game.STATES.GAMEOVER;
     } else {
       this.state = Game.STATES.MENU;
-    }
-  }
-
-  setTeamState(team, teamState) {
-    if (teamState === "Powerup") {
-      team.state = Team.STATES.POWERUP;
-    } else if (teamState === "Spin") {
-      team.state = Team.STATES.SPIN;
     }
   }
 }

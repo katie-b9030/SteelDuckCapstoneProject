@@ -8,6 +8,8 @@ const ARDUINO_CONTROLLER = new ArduinoController();
 // const KEYBOARD_CONTROLLER = new KeyboardController();
 
 window.GAME = new Game();
+window.BUBBLE_POWERUP = "shield";
+window.DUST_POWERUP = "shield";
 
 const BUBBLE_TEAM = GAME.teams[0];
 const DUST_TEAM = GAME.teams[1];
@@ -47,14 +49,21 @@ function mainGameLoop() {
   if (window.GAME.state === GAME.STATES.ONGOING) {
     update();
 
-    GAME.setTeamState(BUBBLE_TEAM, bubbleState);
-    GAME.setTeamState(DUST_TEAM, dustState);
+    window.BUBBLE_POWERUP = bubblePowerup;
+    troopCreationProgress(
+      bubbleSpins,
+      GAME.spinThreshold,
+      bubblePressed,
+      bubblePowerup
+    );
 
-    if (bubbleState === "Powerup") {
-      
-    } else if (bubbleState === "Spin") {
-
-    }
+    window.DUST_POWERUP = dustPowerup;
+    troopCreationProgress(
+      dustSpins,
+      GAME.spinThreshold,
+      dustPressed,
+      dustPowerup
+    );
   }
 
   requestAnimationFrame(mainGameLoop);

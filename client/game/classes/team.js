@@ -11,16 +11,9 @@ export class Team {
 
     this.currentSpins = 0;
 
-    this.state = Team.STATES.POWERUP;
-
     // this.barrel = new BarrelPlayer(name, game);
     // this.cannon = new CannonPlayer(name, game);
   }
-
-  static STATES = {
-    POWERUP: "powerup",
-    SPIN: "spin",
-  };
 
   update() {
     // this.barrel.update();
@@ -61,10 +54,13 @@ export class Team {
     troop.setPowerup(newPowerup);
   }
 
-  troopCreationProgress(teamSpins, spinThreshold, powerup) {
+  troopCreationProgress(teamSpins, spinThreshold, buttonPressed, powerup) {
     // create troops
     this.currentSpins = teamSpins;
-    if (this.currentSpins >= spinThreshold) {
+    if (
+      this.currentSpins >= spinThreshold &&
+      buttonPressed === "Button Pressed"
+    ) {
       this.spawnTroop(powerup);
     }
   }

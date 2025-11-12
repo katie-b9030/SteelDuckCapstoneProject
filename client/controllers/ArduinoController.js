@@ -16,10 +16,6 @@ export class ArduinoController {
 
   update() {}
 
-  getBubbleState() {
-    return this.bubbleData.bubbleState;
-  }
-
   getBubbleSpins() {
     return this.bubbleData.bubbleSpins;
   }
@@ -30,10 +26,6 @@ export class ArduinoController {
 
   getBubblePressed() {
     return this.bubbleData.bubblePressed;
-  }
-
-  getDustState() {
-    return this.dustData.dustState;
   }
 
   getDustSpins() {
