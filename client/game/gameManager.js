@@ -64,6 +64,10 @@ function mainGameLoop() {
       dustPressed,
       dustPowerup
     );
+
+    if (GAME.timeRemaining <= 0) {
+      GAME.getNextState();
+    }
   }
 
   requestAnimationFrame(mainGameLoop);
