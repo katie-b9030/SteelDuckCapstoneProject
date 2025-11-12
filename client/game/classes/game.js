@@ -7,7 +7,7 @@ export class Game {
       new Team("Dust Dominion", this),
     ];
 
-    this.state = this.STATES.ONGOING;
+    this.state = Game.STATES.MENU;
 
     this.timeRemaining = 90;
 
@@ -16,7 +16,7 @@ export class Game {
     this.winner = null;
   }
 
-  STATES = {
+  static STATES = {
     MENU: "menu",
     ONGOING: "ongoing",
     GAMEOVER: "gameover",
@@ -61,7 +61,21 @@ export class Game {
     // TODO: Show End Screen
   }
 
-  troopCreationProgress(barrelSpins) {
-    // create troops
+  getNextState() {
+    if (this.state === Game.STATES.MENU) {
+      this.state = Game.STATES.ONGOING;
+    } else if (this.state === Game.STATES.ONGOING) {
+      this.state = Game.STATES.GAMEOVER;
+    } else {
+      this.state = Game.STATES.MENU;
+    }
+  }
+
+  setTeamState(team, teamState) {
+    if (teamState === "Powerup") {
+      team.state = Team.STATES.POWERUP;
+    } else if (teamState === "Spin") {
+      team.state = Team.STATES.SPIN;
+    }
   }
 }

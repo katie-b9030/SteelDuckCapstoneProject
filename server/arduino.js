@@ -24,9 +24,10 @@ DUST_PORT.on("open", () => console.log("Cannon port open"));
 BUBBLE_PARSER.on("data", (data) => {
   bubbleData = data.split(" | ").map((s) => s.trim());
   notify("bubble", {
-    bubbleSpins: parseInt(bubbleData[0]),
-    bubblePowerup: bubbleData[1],
-    bubblePressed: bubbleData[2],
+    bubbleState: bubbleData[0],
+    bubbleSpins: parseInt(bubbleData[1]),
+    bubblePowerup: bubbleData[2],
+    bubblePressed: bubbleData[3],
   });
   console.log("Bubble output:", data);
 });
@@ -34,9 +35,10 @@ BUBBLE_PARSER.on("data", (data) => {
 DUST_PARSER.on("data", (data) => {
   dustData = data.split(" | ").map((s) => s.trim());
   notify("dust", {
-    dustSpins: parseInt(dustData[0]),
-    dustPowerup: dustData[1],
-    dustPressed: dustData[2],
+    dustState: dustData[0],
+    dustSpins: parseInt(dustData[1]),
+    dustPowerup: dustData[2],
+    dustPressed: dustData[3],
   });
   console.log("Dust output:", data);
 });

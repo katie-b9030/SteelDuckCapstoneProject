@@ -9,34 +9,52 @@ const ARDUINO_CONTROLLER = new ArduinoController();
 
 window.GAME = new Game();
 
-function init() {}
+const BUBBLE_TEAM = GAME.teams[0];
+const DUST_TEAM = GAME.teams[1];
 
-// function update() {}
+let bubbleState;
+let bubbleSpins;
+let bubblePowerup;
+let bubblePressed;
+
+let dustState;
+let dustSpins;
+let dustPowerup;
+let dustPressed;
+
+function init() {
+  GAME.getNextState();
+}
+
+function update() {
+  bubbleState = ARDUINO_CONTROLLER.getBubbleState();
+  bubbleSpins = ARDUINO_CONTROLLER.getBubbleSpins();
+  bubblePowerup = ARDUINO_CONTROLLER.getBubblePowerup();
+  bubblePressed = ARDUINO_CONTROLLER.getBubblePressed();
+  dustState = ARDUINO_CONTROLLER.getDustState();
+  dustSpins = ARDUINO_CONTROLLER.getDustSpins();
+  dustPowerup = ARDUINO_CONTROLLER.getDustSpins();
+  dustPressed = ARDUINO_CONTROLLER.getDustPressed();
+  window.GAME.update();
+}
 
 window.onload = function () {
   init();
   mainGameLoop();
 };
 
-window.mousePressed = function () {
-  if (mouseY >= 500 && mouseY <= 700) {
-    if (mouseX <= 100) {
-      window.GAME.teams[0].spawnTroop(Troop.POWERUP.SHIELD);
-    } else if (mouseX >= windowWidth - 100) {
-      window.GAME.teams[1].spawnTroop(Troop.POWERUP.SHIELD);
-    }
-  }
-  console.log(
-    "Bubbles: ",
-    window.GAME.teams[0].troops,
-    "\nBunnies: ",
-    window.GAME.teams[1].troops
-  );
-};
-
 function mainGameLoop() {
   if (window.GAME.state === GAME.STATES.ONGOING) {
-    window.GAME.update();
+    update();
+
+    GAME.setTeamState(BUBBLE_TEAM, bubbleState);
+    GAME.setTeamState(DUST_TEAM, dustState);
+
+    if (bubbleState === "Powerup") {
+      
+    } else if (bubbleState === "Spin") {
+
+    }
   }
 
   requestAnimationFrame(mainGameLoop);
