@@ -66,7 +66,7 @@ function selectPowerUp() {
 
   powerup = CONTROLLER.getBarrelPowerup();
 
-  if (powerup == "Powerup 1") selectedPowerup = "bubbleShield";
+  if (powerup == "shield") selectedPowerup = "bubbleShield";
   else if (powerup == "Powerup 2") selectedPowerup = "bubbleChestplate";
   else if (powerup == "Powerup 3") selectedPowerup = "bubbleHelmet";
 
@@ -81,7 +81,8 @@ function selectPowerUp() {
     // if (selectedPowerup === "square") squareColor = "#c23fd1";
     // if (selectedPowerup === "triangle") triColor = "#c23fd1";
 
-    sessionStorage.setItem("selectedPowerup", powerup);
+    //sessionStorage.setItem("selectedPowerup", powerup);
+    window.POWERUP;
 
     // setTimeout(() => { barrelScreenVisible = true; }, 1000);
     setTimeout(() => {
@@ -113,7 +114,6 @@ function drawBackground() {
 }
 
 window.setup = function () {
-  sessionStorage.removeItem("selectedPowerup");
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
 };

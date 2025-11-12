@@ -72,3 +72,19 @@ function mainGameLoop() {
 
   requestAnimationFrame(mainGameLoop);
 }
+
+window.mousePressed = function () {
+  if (mouseY >= windowHeight - 225 && mouseY <= windowHeight - 25) {
+    if (mouseX <= 100) {
+      window.GAME.teams[0].spawnTroop(Troop.POWERUP.SHIELD);
+    } else if (mouseX >= windowWidth - 100) {
+      window.GAME.teams[1].spawnTroop(Troop.POWERUP.SHIELD);
+    }
+  }
+  console.log(
+    "Bubbles: ",
+    window.GAME.teams[0].troops,
+    "\nBunnies: ",
+    window.GAME.teams[1].troops
+  );
+};
