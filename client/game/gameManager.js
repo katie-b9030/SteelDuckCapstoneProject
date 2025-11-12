@@ -1,11 +1,11 @@
-//const { subscribe } = require("./serialHandler.js");
-//import { ArduinoController } from "../controllers/ArduinoController.js";
-import { KeyboardController } from "../controllers/KeyboardController.js";
+const { subscribe } = require("./serialHandler.js");
+import { ArduinoController } from "../controllers/ArduinoController.js";
+// import { KeyboardController } from "../controllers/KeyboardController.js";
 import { Game } from "./classes/game.js";
 import { Troop } from "./classes/troop.js";
 
-//const ARDUINO_CONTROLLER = new ArduinoController();
-const KEYBOARD_CONTROLLER = new KeyboardController();
+const ARDUINO_CONTROLLER = new ArduinoController();
+// const KEYBOARD_CONTROLLER = new KeyboardController();
 
 window.GAME = new Game();
 

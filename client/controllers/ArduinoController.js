@@ -2,29 +2,41 @@ const socket = io();
 
 export class ArduinoController {
   constructor() {
-    this.barrelData = {};
-    this.cannonData = {};
+    this.bubbleData = {};
+    this.dustData = {};
 
-    socket.on("barrelData", (data) => {
-      this.barrelData = data;
+    socket.on("bubbleData", (data) => {
+      this.bubbleData = data;
     });
 
-    socket.on("cannonData", (data) => {
-      this.cannonData = data;
+    socket.on("dustData", (data) => {
+      this.dustData = data;
     });
   }
 
   update() {}
 
-  getBarrelSpins() {
-    return this.barrelData.barrelSpins;
+  getBubbleSpins() {
+    return this.bubbleData.bubbleSpins;
   }
 
-  getBarrelPowerup() {
-    return this.barrelData.barrelPowerup;
+  getBubblePowerup() {
+    return this.bubbleData.bubblePowerup;
   }
 
-  getBarrelPowerupPressed() {
-    return this.barrelData.barrelPowerupPressed;
+  getBubblePressed() {
+    return this.bubbleData.bubblePressed;
+  }
+
+  getDustSpins() {
+    return this.dustData.dustSpins;
+  }
+
+  getDustPowerup() {
+    return this.dustData.dustPowerup;
+  }
+
+  getDustPressed() {
+    return this.dustData.dustPressed;
   }
 }
