@@ -200,6 +200,7 @@ window.draw = function () {
 };
 
 window.windowResized = function () {
+  rive.resizeDrawingSurfaceToCanvas();
   resizeCanvas(windowWidth, windowHeight);
   bigBarW = windowWidth / 2;
 };

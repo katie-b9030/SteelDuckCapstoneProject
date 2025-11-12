@@ -25,7 +25,7 @@ import { Rive } from "@rive-app/canvas";
 
 const CONTROLLER = new KeyboardController();
 const RIVE = new Rive({
-  src: "https://cdn.rive.app/animations/vehicles.riv",
+  src: "../media/assets/armor/testcoin.riv",
   autoplay: true,
   onLoad: () => {
     RIVE.resizeDrawingSurfaceToCanvas();
@@ -177,6 +177,11 @@ window.draw = function () {
 
   selectPowerUp();
   increaseProgress();
+};
+
+window.windowResized = function () {
+  rive.resizeDrawingSurfaceToCanvas();
+  resizeCanvas(windowWidth, windowHeight);
 };
 
 // let progressBar;
