@@ -10,7 +10,6 @@ const int MAX_SPINS = 10;
 
 //Vars
 int spinCount = 0;
-int selectSpins = 0;
 bool magnetDetected = false;
 bool powerupSelected = false;
 int i = 0;
@@ -82,6 +81,7 @@ void loop() {
       Serial.println("Button Pressed");
       powerupSelected = false;
       i = 0;
+      delay(500);
     } else {
       Serial.println("Button Released");
     }
