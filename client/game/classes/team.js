@@ -1,5 +1,5 @@
-import { CannonPlayer } from "./cannonPlayer.js";
-import { BarrelPlayer } from "./barrelPlayer.js";
+// import { CannonPlayer } from "./cannonPlayer.js";
+// import { BarrelPlayer } from "./barrelPlayer.js";
 import { Troop } from "./troop.js";
 
 export class Team {
@@ -9,9 +9,18 @@ export class Team {
     this.score = 0;
     this.troops = [];
 
-    this.barrel = new BarrelPlayer(name, game);
-    this.cannon = new CannonPlayer(name, game);
+    this.currentSpins = 0;
+
+    this.state = Team.STATES.POWERUP;
+
+    // this.barrel = new BarrelPlayer(name, game);
+    // this.cannon = new CannonPlayer(name, game);
   }
+
+  static STATES = {
+    POWERUP: "powerup",
+    SPIN: "spin",
+  };
 
   update() {
     // this.barrel.update();
@@ -50,5 +59,13 @@ export class Team {
 
   modifyTroop(troop, newPowerup) {
     troop.setPowerup(newPowerup);
+  }
+
+  troopCreationProgress(teamSpins, spinThreshold, powerup) {
+    // create troops
+    this.currentSpins = teamSpins;
+    if (this.currentSpins >= spinThreshold) {
+      this.spawnTroop(powerup);
+    }
   }
 }
