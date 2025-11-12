@@ -2,6 +2,7 @@
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
 import { preloadImages } from "../game/asset-management/soldierAssets.js";
+import { mainGameLoop } from "../game/gameManager.js";
 
 // import { Rive } from "../@rive-app/canvas";
 
@@ -160,7 +161,8 @@ window.preload = function () {
 };
 
 function drawBackground() {
-  let imgAspect = backgroundImage.width / backgroundImage.height;
+  let imgAspect =
+    window.IMAGES.backgroundImage.width / window.IMAGES.backgroundImage.height;
   let canvasAspect = width / height;
 
   let drawWidth, drawHeight;
@@ -175,7 +177,7 @@ function drawBackground() {
 
   imageMode(CENTER);
   image(
-    window.ImageTrackList.backgroundImage,
+    window.IMAGES.backgroundImage,
     width / 2,
     height / 2,
     drawWidth,
@@ -184,9 +186,12 @@ function drawBackground() {
 }
 
 window.draw = function () {
+  mainGameLoop();
+
   drawBackground();
   drawLaneAndSpawns();
 
+  if (!window.GAME || !window.GAME.teams) return;
   for (let team of window.GAME.teams) {
     for (let troop of team.troops) {
       push();
@@ -194,7 +199,7 @@ window.draw = function () {
       image(
         troop.img,
         troop.direction * troop.xPos,
-        525,
+        windowHeight - 225,
         troop.width,
         troop.height
       );

@@ -1,4 +1,3 @@
-const { subscribe } = require("./serialHandler.js");
 import { ArduinoController } from "../controllers/ArduinoController.js";
 // import { KeyboardController } from "../controllers/KeyboardController.js";
 import { Game } from "./classes/game.js";
@@ -14,12 +13,10 @@ window.DUST_POWERUP = "shield";
 const BUBBLE_TEAM = GAME.teams[0];
 const DUST_TEAM = GAME.teams[1];
 
-let bubbleState;
 let bubbleSpins;
 let bubblePowerup;
 let bubblePressed;
 
-let dustState;
 let dustSpins;
 let dustPowerup;
 let dustPressed;
@@ -29,11 +26,9 @@ function init() {
 }
 
 function update() {
-  bubbleState = ARDUINO_CONTROLLER.getBubbleState();
   bubbleSpins = ARDUINO_CONTROLLER.getBubbleSpins();
   bubblePowerup = ARDUINO_CONTROLLER.getBubblePowerup();
   bubblePressed = ARDUINO_CONTROLLER.getBubblePressed();
-  dustState = ARDUINO_CONTROLLER.getDustState();
   dustSpins = ARDUINO_CONTROLLER.getDustSpins();
   dustPowerup = ARDUINO_CONTROLLER.getDustSpins();
   dustPressed = ARDUINO_CONTROLLER.getDustPressed();
@@ -45,12 +40,13 @@ window.onload = function () {
   mainGameLoop();
 };
 
-function mainGameLoop() {
-  if (window.GAME.state === GAME.STATES.ONGOING) {
+export function mainGameLoop() {
+  console.log("Game Loop");
+  if (window.GAME.state === Game.STATES.ONGOING) {
     update();
 
     window.BUBBLE_POWERUP = bubblePowerup;
-    troopCreationProgress(
+    BUBBLE_TEAM.troopCreationProgress(
       bubbleSpins,
       GAME.spinThreshold,
       bubblePressed,
@@ -58,7 +54,7 @@ function mainGameLoop() {
     );
 
     window.DUST_POWERUP = dustPowerup;
-    troopCreationProgress(
+    DUST_TEAM.troopCreationProgress(
       dustSpins,
       GAME.spinThreshold,
       dustPressed,
@@ -69,11 +65,10 @@ function mainGameLoop() {
       GAME.getNextState();
     }
   }
-
-  requestAnimationFrame(mainGameLoop);
 }
 
 window.mousePressed = function () {
+  console.log("Mouse Pressed");
   if (mouseY >= windowHeight - 225 && mouseY <= windowHeight - 25) {
     if (mouseX <= 100) {
       window.GAME.teams[0].spawnTroop(Troop.POWERUP.SHIELD);

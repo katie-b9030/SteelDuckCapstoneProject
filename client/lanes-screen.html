@@ -15,19 +15,19 @@
     <!-- -->
     <script>
         // Check if the page was refreshed or opened directly
-        window.addEventListener("load", () => {
-            const cameFromBarrel = sessionStorage.getItem("fromBarrelScreen");
-            const navType = performance.getEntriesByType("navigation")[0]?.type;
+        // window.addEventListener("load", () => {
+        //     const cameFromBarrel = sessionStorage.getItem("fromBarrelScreen");
+        //     const navType = performance.getEntriesByType("navigation")[0]?.type;
 
-            //If the page was refreshed or loaded directly
-            if (navType === "reload" || !cameFromBarrel) {
-                sessionStorage.removeItem("fromBarrelScreen"); //remove item so it's not always there 
-                // Go to the barrel screen page
-                window.location.replace("barrel-screen.html");
-            } else {
-                sessionStorage.removeItem("fromBarrelScreen");
-            }
-        });
+        //     //If the page was refreshed or loaded directly
+        //     if (navType === "reload" || !cameFromBarrel) {
+        //         sessionStorage.removeItem("fromBarrelScreen"); //remove item so it's not always there
+        //         // Go to the barrel screen page
+        //         window.location.replace("barrel-screen.html");
+        //     } else {
+        //         sessionStorage.removeItem("fromBarrelScreen");
+        //     }
+        // });
     </script>
 
 </head>
