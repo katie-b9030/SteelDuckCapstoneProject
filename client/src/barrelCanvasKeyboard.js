@@ -21,16 +21,16 @@
 // let squareA = 100;
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
-import { Rive } from "@rive-app/canvas";
+//import { Rive } from "@rive-app/canvas";
 
 const CONTROLLER = new KeyboardController();
-const RIVE = new Rive({
-  src: "../media/assets/armor/testcoin.riv",
-  autoplay: true,
-  onLoad: () => {
-    RIVE.resizeDrawingSurfaceToCanvas();
-  },
-});
+// const RIVE = new Rive({
+//   src: "../media/assets/armor/testcoin.riv",
+//   autoplay: true,
+//   onLoad: () => {
+//     RIVE.resizeDrawingSurfaceToCanvas();
+//   },
+// });
 
 const SPIN_THRESHOLD = 5;
 
@@ -40,6 +40,9 @@ let bubbleChestplate;
 let bubbleHelmet;
 let bubbleShield;
 let barrelScreenVisible = false;
+
+let strongAgainst = '';
+let weakAgainst = '';
 
 let spinCount = 0;
 let powerup;
@@ -56,6 +59,9 @@ window.preload = function () {
   bubbleChestplate = loadImage("../media/assets/armor/bubble-chestplate.png");
   bubbleHelmet = loadImage("../media/assets/armor/bubble-helmet.png");
   bubbleShield = loadImage("../media/assets/armor/bubble-shield.png");
+  dustCloak = loadImage("../media/assets/armor/dust-cloak.png");
+  dustHelmet = loadImage("../media/assets/armor/dust-helmet.png");
+  dustShield = loadImage("../media/assets/armor/dust-shield.png");
 };
 
 function fillBubbleBar(bubbleBar, x, y) {
@@ -102,6 +108,17 @@ function selectPowerUp() {
   ) {
     locked = true;
 
+    if (selectedPowerup === "bubbleShield") {
+      strongAgainst = "Helmet";
+      weakAgainst = "Chestplate";
+    } else if (selectedPowerup === "bubbleChestplate") {
+      strongAgainst = "Shield";
+      weakAgainst = "Helmet";
+    } else if (selectedPowerup === "bubbleHelmet") {
+      strongAgainst = "Chestplate";
+      weakAgainst = "Shield";
+    }
+
     sessionStorage.setItem("selectedPowerup", powerup);
 
     // setTimeout(() => { barrelScreenVisible = true; }, 1000);
@@ -142,8 +159,8 @@ window.draw = function () {
   if (!locked || selectedPowerup === "bubbleShield") {
     image(
       bubbleShield,
-      windowWidth / 2,
-      (windowHeight * 2) / 8,
+      bubbleShieldX,
+      bubbleShieldY,
       bubbleShield.width * getScale("bubbleShield"),
       bubbleShield.height * getScale("bubbleShield")
     );
@@ -151,8 +168,8 @@ window.draw = function () {
   if (!locked || selectedPowerup === "bubbleChestplate") {
     image(
       bubbleChestplate,
-      windowWidth / 2,
-      (windowHeight * 3) / 8,
+      bubbleChestplateX,
+      bubbleChestplateY,
       bubbleChestplate.width * getScale("bubbleChestplate"),
       bubbleChestplate.height * getScale("bubbleChestplate")
     );
@@ -160,8 +177,8 @@ window.draw = function () {
   if (!locked || selectedPowerup === "bubbleHelmet") {
     image(
       bubbleHelmet,
-      windowWidth / 2,
-      (windowHeight * 4) / 8,
+      bubbleHelmetX,
+      bubbleHelmetY,
       bubbleHelmet.width * getScale("bubbleHelmet"),
       bubbleHelmet.height * getScale("bubbleHelmet")
     );
@@ -174,6 +191,34 @@ window.draw = function () {
     barrelImg.width * scaleFactor,
     barrelImg.height * scaleFactor
   );
+
+  if (locked && selectedPowerup) {
+    textAlign(CENTER);
+    textSize(28);
+    fill("white");
+
+    let posY;
+    if (selectedPowerup == "bubbleShield") posY = (windowHeight * 2) / 8;
+    else if (selectedPowerup == "bubbleChestplate") posY = (windowHeight * 3) / 8;
+    else if (selectedPowerup == "bubbleHelmet") posY = (windowHeight * 4) / 8;
+
+    const posX = windowWidth / 2;
+    const imgScale = 0.8;
+
+    text(`Selected: ${selectedPowerup.replace("bubble", "")}`, posX, (windowHeight * 1) / 25);
+
+    fill("#FF3333");
+    textAlign(RIGHT);
+    text(`Weak vs ${weakAgainst}`, posX - 200, posY);
+
+    fill("#00FF00");
+    textAlign(CENTER);
+    text(`Strong vs ${strongAgainst}`, posX + 300, posY);
+  }
+
+  // Reset color and alignment
+  fill("white");
+  textAlign(CENTER);
 
   selectPowerUp();
   increaseProgress();
