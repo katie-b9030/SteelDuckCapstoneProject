@@ -2,7 +2,7 @@
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
 import { preloadImages } from "../game/asset-management/imageAssets.js";
-import { mainGameLoop } from "../game/gameManager.js";
+//import { mainGameLoop } from "../game/gameManager.js";
 
 // import { Rive } from "../@rive-app/canvas";
 
@@ -190,8 +190,6 @@ function drawBackground() {
 }
 
 window.draw = function () {
-  mainGameLoop();
-
   drawBackground();
   drawUIItems();
 
@@ -207,6 +205,7 @@ window.draw = function () {
         troop.width,
         troop.height
       );
+      pop();
     }
   }
 

@@ -41,7 +41,6 @@ window.onload = function () {
 };
 
 export function mainGameLoop() {
-  console.log("Game Loop");
   if (window.GAME.state === Game.STATES.ONGOING) {
     update();
 
@@ -61,9 +60,11 @@ export function mainGameLoop() {
       dustPowerup
     );
 
-    if (GAME.timeRemaining <= 0) {
-      GAME.getNextState();
-    }
+    // if (GAME.timeRemaining <= 0) {
+    //   GAME.getNextState();
+    // }
+
+    requestAnimationFrame(mainGameLoop);
   }
 }
 

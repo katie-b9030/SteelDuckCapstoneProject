@@ -22,7 +22,7 @@ export class Troop {
     this.width = 125;
     this.height = 200;
 
-    this.xPos = teamType === "Bubble Brigade" ? 0 : windowWidth; // change based on size of canvas
+    this.xPos = teamType === "Bubble Brigade" ? 0 : width; // change based on size of canvas
     this.direction = teamType === "Bubble Brigade" ? 1 : -1;
 
     this.troopCollision = false;
@@ -110,7 +110,7 @@ export class Troop {
   }
 
   checkTroopCollision(other) {
-    if (Math.abs(this.xPos - other.xPos) <= 250) {
+    if (Math.abs(this.xPos - other.xPos) <= this.width) {
       this.troopCollision = true;
       other.troopCollision = true;
       this.collidedWith = other;
@@ -120,10 +120,10 @@ export class Troop {
   }
 
   checkEndCollision() {
-    if (this.teamType === "Bubble Brigade" && this.xPos >= windowWidth - 100) {
+    if (this.teamType === "Bubble Brigade" && this.xPos >= width - 125) {
       this.endCollision = true;
       return true;
-    } else if (this.teamType === "Dust Dominion" && this.xPos <= 100) {
+    } else if (this.teamType === "Dust Dominion" && this.xPos <= 225) {
       this.endCollision = true;
       return true;
     }
