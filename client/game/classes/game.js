@@ -54,7 +54,7 @@ export class Game {
 
   startGame() {
     // TODO: Show Start screen
-    this.startTime = millis(); // SAFE to call here
+    this.startTime = millis(); 
     this.elapsed = 0;
   }
 
