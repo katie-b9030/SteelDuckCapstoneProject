@@ -23,6 +23,7 @@ let dustPressed;
 
 function init() {
   GAME.getNextState();
+  GAME.startGame();
 }
 
 function update() {

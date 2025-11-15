@@ -11,6 +11,10 @@ export class Game {
 
     this.timeRemaining = 90;
 
+    this.startTime = null;
+
+    this.elapsed = 0;
+
     this.spinThreshold = 10;
 
     this.winner = null;
@@ -23,7 +27,10 @@ export class Game {
   };
 
   update() {
-    this.timeRemaining -= int(Math.ceil(millis() / 1000));
+
+    this.elapsed = (millis() - this.startTime) / 1000;
+
+    this.timeRemaining = Math.max(90 - Math.floor(this.elapsed), 0);
 
     this.handleCollisions();
 
@@ -47,6 +54,8 @@ export class Game {
 
   startGame() {
     // TODO: Show Start screen
+    this.startTime = millis(); // SAFE to call here
+    this.elapsed = 0;
   }
 
   endGame() {
