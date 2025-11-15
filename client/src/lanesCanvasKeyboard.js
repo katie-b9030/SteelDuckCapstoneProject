@@ -1,6 +1,5 @@
 "use strict";
 
-import { KeyboardController } from "../controllers/KeyboardController.js";
 import { preloadImages } from "../game/asset-management/imageAssets.js";
 //import { mainGameLoop } from "../game/gameManager.js";
 
@@ -23,6 +22,8 @@ let barY = 10;
 let bigBarW;
 let barH = 20;
 let barW = 1;
+
+let myFont;
 
 // images
 // let backgroundImage;
@@ -70,8 +71,16 @@ function drawUIItems() {
   );
 
   fill("#FFFFFF");
+  textFont(myFont);
   textSize(24);
-  text(window.GAME.timeRemaining, windowWidth / 2, 100);
+  textAlign(CENTER);
+  text(window.GAME.timeRemaining, width / 2, 100);
+
+  text("Score:", 75, 100);
+  text(window.GAME.teams[0].score, 75, 130);
+
+  text("Score:", width - 75, 100);
+  text(window.GAME.teams[1].score, width - 75, 130);
 }
 
 window.setup = function () {
@@ -79,7 +88,7 @@ window.setup = function () {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.drawingContext.willReadFrequently = true;
   // powerup = sessionStorage.getItem("selectedPowerup") || "None";
-  bigBarW = windowWidth / 2;
+  bigBarW = width / 2;
 };
 
 // function selectBubbleSoldier() {
@@ -137,6 +146,7 @@ window.setup = function () {
 
 window.preload = function () {
   preloadImages();
+  myFont = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
   // backgroundImage = loadImage(
   //   "../media/assets/background/bg-zoom-static.png"
   // );
@@ -235,5 +245,5 @@ window.draw = function () {
 window.windowResized = function () {
   // RIVE.resizeDrawingSurfaceToCanvas();
   resizeCanvas(windowWidth, windowHeight);
-  bigBarW = windowWidth / 2;
+  bigBarW = width / 2;
 };
