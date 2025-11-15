@@ -72,9 +72,9 @@ window.mousePressed = function () {
   console.log("Mouse Pressed");
   if (mouseY >= windowHeight - 225 && mouseY <= windowHeight - 25) {
     if (mouseX <= 100) {
-      window.GAME.teams[0].spawnTroop(Troop.POWERUP.SHIELD);
+      window.GAME.teams[0].spawnTroop(ARDUINO_CONTROLLER.getBubblePowerup());
     } else if (mouseX >= windowWidth - 100) {
-      window.GAME.teams[1].spawnTroop(Troop.POWERUP.SHIELD);
+      window.GAME.teams[1].spawnTroop(ARDUINO_CONTROLLER.getDustPowerup());
     }
   }
   console.log(

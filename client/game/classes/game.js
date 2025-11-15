@@ -23,7 +23,8 @@ export class Game {
   };
 
   update() {
-    this.timeRemaining -= int(Math.ceil(millis() / 1000));
+
+    this.timeRemaining -= int(Math.floor(millis() / 1000));
 
     this.handleCollisions();
 
