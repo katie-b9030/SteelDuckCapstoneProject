@@ -1,25 +1,5 @@
 "use strict";
 
-// const socket = io();
-
-// let barrelData = {};
-// let cannonData = {};
-
-// socket.on("barrelData", (data) => {
-//   barrelData = data;
-// });
-
-// socket.on("cannonData", (data) => {
-//   cannonData = data;
-// });
-
-// let squareX = 100;
-// let squareY = 200;
-// let circleX = 400;
-// let circleY = 200;
-// let circleD = 100;
-// let squareA = 100;
-
 import { KeyboardController } from "../controllers/KeyboardController.js";
 //import { Rive } from "@rive-app/canvas";
 
@@ -59,9 +39,6 @@ window.preload = function () {
   bubbleChestplate = loadImage("../media/assets/armor/bubble-chestplate.png");
   bubbleHelmet = loadImage("../media/assets/armor/bubble-helmet.png");
   bubbleShield = loadImage("../media/assets/armor/bubble-shield.png");
-  dustCloak = loadImage("../media/assets/armor/dust-cloak.png");
-  dustHelmet = loadImage("../media/assets/armor/dust-helmet.png");
-  dustShield = loadImage("../media/assets/armor/dust-shield.png");
 };
 
 function fillBubbleBar(bubbleBar, x, y) {
@@ -84,6 +61,7 @@ function increaseProgress() {
         setTimeout(() => {
           // Mark down that we are intentionally changing pages
           sessionStorage.setItem("fromBarrelScreen", "true");
+          sessionStorage.setItem("selectedSet", "bubble");
 
           // Go to the next page
           window.location.href = "lanes-screen.html";
