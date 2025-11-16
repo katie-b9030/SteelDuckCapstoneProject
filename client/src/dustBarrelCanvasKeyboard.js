@@ -1,75 +1,113 @@
 "use strict";
 
 import { KeyboardController } from "../controllers/KeyboardController.js";
-//import { Rive } from "@rive-app/canvas";
 
 const CONTROLLER = new KeyboardController();
-// const RIVE = new Rive({
-//   src: "../media/assets/armor/testcoin.riv",
-//   autoplay: true,
-//   onLoad: () => {
-//     RIVE.resizeDrawingSurfaceToCanvas();
-//   },
-// });
 
-const SPIN_THRESHOLD = 5;
+const SPIN_THRESHOLD = 10;
 
+let bgImage;
+let tableImage;
+let scrollImage;
 let progressBar;
 let barrelImg;
 let dustCloak;
 let dustHelmet;
 let dustShield;
-let barrelScreenVisible = false;
 
 let strongAgainst = '';
-let weakAgainst = '';
 
 let spinCount = 0;
 let powerup;
-let fillBarWidth = 0;
+let fillPercent = 0;
 
-let selectedPowerup; // 'dustShield', 'dustCloak', 'dustHelmet'
+let germania;
+
+let powerupX, powerupY;
+
+
+let selectedPowerup = "dustShield"; // 'dustShield', 'dustCloak', 'dustHelmet'
 let locked = false;
 let scaleFactor = 0.5;
 let selectedScaleFactor = 0.8;
 
 window.preload = function () {
-  progressBar = loadImage("../media/assets/ui/bubble-bar-empty.png"); // Change to dust bar when it comes in
+  progressBar = loadImage("../media/assets/ui/new-bubble-bar.png");
+  bgImage = loadImage("../media/assets/backgrounds/layout-dirty.png");
+  scrollImage = loadImage("../media/assets/ui/scroll.png");
+  tableImage = loadImage("../media/assets/ui/table.png")
   barrelImg = loadImage("../media/assets/ui/barrel.png");
   dustCloak = loadImage("../media/assets/armor/dust-cloak.png");
   dustHelmet = loadImage("../media/assets/armor/dust-helmet.png");
   dustShield = loadImage("../media/assets/armor/dust-shield.png");
+  germania = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
 };
 
-function fillDustBar(dustBar, x, y) {
+function drawDustFillBar() {             // Adjust if bar should be bigger/smaller
+  const fullWidth = 300 * 2;
+  const fullHeight = 40;
+
+  const barX = width * 0.6;
+  const barY = height * 0.1;
+  const r = fullHeight / 2;
+
+  const x = barX - fullWidth + 175;
+  const y = barY - fullHeight / 2;
+
+  // Draw empty bar (border only)
+  noFill();
+  stroke(0);        // black border
+  strokeWeight(3);
+  rect(x, y, fullWidth, fullHeight, r);
+  //rect(-200, -100, barX - fullWidth / 2, barY - fullHeight / 2, 200); // optional corner radius 10
+
+  drawingContext.save();
+  drawingContext.beginPath();
+  drawingContext.roundRect(x, y, fullWidth, fullHeight, r);
+  drawingContext.clip();
+
+  // Draw filled portion
   noStroke();
-  fill("#02c3d1");
-  rect(x, y, fillBarWidth, dustBar.height, 50);
+  fill(103, 50, 126); // your purple color
+  rect(x, y, (fullWidth * fillPercent), fullHeight, r);
+  //rect(-200, -100, (barX - fullWidth / 2) * fillPercent, barY - fullHeight / 2, 200);
+
+  //pop();
+  drawingContext.restore();
+
+  // Draw percent text centered ON the bar
+  push();
+  textAlign(CENTER, CENTER);
+  textFont(germania);
+  stroke(0);
+  strokeWeight(6);
+  fill(255);
+
+  textSize(32);
+  text(int(fillPercent * 100) + "%", barX - 145, barY); // centered on the bar
+  pop();
 }
+
 
 function increaseProgress() {
-  if (locked && CONTROLLER.getBarrelSpins()) {
-    // only start this if powerup has been selected
-    spinCount = CONTROLLER.getBarrelSpins();
-    if (spinCount < SPIN_THRESHOLD) {
-      fillBarWidth = (progressBar.width / SPIN_THRESHOLD) * spinCount;
-    } else {
-      fillBarWidth = progressBar.width;
+  if (!locked) return;
 
-      if (!window.transitioning) {
-        window.transitioning = true;
-        setTimeout(() => {
-          // Mark down that we are intentionally changing pages
-          sessionStorage.setItem("fromBarrelScreen", "true");
-          sessionStorage.setItem("selectedSet", "dust");
+  spinCount = CONTROLLER.getBarrelSpins();   // SPACE increments this
 
-          // Go to the next page
-          window.location.href = "lanes-screen.html";
-        }, 1000);
-      }
-    }
+  // Convert spins → percent
+  fillPercent = Math.min(spinCount / SPIN_THRESHOLD, 1);
+
+  if (fillPercent >= 1 && !window.transitioning) {
+    window.transitioning = true;
+
+    setTimeout(() => {
+      sessionStorage.setItem("fromBarrelScreen", "true");
+      sessionStorage.setItem("selectedSet", "dust");
+      window.location.href = "lanes-screen.html";
+    }, 1000);
   }
 }
+
 
 function selectPowerUp() {
   if (locked) return;
@@ -88,21 +126,18 @@ function selectPowerUp() {
 
     if (selectedPowerup === "dustShield") {
       strongAgainst = "Helmet";
-      weakAgainst = "Chestplate";
     } else if (selectedPowerup === "dustCloak") {
       strongAgainst = "Shield";
-      weakAgainst = "Helmet";
     } else if (selectedPowerup === "dustHelmet") {
       strongAgainst = "Chestplate";
-      weakAgainst = "Shield";
     }
 
     sessionStorage.setItem("selectedPowerup", powerup);
 
     // setTimeout(() => { barrelScreenVisible = true; }, 1000);
-    setTimeout(() => {
-      text("Spin the Barrel!", 200, 300);
-    }, 500);
+    // setTimeout(() => {
+    //   text("Spin the Barrel!", 200, 300);
+    // }, 500);
   }
 }
 
@@ -113,91 +148,108 @@ window.setup = function () {
   sessionStorage.removeItem("selectedPowerup");
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+  const barrelX = windowWidth / 2;
+  const barrelY = (windowHeight * 6) / 8;
+
+  powerupX = barrelX;
+  powerupY = barrelY - barrelImg.height * 0.5;
+
 };
 
-window.draw = function () {
-  background("#363947");
 
-  let dustShieldX = windowWidth / 2;
-  let dustCloakX = windowWidth / 2;
-  let dustHelmetX = windowWidth / 2;
-  let dustShieldY = (windowHeight * 2) / 8;
-  let dustCloakY = (windowHeight * 3) / 8;
-  let dustHelmetY = (windowHeight * 4) / 8;
+function drawBackground() {
+  background(0);
+  image(bgImage, width / 2, height / 2, width, height);
+}
 
-  let barrelX = windowWidth / 2;
-  let barrelY = (windowHeight * 6) / 8;
+function drawScrollPanel() {
+  const scrollX = width * 0.78;
+  const scrollY = height * 0.45;
 
-  let x = windowWidth / 2;
-  let y = (windowHeight * 1) / 10;
-  fillDustBar(progressBar, x - 430, y - 48);
+  image(scrollImage, scrollX, scrollY, scrollImage.width * 0.75, scrollImage.height * 0.75);
 
-  image(progressBar, x, y);
+  if (locked) {
+    textAlign(CENTER);
+    fill(80);
+    noStroke();
+    textSize(34);
+    textFont(germania);
+    text(`beats`, scrollX, scrollY - scrollImage.height * 0.1);
 
-  if (!locked || selectedPowerup === "dustShield") {
-    image(
-      dustShield,
-      dustShieldX,
-      dustShieldY,
-      dustShield.width * getScale("dustShield"),
-      dustShield.height * getScale("dustShield")
-    );
+    fill("#964B00");
+    textSize(48);
+    text(strongAgainst, scrollX, scrollY + scrollImage.height * 0.02);
   }
-  if (!locked || selectedPowerup === "dustCloak") {
-    image(
-      dustCloak,
-      dustCloakX,
-      dustCloakY,
-      dustCloak.width * getScale("dustCloak"),
-      dustCloak.height * getScale("dustCloak")
-    );
-  }
-  if (!locked || selectedPowerup === "dustHelmet") {
-    image(
-      dustHelmet,
-      dustHelmetX,
-      dustHelmetY,
-      dustHelmet.width * getScale("dustHelmet"),
-      dustHelmet.height * getScale("dustHelmet")
-    );
-  }
+}
+
+function drawBarrel() {
+  const barrelX = windowWidth / 2;
+  const barrelY = (windowHeight * 6) / 8;
 
   image(
     barrelImg,
     barrelX,
     barrelY,
-    barrelImg.width * scaleFactor,
-    barrelImg.height * scaleFactor
+    barrelImg.width * .4,
+    barrelImg.height * .4
   );
+}
 
-  if (locked && selectedPowerup) {
-    textAlign(CENTER);
-    textSize(28);
-    fill("white");
+function drawTable() {
+  const tableX = width * 0.5;
+  const tableY = height * 0.72;
 
-    let posY;
-    if (selectedPowerup == "dustShield") posY = (windowHeight * 2) / 8;
-    else if (selectedPowerup == "dustCloak") posY = (windowHeight * 3) / 8;
-    else if (selectedPowerup == "dustHelmet") posY = (windowHeight * 4) / 8;
+  // You can adjust the scaling factor as needed
+  const scale = 0.9;
 
-    const posX = windowWidth / 2;
-    const imgScale = 0.8;
+  image(
+    tableImage,
+    tableX,
+    tableY,
+    tableImage.width * scale,
+    tableImage.height * scale
+  );
+}
 
-    text(`Selected: ${selectedPowerup.replace("dust", "")}`, posX, (windowHeight * 1) / 25);
+function drawCurrentPowerup() {
+  if (!selectedPowerup) return;
 
-    fill("#FF3333");
-    textAlign(RIGHT);
-    text(`Weak vs ${weakAgainst}`, posX - 200, posY);
+  let img;
 
-    fill("#00FF00");
-    textAlign(CENTER);
-    text(`Strong vs ${strongAgainst}`, posX + 300, posY);
-  }
+  if (selectedPowerup === "dustShield") img = dustShield;
+  else if (selectedPowerup === "dustCloak") img = dustCloak;
+  else if (selectedPowerup === "dustHelmet") img = dustHelmet;
 
-  // Reset color and alignment
-  fill("white");
+  const s = getScale(selectedPowerup);
+
+  image(img, powerupX - 50, powerupY, img.width * s, img.height * s);
+}
+
+
+function drawPowerupInfo() {
+  if (!locked || !selectedPowerup) return;
+
   textAlign(CENTER);
+  textFont(germania);
+  textSize(28);
+  fill("white");
+}
 
+
+window.draw = function () {
+  drawBackground();
+  drawTable();
+  drawDustFillBar();
+  drawScrollPanel();
+  drawCurrentPowerup();
+  drawBarrel();
+  drawPowerupInfo();
+
+  // Reset alignment
+  textAlign(CENTER);
+  fill("white");
+
+  // Input handlers
   selectPowerUp();
   increaseProgress();
 };
