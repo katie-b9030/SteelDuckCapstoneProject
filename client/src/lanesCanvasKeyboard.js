@@ -1,6 +1,6 @@
 "use strict";
 
-import { preloadImages } from "../game/asset-management/imageAssets.js";
+import { preloadLanesImages } from "../game/asset-management/imageAssets.js";
 //import { mainGameLoop } from "../game/gameManager.js";
 
 // import { Rive } from "../@rive-app/canvas";
@@ -203,17 +203,17 @@ function drawBackground() {
   );
 }
 
-function changeCurrentFrames() {
+function changeCurrentFrame() {
   if (currentFrame < numDefaultFrames - 1) {
     currentDefaultFrame++;
   } else {
     currentDefaultFrame = 0;
   }
-  if (currentDeathFrame < numDeathFrames - 1) {
-    currentDeathFrame++;
-  } else {
-    currentDeathFrame = 0;
-  }
+  // if (currentDeathFrame < numDeathFrames - 1) {
+  //   currentDeathFrame++;
+  // } else {
+  //   currentDeathFrame = 0;
+  // }
 }
 
 window.draw = function () {
@@ -225,8 +225,9 @@ window.draw = function () {
     for (let troop of team.troops) {
       push();
       scale(troop.direction, 1);
+      let troopImg = troop.img[currentDefaultFrame];
       image(
-        troop.img,
+        troopImg,
         troop.direction * troop.xPos,
         windowHeight - 225,
         troop.width,
@@ -234,6 +235,7 @@ window.draw = function () {
       );
       pop();
     }
+    changeCurrentFrame();
   }
 
   // noFill();

@@ -105,7 +105,7 @@ function drawBackground() {
 
   imageMode(CENTER);
   image(
-    IMAGES.bubbleBarrelbackgroundImage,
+    IMAGES.bubbleBarrelBackgroundImage,
     width / 2,
     height / 2,
     drawWidth,
@@ -168,24 +168,24 @@ window.draw = function () {
     chestFrame,
     bubbleChestplateX,
     bubbleChestplateY,
-    bubbleChestplate.width * scaleFactor,
-    bubbleChestplate.height * scaleFactor
+    chestFrame.width * scaleFactor,
+    chestFrame.height * scaleFactor
   );
   let helmetFrame = IMAGES.bubbleHelmetFrames[currentFrame];
   image(
     helmetFrame,
     bubbleHelmetX,
     bubbleHelmetY,
-    bubbleHelmet.width * scaleFactor,
-    bubbleHelmet.height * scaleFactor
+    helmetFrame.width * scaleFactor,
+    helmetFrame.height * scaleFactor
   );
 
   image(
     IMAGES.barrel,
     barrelX,
     barrelY,
-    barrelImg.width * scaleFactor,
-    barrelImg.height * scaleFactor
+    IMAGES.barrel.width * scaleFactor,
+    IMAGES.barrel.height * scaleFactor
   );
 
   // selectPowerUp();
