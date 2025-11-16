@@ -27,7 +27,6 @@ export class Game {
   };
 
   update() {
-
     this.elapsed = (millis() - this.startTime) / 1000;
 
     this.timeRemaining = Math.max(90 - Math.floor(this.elapsed), 0);
@@ -45,16 +44,27 @@ export class Game {
         const d = this.teams[1].troops[j];
         if (b.teamType !== d.teamType && b.isAlive && d.isAlive) {
           if (b.checkTroopCollision(d)) {
-            b.battle(d);
+            this.teams[0].checkForScore(b.battle(d), 1);
+            this.teams[1].checkForScore(b.battle(d), 1);
           }
         }
+      }
+    }
+    for (let b of this.teams[0].troops) {
+      if (b.isAlive) {
+        this.teams[0].checkForScore(b.checkEndCollision(), 5);
+      }
+    }
+    for (let d of this.teams[1].troops) {
+      if (d.isAlive) {
+        this.teams[1].checkForScore(d.checkEndCollision(), 5);
       }
     }
   }
 
   startGame() {
     // TODO: Show Start screen
-    this.startTime = millis(); 
+    this.startTime = millis();
     this.elapsed = 0;
   }
 

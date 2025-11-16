@@ -73,7 +73,7 @@ export class Troop {
   }
 
   compare(other) {
-    if (other.powerup === null) return "end";
+    if (other === null) return "end";
     if (this.powerup === other.powerup) return "draw";
 
     const { beats, losesTo } = Troop.rules[this.powerup];
@@ -95,13 +95,17 @@ export class Troop {
 
     if (result === "win") {
       other.die();
+      return this;
     } else if (result === "lose") {
       this.die();
+      return other;
     } else if (result === "end") {
       this.die();
+      return this;
     } else {
       this.die();
       other.die();
+      return null;
     }
   }
 
@@ -122,10 +126,10 @@ export class Troop {
   checkEndCollision() {
     if (this.teamType === "Bubble Brigade" && this.xPos >= width - 125) {
       this.endCollision = true;
-      return true;
+      return this.battle(null);
     } else if (this.teamType === "Dust Dominion" && this.xPos <= 225) {
       this.endCollision = true;
-      return true;
+      return this.battle(null);
     }
   }
 }

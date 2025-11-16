@@ -30,13 +30,9 @@ export class Team {
     this.troops.push(TROOP);
   }
 
-  checkForScore() {
-    for (let troop of this.troops) {
-      if (troop.troopCollision && troop.isAlive) {
-        this.score += 1;
-      } else if (troop.endCollision) {
-        this.score += 5;
-      }
+  checkForScore(troop, score) {
+    if (troop != null && troop.teamType === this.name) {
+      this.score += score;
 
       troop.troopCollision = false;
       troop.collidedWith = false;

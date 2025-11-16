@@ -31,7 +31,7 @@ function update() {
   bubblePowerup = ARDUINO_CONTROLLER.getBubblePowerup();
   bubblePressed = ARDUINO_CONTROLLER.getBubblePressed();
   dustSpins = ARDUINO_CONTROLLER.getDustSpins();
-  dustPowerup = ARDUINO_CONTROLLER.getDustSpins();
+  dustPowerup = ARDUINO_CONTROLLER.getDustPowerup();
   dustPressed = ARDUINO_CONTROLLER.getDustPressed();
   window.GAME.update();
 }
@@ -61,9 +61,9 @@ export function mainGameLoop() {
       dustPowerup
     );
 
-    // if (GAME.timeRemaining <= 0) {
-    //   GAME.getNextState();
-    // }
+    if (GAME.timeRemaining <= 0) {
+      GAME.getNextState();
+    }
 
     requestAnimationFrame(mainGameLoop);
   }
