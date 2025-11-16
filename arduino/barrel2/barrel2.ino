@@ -30,7 +30,6 @@ void setup() {
 
 void loop() {
   if(powerupSelected == false) {
-    Serial.print("Powerup | ");
     spinCount = 0;
     Serial.print(spinCount);
     Serial.print(" | ");
@@ -58,8 +57,6 @@ void loop() {
     }
   }
   else {
-    Serial.print("Spin | ");
-
     //magnet spin
     int state = digitalRead(MAGNETIC_PIN);
 
