@@ -25,6 +25,9 @@ let barW = 1;
 
 let myFont;
 
+let currentDefaultFrame = 0;
+let currentDeathFrame = 0;
+
 // images
 // let backgroundImage;
 // // bubble soldiers
@@ -145,7 +148,7 @@ window.setup = function () {
 // };
 
 window.preload = function () {
-  preloadImages();
+  preloadLanesImages();
   myFont = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
   // backgroundImage = loadImage(
   //   "../media/assets/background/bg-zoom-static.png"
@@ -176,7 +179,8 @@ window.preload = function () {
 
 function drawBackground() {
   let imgAspect =
-    window.IMAGES.backgroundImage.width / window.IMAGES.backgroundImage.height;
+    window.IMAGES.lanesBackgroundImage.width /
+    window.IMAGES.lanesBackgroundImage.height;
   let canvasAspect = width / height;
 
   let drawWidth, drawHeight;
@@ -191,12 +195,25 @@ function drawBackground() {
 
   imageMode(CENTER);
   image(
-    window.IMAGES.backgroundImage,
+    window.IMAGES.lanesBackgroundImage,
     width / 2,
     height / 2,
     drawWidth,
     drawHeight
   );
+}
+
+function changeCurrentFrames() {
+  if (currentFrame < numDefaultFrames - 1) {
+    currentDefaultFrame++;
+  } else {
+    currentDefaultFrame = 0;
+  }
+  if (currentDeathFrame < numDeathFrames - 1) {
+    currentDeathFrame++;
+  } else {
+    currentDeathFrame = 0;
+  }
 }
 
 window.draw = function () {
@@ -240,6 +257,8 @@ window.draw = function () {
   //   image(d.img, -d.x, windowHeight - 225, d.width, d.height);
   //   pop();
   // }
+
+  changeCurrentFrames();
 };
 
 window.windowResized = function () {
