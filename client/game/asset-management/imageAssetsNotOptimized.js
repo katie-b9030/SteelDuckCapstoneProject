@@ -1,5 +1,3 @@
-// Optimized by chatGPT to prevent server from getting overloaded with loading images
-
 window.IMAGES = {};
 
 window.numDefaultFrames = 120;
