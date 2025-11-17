@@ -42,7 +42,9 @@ export class Team {
   }
 
   filterDeaths() {
-    let currentLiveTroops = this.troops.filter((troop) => troop.isAlive);
+    let currentLiveTroops = this.troops.filter(
+      (troop) => troop.state !== Troop.STATES.DEAD
+    );
 
     this.troops = currentLiveTroops;
   }
@@ -58,8 +60,12 @@ export class Team {
     const isButtonPressed = buttonPressed === "Button Pressed";
 
     // Only spawn if button transitioned from not pressed → pressed
-    if (this.currentSpins >= spinThreshold && isButtonPressed && !this.buttonPressedLast) {
-        this.spawnTroop(powerup);
+    if (
+      this.currentSpins >= spinThreshold &&
+      isButtonPressed &&
+      !this.buttonPressedLast
+    ) {
+      this.spawnTroop(powerup);
     }
 
     this.buttonPressedLast = isButtonPressed;

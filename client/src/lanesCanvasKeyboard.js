@@ -223,17 +223,19 @@ window.draw = function () {
   if (!window.GAME || !window.GAME.teams) return;
   for (let team of window.GAME.teams) {
     for (let troop of team.troops) {
-      push();
-      scale(troop.direction, 1);
-      let troopImg = troop.img[currentDefaultFrame];
-      image(
-        troopImg,
-        troop.direction * troop.xPos,
-        windowHeight - 225,
-        troop.width,
-        troop.height
-      );
-      pop();
+      if (troop.img[troop.animFrame]) {
+        push();
+        scale(troop.direction, 1);
+        let troopImg = troop.img[troop.animFrame];
+        image(
+          troopImg,
+          troop.direction * troop.xPos,
+          windowHeight - 225,
+          troop.width,
+          troop.height
+        );
+        pop();
+      }
     }
     changeCurrentFrame();
   }
