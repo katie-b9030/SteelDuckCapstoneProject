@@ -152,8 +152,8 @@ function drawScrollPanel() {
 }
 
 function drawBarrel() {
-  const barrelX = windowWidth / 2;
-  const barrelY = (windowHeight * 6) / 8;
+  const barrelX = width / 2;
+  const barrelY = (height * 6) / 8;
 
   let barrelFrame = IMAGES.barrel[currentBarrelFrame];
   image(barrelFrame, barrelX, barrelY, 600 * 0.4, 400 * 0.4);
