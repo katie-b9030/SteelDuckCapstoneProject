@@ -15,7 +15,7 @@ let bubbleChestplate;
 let bubbleHelmet;
 let bubbleShield;
 
-let strongAgainst = '';
+let strongAgainst = "";
 
 let spinCount = 0;
 let powerup;
@@ -24,7 +24,6 @@ let fillPercent = 0;
 let germania;
 
 let powerupX, powerupY;
-
 
 let selectedPowerup = "bubbleShield"; // 'bubbleShield', 'bubbleChestplate', 'bubbleHelmet'
 let locked = false;
@@ -35,7 +34,7 @@ window.preload = function () {
   progressBar = loadImage("../media/assets/ui/new-bubble-bar.png");
   bgImage = loadImage("../media/assets/backgrounds/layout-clean.png");
   scrollImage = loadImage("../media/assets/ui/scroll.png");
-  tableImage = loadImage("../media/assets/ui/table.png")
+  tableImage = loadImage("../media/assets/ui/table.png");
   barrelImg = loadImage("../media/assets/ui/barrel.png");
   bubbleChestplate = loadImage("../media/assets/armor/bubble-chestplate.png");
   bubbleHelmet = loadImage("../media/assets/armor/bubble-helmet.png");
@@ -43,7 +42,8 @@ window.preload = function () {
   germania = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
 };
 
-function drawBubbleFillBar() {             // Adjust if bar should be bigger/smaller
+function drawBubbleFillBar() {
+  // Adjust if bar should be bigger/smaller
   const fullWidth = 300 * 2;
   const fullHeight = 40;
 
@@ -60,7 +60,7 @@ function drawBubbleFillBar() {             // Adjust if bar should be bigger/sma
   // Draw empty bar (border only)
   noFill();
   stroke(0);
-  strokeWeight(3);        // black border
+  strokeWeight(3); // black border
   rect(x, y, fullWidth, fullHeight, r);
   //rect(-200, -100, barX - fullWidth / 2, barY - fullHeight / 2, 200); // optional corner radius 10
 
@@ -68,8 +68,6 @@ function drawBubbleFillBar() {             // Adjust if bar should be bigger/sma
   drawingContext.beginPath();
   drawingContext.roundRect(x, y, fullWidth, fullHeight, r);
   drawingContext.clip();
-
-
 
   // Draw filled portion
   noStroke();
@@ -93,11 +91,10 @@ function drawBubbleFillBar() {             // Adjust if bar should be bigger/sma
   pop();
 }
 
-
 function increaseProgress() {
   if (!locked) return;
 
-  spinCount = CONTROLLER.getBarrelSpins();   // SPACE increments this
+  spinCount = CONTROLLER.getBarrelSpins(); // SPACE increments this
 
   // Convert spins → percent
   fillPercent = Math.min(spinCount / SPIN_THRESHOLD, 1);
@@ -112,7 +109,6 @@ function increaseProgress() {
     }, 1000);
   }
 }
-
 
 function selectPowerUp() {
   if (locked) return;
@@ -158,9 +154,7 @@ window.setup = function () {
 
   powerupX = barrelX;
   powerupY = barrelY - barrelImg.height * 0.5;
-
 };
-
 
 function drawBackground() {
   background(0);
@@ -171,7 +165,13 @@ function drawScrollPanel() {
   const scrollX = width * 0.78;
   const scrollY = height * 0.45;
 
-  image(scrollImage, scrollX, scrollY, scrollImage.width * 0.75, scrollImage.height * 0.75);
+  image(
+    scrollImage,
+    scrollX,
+    scrollY,
+    scrollImage.width * 0.75,
+    scrollImage.height * 0.75
+  );
 
   if (locked) {
     textAlign(CENTER);
@@ -195,8 +195,8 @@ function drawBarrel() {
     barrelImg,
     barrelX,
     barrelY,
-    barrelImg.width * .4,
-    barrelImg.height * .4
+    barrelImg.width * 0.4,
+    barrelImg.height * 0.4
   );
 }
 
@@ -230,7 +230,6 @@ function drawCurrentPowerup() {
   image(img, powerupX - 50, powerupY, img.width * s, img.height * s);
 }
 
-
 function drawPowerupInfo() {
   if (!locked || !selectedPowerup) return;
 
@@ -239,7 +238,6 @@ function drawPowerupInfo() {
   textSize(28);
   fill("white");
 }
-
 
 window.draw = function () {
   drawBackground();

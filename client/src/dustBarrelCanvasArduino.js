@@ -9,6 +9,8 @@ let fillPercent;
 
 let germania;
 
+let barrelImg;
+
 let powerupX, powerupY;
 
 let locked = false;
@@ -19,6 +21,7 @@ let currentPowerupFrame = 0;
 let currentBarrelFrame = 0;
 
 window.preload = function () {
+  barrelImg = loadImage("../media/assets/ui/barrel.png");
   preloadLanesImages().then(() => {
     window.ASSETS_READY = true;
   });
@@ -120,6 +123,19 @@ function drawBackground() {
   );
 }
 
+function drawBarrel() {
+  const barrelX = windowWidth / 2;
+  const barrelY = (windowHeight * 6) / 8;
+
+  image(
+    barrelImg,
+    barrelX,
+    barrelY,
+    barrelImg.width * 0.4,
+    barrelImg.height * 0.4
+  );
+}
+
 function drawScrollPanel() {
   setStrongAgainst();
 
@@ -128,13 +144,7 @@ function drawScrollPanel() {
 
   let img;
 
-  image(
-    IMAGES.scrollImage,
-    scrollX,
-    scrollY,
-    200,
-    200
-  );
+  image(IMAGES.scrollImage, scrollX, scrollY, 350, 350);
 
   textAlign(CENTER);
   fill(80);
@@ -157,13 +167,13 @@ function drawScrollPanel() {
   image(img, scrollX, scrollY + 50, 150, 150);
 }
 
-function drawBarrel() {
-  const barrelX = windowWidth / 2;
-  const barrelY = (height * 6) / 8;
+// function drawBarrel() {
+//   const barrelX = windowWidth / 2;
+//   const barrelY = (height * 6) / 8;
 
-  let barrelFrame = IMAGES.barrel[currentBarrelFrame];
-  image(barrelFrame, barrelX, barrelY, 600 * 0.4, 400 * 0.4);
-}
+//   let barrelFrame = IMAGES.barrel[currentBarrelFrame];
+//   image(barrelFrame, barrelX, barrelY, 600 * 0.4, 400 * 0.4);
+// }
 
 function drawTable() {
   const tableX = windowWidth * 0.5;
@@ -226,8 +236,7 @@ window.draw = function () {
   fill("white");
 
   // Input handlers
-  selectStrongAgainst();
-  increaseProgress();
+  setStrongAgainst();
   changeCurrentFrame();
 };
 

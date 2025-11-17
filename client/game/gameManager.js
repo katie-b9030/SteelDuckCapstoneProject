@@ -9,6 +9,8 @@ const ARDUINO_CONTROLLER = new ArduinoController();
 window.GAME = new Game();
 window.GAME_READY = false;
 window.p5SetupDone = false;
+window.BUBBLE_POWERUP;
+window.DUST_POWERUP;
 
 const BUBBLE_TEAM = GAME.teams[0];
 const DUST_TEAM = GAME.teams[1];
