@@ -87,8 +87,8 @@ void loop() {
     } else {
       Serial.println("Button Released");
     }
-    buttonPressedLast = (buttonState == LOW);
   }
+  buttonPressedLast = (buttonState == LOW);
 
 
 
