@@ -8,6 +8,7 @@ const ARDUINO_CONTROLLER = new ArduinoController();
 
 window.GAME = new Game();
 window.GAME_READY = false;
+window.p5SetupDone = false;
 
 const BUBBLE_TEAM = GAME.teams[0];
 const DUST_TEAM = GAME.teams[1];
@@ -36,37 +37,38 @@ function update() {
 }
 
 window.onload = function () {
-  init();
+  //init();
   window.GAME_READY = true;
   mainGameLoop();
 };
 
 export function mainGameLoop() {
-  if (window.GAME.state === Game.STATES.ONGOING) {
-    update();
+  if (window.p5SetupDone) {
+    if (window.GAME.state === Game.STATES.ONGOING) {
+      update();
 
-    window.BUBBLE_POWERUP = bubblePowerup;
-    BUBBLE_TEAM.troopCreationProgress(
-      bubbleSpins,
-      GAME.spinThreshold,
-      bubblePressed,
-      bubblePowerup
-    );
+      window.BUBBLE_POWERUP = bubblePowerup;
+      BUBBLE_TEAM.troopCreationProgress(
+        bubbleSpins,
+        GAME.spinThreshold,
+        bubblePressed,
+        bubblePowerup
+      );
 
-    window.DUST_POWERUP = dustPowerup;
-    DUST_TEAM.troopCreationProgress(
-      dustSpins,
-      GAME.spinThreshold,
-      dustPressed,
-      dustPowerup
-    );
+      window.DUST_POWERUP = dustPowerup;
+      DUST_TEAM.troopCreationProgress(
+        dustSpins,
+        GAME.spinThreshold,
+        dustPressed,
+        dustPowerup
+      );
 
-    if (GAME.timeRemaining <= 0) {
-      GAME.getNextState();
+      if (GAME.timeRemaining <= 0) {
+        GAME.getNextState();
+      }
     }
-
-    requestAnimationFrame(mainGameLoop);
   }
+  requestAnimationFrame(mainGameLoop);
 }
 
 window.mousePressed = function () {

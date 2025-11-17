@@ -1,5 +1,6 @@
 "use strict";
 import { preloadLanesImages } from "../game/asset-management/imageAssets.js";
+import { Troop } from "../game/classes/troop.js";
 
 window.ASSETS_READY = false;
 
@@ -14,6 +15,9 @@ let locked = false;
 let scaleFactor = 0.5;
 let selectedScaleFactor = 0.8;
 
+let currentPowerupFrame = 0;
+let currentBarrelFrame = 0;
+
 window.preload = function () {
   preloadLanesImages().then(() => {
     window.ASSETS_READY = true;
@@ -23,12 +27,26 @@ window.preload = function () {
 };
 
 function setStrongAgainst() {
-  if (BUBBLE_POWERUP === Troop.POWERUP.SHIELD) {
+  if (DUST_POWERUP === Troop.POWERUP.SHIELD) {
     strongAgainst = Troop.POWERUP.HELMET;
-  } else if (BUBBLE_POWERUP === Troop.POWERUP.CHEST) {
+  } else if (DUST_POWERUP === Troop.POWERUP.CHEST) {
     strongAgainst = Troop.POWERUP.SHIELD;
-  } else if (BUBBLE_POWERUP === Troop.POWERUP.HELMET) {
+  } else if (DUST_POWERUP === Troop.POWERUP.HELMET) {
     strongAgainst = Troop.POWERUP.CHEST;
+  }
+}
+
+function changeCurrentFrame() {
+  if (currentPowerupFrame < numDefaultFrames - 1) {
+    currentPowerupFrame++;
+  } else {
+    currentPowerupFrame = 0;
+  }
+
+  if (currentBarrelFrame < numDeathFrames - 1) {
+    currentBarrelFrame++;
+  } else {
+    currentBarrelFrame = 0;
   }
 }
 
@@ -81,11 +99,14 @@ function drawDustFillBar() {
 }
 
 const getScale = (powerupName) =>
-  BUBBLE_POWERUP === powerupName ? selectedScaleFactor : scaleFactor;
+  DUST_POWERUP === powerupName ? selectedScaleFactor : scaleFactor;
 
 window.setup = function () {
   createCanvas(windowWidth, windowHeight);
   imageMode(CENTER);
+  if (!window.p5SetupDone) {
+    window.p5SetupDone = true;
+  }
 };
 
 function drawBackground() {
@@ -94,8 +115,12 @@ function drawBackground() {
 }
 
 function drawScrollPanel() {
+  setStrongAgainst();
+
   const scrollX = width * 0.78;
   const scrollY = height * 0.45;
+
+  let img;
 
   image(
     IMAGES.scrollImage,
@@ -105,30 +130,38 @@ function drawScrollPanel() {
     IMAGES.scrollImage.height * 0.75
   );
 
-  if (locked) {
-    textAlign(CENTER);
-    fill(80);
-    noStroke();
-    textSize(34);
-    textFont(germania);
-    text(`beats`, scrollX, scrollY - scrollImage.height * 0.1);
+  textAlign(CENTER);
+  fill(80);
+  noStroke();
+  textSize(34);
+  textFont(germania);
+  text(`beats`, scrollX, scrollY - IMAGES.scrollImage.height * 0.1);
 
-    fill("#964B00");
-    textSize(48);
-    text(strongAgainst, scrollX, scrollY + scrollImage.height * 0.02);
-  }
+  fill("#964B00");
+  textSize(48);
+  text(strongAgainst, scrollX, scrollY + IMAGES.scrollImage.height * 0.02);
+
+  if (strongAgainst === Troop.POWERUP.SHIELD)
+    img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
+  else if (strongAgainst === Troop.POWERUP.CHEST)
+    img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
+  else if (strongAgainst === Troop.POWERUP.HELMET)
+    img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
+
+  image(img, scrollX, scrollY, 200, 200);
 }
 
 function drawBarrel() {
   const barrelX = windowWidth / 2;
   const barrelY = (windowHeight * 6) / 8;
 
+  let barrelFrame = IMAGES.barrel[currentBarrelFrame];
   image(
-    IMAGES.barrelImg,
+    barrelFrame,
     barrelX,
     barrelY,
-    IMAGES.barrelImg.width * 0.4,
-    IMAGES.barrelImg.height * 0.4
+    barrelFrame.width * 0.4,
+    barrelFrame.height * 0.4
   );
 }
 
@@ -150,12 +183,20 @@ function drawTable() {
 
 function drawCurrentPowerup() {
   const s = getScale(DUST_POWERUP);
+  let img;
 
   const barrelX = width / 2;
   const barrelY = (width * 6) / 8;
 
   powerupX = barrelX;
   powerupY = barrelY - IMAGES.barrelImg.height * 0.5;
+
+  if (DUST_POWERUP === Troop.POWERUP.SHIELD)
+    img = IMAGES.dustShieldFrames[currentPowerupFrame];
+  else if (DUST_POWERUP === Troop.POWERUP.CHEST)
+    img = IMAGES.dustChestFrames[currentPowerupFrame];
+  else if (DUST_POWERUP === Troop.POWERUP.HELMET)
+    img = IMAGES.dustHelmetFrames[currentPowerupFrame];
 
   image(img, powerupX - 50, powerupY, img.width * s, img.height * s);
 }
@@ -193,6 +234,7 @@ window.draw = function () {
   // Input handlers
   selectStrongAgainst();
   increaseProgress();
+  changeCurrentFrame();
 };
 
 window.windowResized = function () {

@@ -7,7 +7,7 @@ export class Game {
       new Team("Dust Dominion", this),
     ];
 
-    this.state = Game.STATES.MENU;
+    this.state = Game.STATES.ONGOING;
 
     this.timeRemaining = 200;
 
