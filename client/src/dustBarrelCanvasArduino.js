@@ -137,9 +137,9 @@ function drawScrollPanel() {
   textFont(germania);
   text(`beats`, scrollX, scrollY - IMAGES.scrollImage.height * 0.1);
 
-  fill("#964B00");
-  textSize(48);
-  text(strongAgainst, scrollX, scrollY + IMAGES.scrollImage.height * 0.02);
+  // fill("#964B00");
+  // textSize(48);
+  // text(strongAgainst, scrollX, scrollY + IMAGES.scrollImage.height * 0.02);
 
   if (strongAgainst === Troop.POWERUP.SHIELD)
     img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
@@ -148,7 +148,7 @@ function drawScrollPanel() {
   else if (strongAgainst === Troop.POWERUP.HELMET)
     img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
 
-  image(img, scrollX, scrollY, 200, 200);
+  image(img, scrollX, scrollY - 50, 150, 150);
 }
 
 function drawBarrel() {
@@ -198,7 +198,7 @@ function drawCurrentPowerup() {
   else if (DUST_POWERUP === Troop.POWERUP.HELMET)
     img = IMAGES.dustHelmetFrames[currentPowerupFrame];
 
-  image(img, powerupX - 50, powerupY, img.width * s, img.height * s);
+  image(img, powerupX - 50, powerupY, 300 * s, 300 * s);
 }
 
 function drawPowerupInfo() {
