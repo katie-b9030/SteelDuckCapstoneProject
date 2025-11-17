@@ -11,6 +11,7 @@ export class Team {
 
     this.currentSpins = 0;
     this.buttonPressedLast = false;
+    this.currentPowerup = "shield";
 
     // this.barrel = new BarrelPlayer(name, game);
     // this.cannon = new CannonPlayer(name, game);
