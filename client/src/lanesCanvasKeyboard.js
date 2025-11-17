@@ -147,9 +147,9 @@ window.setup = function () {
 //   }
 // };
 
-window.preload = function () {
-  preloadLanesImages();
+window.preload = async function () {
   myFont = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
+  await preloadLanesImages();
   // backgroundImage = loadImage(
   //   "../media/assets/background/bg-zoom-static.png"
   // );
@@ -204,7 +204,7 @@ function drawBackground() {
 }
 
 function changeCurrentFrame() {
-  if (currentFrame < numDefaultFrames - 1) {
+  if (currentDefaultFrame < numDefaultFrames - 1) {
     currentDefaultFrame++;
   } else {
     currentDefaultFrame = 0;
@@ -260,7 +260,7 @@ window.draw = function () {
   //   pop();
   // }
 
-  changeCurrentFrames();
+  // changeCurrentFrame();
 };
 
 window.windowResized = function () {

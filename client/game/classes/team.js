@@ -10,6 +10,7 @@ export class Team {
     this.troops = [];
 
     this.currentSpins = 0;
+    this.buttonPressedLast = false;
 
     // this.barrel = new BarrelPlayer(name, game);
     // this.cannon = new CannonPlayer(name, game);
@@ -51,13 +52,16 @@ export class Team {
   }
 
   troopCreationProgress(teamSpins, spinThreshold, buttonPressed, powerup) {
-    // create troops
     this.currentSpins = teamSpins;
-    if (
-      this.currentSpins >= spinThreshold &&
-      buttonPressed === "Button Pressed"
-    ) {
-      this.spawnTroop(powerup);
+
+    // Convert string to boolean for easier logic
+    const isButtonPressed = buttonPressed === "Button Pressed";
+
+    // Only spawn if button transitioned from not pressed → pressed
+    if (this.currentSpins >= spinThreshold && isButtonPressed && !this.buttonPressedLast) {
+        this.spawnTroop(powerup);
     }
+
+    this.buttonPressedLast = isButtonPressed;
   }
 }

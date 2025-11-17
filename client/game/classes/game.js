@@ -9,7 +9,7 @@ export class Game {
 
     this.state = Game.STATES.MENU;
 
-    this.timeRemaining = 90;
+    this.timeRemaining = 120;
 
     this.startTime = null;
 
@@ -29,7 +29,7 @@ export class Game {
   update() {
     this.elapsed = (millis() - this.startTime) / 1000;
 
-    this.timeRemaining = Math.max(90 - Math.floor(this.elapsed), 0);
+    this.timeRemaining = Math.max(120 - Math.floor(this.elapsed), 0);
 
     this.handleCollisions();
 

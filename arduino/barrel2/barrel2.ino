@@ -12,6 +12,7 @@ const int MAX_SPINS = 10;
 int spinCount = 0;
 bool magnetDetected = false;
 bool powerupSelected = false;
+bool buttonPressedLast = false;
 int i = 0;
 String selectedPowerup = POWERUPS[i];
 
@@ -29,6 +30,8 @@ void setup() {
 }
 
 void loop() {
+  int buttonState = digitalRead(POWERUP_BTN);
+
   if(powerupSelected == false) {
     spinCount = 0;
     Serial.print(spinCount);
@@ -49,7 +52,7 @@ void loop() {
     Serial.print(selectedPowerup);
     Serial.print(" | ");
 
-    if (digitalRead(POWERUP_BTN) == LOW) {
+    if (buttonState == LOW && !buttonPressedLast) {
       Serial.println("Button Pressed");
       powerupSelected = true;
     } else {
@@ -77,14 +80,14 @@ void loop() {
     if(spinCount >= MAX_SPINS) spinCount = MAX_SPINS;
 
     //arcade button press
-    if (digitalRead(POWERUP_BTN) == LOW && spinCount == MAX_SPINS) {
+    if (buttonState == LOW && !buttonPressedLast && spinCount == MAX_SPINS) {
       Serial.println("Button Pressed");
       powerupSelected = false;
       i = 0;
-      delay(500);
     } else {
       Serial.println("Button Released");
     }
+    buttonPressedLast = (buttonState == LOW);
   }
 
 

@@ -19,7 +19,7 @@ export class Troop {
     this.speed = this.chooseSpeed();
 
     this.img = this.chooseImage();
-    this.width = 125;
+    this.width = 200;
     this.height = 200;
 
     this.xPos = teamType === "Bubble Brigade" ? 0 : width; // change based on size of canvas
@@ -41,11 +41,11 @@ export class Troop {
       } else {
         return window.IMAGES.bubbleSoldierDefaultWalkFrames;
       }
-    } else {
+    } else if(this.teamType === "Dust Dominion") {
       if (this.powerup === Troop.POWERUP.SHIELD) {
         return window.IMAGES.dustSoldierShieldWalkFrames;
       } else if (this.powerup === Troop.POWERUP.CHEST) {
-        return window.IMAGES.dustSoldierClhestWalkFrames;
+        return window.IMAGES.dustSoldierChestWalkFrames;
       } else if (this.powerup === Troop.POWERUP.HELMET) {
         return window.IMAGES.dustSoldierHelmetWalkFrames;
       } else {
