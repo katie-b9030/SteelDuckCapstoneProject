@@ -44,38 +44,52 @@ window.preload = function () {
 };
 
 function drawBubbleFillBar() {             // Adjust if bar should be bigger/smaller
-  const fullWidth = 300;
+  const fullWidth = 300 * 2;
   const fullHeight = 40;
 
   const barX = width * 0.6;
   const barY = height * 0.1;
+  const r = fullHeight / 2;
 
-  push();
-  translate(barX - fullWidth / 2, barY - fullHeight / 2);
+  const x = barX - fullWidth + 175;
+  const y = barY - fullHeight / 2;
+
+  // push();
+  // translate(barX - fullWidth / 2, barY - fullHeight / 2);
 
   // Draw empty bar (border only)
   noFill();
-  stroke(0);        // black border
-  strokeWeight(4);
-  rect(-200, -100, barX - fullWidth / 2, barY - fullHeight / 2, 200); // optional corner radius 10
+  stroke(0);
+  strokeWeight(3);        // black border
+  rect(x, y, fullWidth, fullHeight, r);
+  //rect(-200, -100, barX - fullWidth / 2, barY - fullHeight / 2, 200); // optional corner radius 10
+
+  drawingContext.save();
+  drawingContext.beginPath();
+  drawingContext.roundRect(x, y, fullWidth, fullHeight, r);
+  drawingContext.clip();
+
+
 
   // Draw filled portion
   noStroke();
   fill(98, 202, 235); // your blue color
-  rect(-200, -100, (barX - fullWidth / 2) * fillPercent, barY - fullHeight / 2, 200);
+  rect(x, y, fullWidth * fillPercent, fullHeight, r);
+  //rect(-200, -100, (barX - fullWidth / 2) * fillPercent, barY - fullHeight / 2, 200);
 
-  pop();
+  drawingContext.restore();
+  //pop();
 
   // Draw percent text centered ON the bar
   push();
   textAlign(CENTER, CENTER);
   textFont(germania);
   stroke(0);
-  strokeWeight(8);
+  strokeWeight(6);
   fill(255);
 
-  textSize(52);
-  text(int(fillPercent * 100) + "%", barX - fullHeight * 2.5, barY - fullHeight); // centered on the bar
+  textSize(32);
+  text(int(fillPercent * 100) + "%", barX - 145, barY); // centered on the bar
   pop();
 }
 
