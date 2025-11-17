@@ -186,10 +186,10 @@ function drawCurrentPowerup() {
   let img;
 
   const barrelX = width / 2;
-  const barrelY = (width * 6) / 8;
+  const barrelY = (height * 6) / 8;
 
   powerupX = barrelX;
-  powerupY = barrelY - IMAGES.barrelImg.height * 0.5;
+  powerupY = barrelY - 400 * 0.5;
 
   if (DUST_POWERUP === Troop.POWERUP.SHIELD)
     img = IMAGES.dustShieldFrames[currentPowerupFrame];
