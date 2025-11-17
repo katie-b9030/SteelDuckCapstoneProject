@@ -21,10 +21,7 @@ export class Troop {
 
   constructor(teamType, powerup) {
     this.teamType = teamType; // bubble brigade or dust dominion
-    this.powerup =
-      teamType === "Bubble Brigade"
-        ? Troop.POWERUP.CHEST
-        : Troop.POWERUP.HELMET;
+    this.powerup = powerup;
 
     this.state = Troop.STATES.ALIVE;
     this.isAlive = true;

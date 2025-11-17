@@ -36,10 +36,14 @@ async function preloadFrames(prefix, count) {
 export async function preloadLanesImages() {
   window.IMAGES = {};
 
-  // backgrounds
-  IMAGES.lanesBackgroundImage = await loadImageAsync(
-    "../../../media/assets/backgrounds/bg-zoom-static-blur.png"
-  );
+  // backgrounds / UI
+  // IMAGES.lanesBackgroundImage = await loadImageAsync(
+  //   "../../../media/assets/backgrounds/bg-zoom-static-blur.png"
+  // );
+  
+  // IMAGES.scoreBar = await loadImageAsync(
+  //   "../../../media/assets/ui/score-bar-empty.png"
+  // );
 
   // Bubble barrel / UI
   IMAGES.bubbleBarrelBackgroundImage = await loadImageAsync(

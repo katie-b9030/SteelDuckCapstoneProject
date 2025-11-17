@@ -28,6 +28,9 @@ let myFont;
 let currentDefaultFrame = 0;
 let currentDeathFrame = 0;
 
+let lanesBackgroundImage;
+let scoreBar;
+
 // images
 // let backgroundImage;
 // // bubble soldiers
@@ -73,17 +76,24 @@ function drawUIItems() {
     LANE_HEIGHT
   );
 
+  // boxes behind the scores
+  stroke(150);        
+  strokeWeight(4);
+  fill(0);            
+  rect(25, 170, 100, 75, 50);
+  rect(width - 125, 170, 100, 75, 50);
+
   fill("#FFFFFF");
   textFont(myFont);
   textSize(24);
   textAlign(CENTER);
-  text(window.GAME.timeRemaining, width / 2, 100);
+  text(window.GAME.timeRemaining, width / 2, 165);
 
-  text("Score:", 75, 100);
-  text(window.GAME.teams[0].score, 75, 130);
+  text("Score:", 75, 200);
+  text(window.GAME.teams[0].score, 75, 230);
 
-  text("Score:", width - 75, 100);
-  text(window.GAME.teams[1].score, width - 75, 130);
+  text("Score:", width - 75, 200);
+  text(window.GAME.teams[1].score, width - 75, 230);
 }
 
 window.setup = function () {
@@ -149,38 +159,35 @@ window.setup = function () {
 
 window.preload = async function () {
   myFont = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
+  lanesBackgroundImage = loadImage("../media/assets/backgrounds/bg-zoom-static-blur.png");
+  scoreBar = loadImage("../media/assets/ui/score-bar-empty.png");
   await preloadLanesImages();
-  // backgroundImage = loadImage(
-  //   "../media/assets/background/bg-zoom-static.png"
-  // );
-
-  // bubbleSoldierPlainGif = loadImage(
-  //   "../media/assets/characters/bubble-empty.gif"
-  // );
-  // bubbleSoldierHelmetGif = loadImage(
-  //   "../media/assets/characters/bubble-helmet.gif"
-  // );
-  // bubbleSoldierChestplateGif = loadImage(
-  //   "../media/assets/characters/bubble-chestplate.gif"
-  // );
-  // bubbleSoldierShieldGif = loadImage(
-  //   "../media/assets/characters/bubble-shield.gif"
-  // );
-
-  // dustSoldierPlainGif = loadImage("../media/assets/characters/dust-empty.gif");
-  // dustSoldierHelmetGif = loadImage(
-  //   "../media/assets/characters/dust-helmet.gif"
-  // );
-  // dustSoldierCloakGif = loadImage("../media/assets/characters/dust-cloak.gif");
-  // dustSoldierShieldGif = loadImage(
-  //   "../media/assets/characters/dust-shield.gif"
-  // );
 };
+
+function drawScoreBar() {
+  let leftScore = window.GAME.teams[0].score;
+  let rightScore = window.GAME.teams[1].score;
+  let total = leftScore + rightScore;
+  let barWidth = width - 400; // total bar width
+  let barHeight = 40;
+
+  let leftFill = total === 0 ? barWidth / 2 : (leftScore / total) * barWidth;
+  let rightFill = total === 0 ? barWidth / 2 : (rightScore / total) * barWidth;
+
+  noStroke();
+
+  fill("rgba(35, 85, 221, 1)");
+  rect(200, 80, leftFill, barHeight, 60, 0, 0, 60);
+
+  fill("rgba(50, 19, 58, 1)");
+  rect(width - 200 - rightFill, 80, rightFill, barHeight, 0, 60, 60, 0);
+}
+
 
 function drawBackground() {
   let imgAspect =
-    window.IMAGES.lanesBackgroundImage.width /
-    window.IMAGES.lanesBackgroundImage.height;
+    lanesBackgroundImage.width /
+    lanesBackgroundImage.height;
   let canvasAspect = width / height;
 
   let drawWidth, drawHeight;
@@ -195,13 +202,31 @@ function drawBackground() {
 
   imageMode(CENTER);
   image(
-    window.IMAGES.lanesBackgroundImage,
+    lanesBackgroundImage,
     width / 2,
     height / 2,
     drawWidth,
     drawHeight
   );
+
+  drawScoreBar();
+
+  let sbAspect = scoreBar.height / scoreBar.width;
+  let sbW = width;          
+  let sbH = sbW * sbAspect; 
+
+  imageMode(CORNER);        
+  image(scoreBar, 0, 0, sbW, sbH);
+
+  // image(
+  //   window.IMAGES.scoreBar, 
+  //   width / 2, 
+  //   window.IMAGES.scoreBar.height / 2, 
+  //   width, 
+  //   width * (window.IMAGES.scoreBar.height / window.IMAGES.scoreBar.width)
+  // );
 }
+
 
 function changeCurrentFrame() {
   if (currentDefaultFrame < numDefaultFrames - 1) {
