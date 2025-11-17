@@ -148,7 +148,7 @@ function drawScrollPanel() {
   else if (strongAgainst === Troop.POWERUP.HELMET)
     img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
 
-  image(img, scrollX, scrollY - 50, 150, 150);
+  image(img, scrollX, scrollY + 50, 150, 150);
 }
 
 function drawBarrel() {
@@ -156,13 +156,7 @@ function drawBarrel() {
   const barrelY = (windowHeight * 6) / 8;
 
   let barrelFrame = IMAGES.barrel[currentBarrelFrame];
-  image(
-    barrelFrame,
-    barrelX,
-    barrelY,
-    barrelFrame.width * 0.4,
-    barrelFrame.height * 0.4
-  );
+  image(barrelFrame, barrelX, barrelY, 600 * 0.4, 400 * 0.4);
 }
 
 function drawTable() {
@@ -172,13 +166,7 @@ function drawTable() {
   // You can adjust the scaling factor as needed
   const scale = 0.9;
 
-  image(
-    IMAGES.tableImage,
-    tableX,
-    tableY,
-    IMAGES.tableImage.width * scale,
-    IMAGES.tableImage.height * scale
-  );
+  image(IMAGES.tableImage, tableX, tableY, 600 * scale, 500 * scale);
 }
 
 function drawCurrentPowerup() {
