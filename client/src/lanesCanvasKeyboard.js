@@ -149,7 +149,6 @@ window.setup = function () {
 
 window.preload = async function () {
   myFont = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
-  await preloadLanesImages();
   // backgroundImage = loadImage(
   //   "../media/assets/background/bg-zoom-static.png"
   // );

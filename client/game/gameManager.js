@@ -7,8 +7,7 @@ const ARDUINO_CONTROLLER = new ArduinoController();
 // const KEYBOARD_CONTROLLER = new KeyboardController();
 
 window.GAME = new Game();
-window.BUBBLE_POWERUP = "shield";
-window.DUST_POWERUP = "shield";
+window.GAME_READY = false;
 
 const BUBBLE_TEAM = GAME.teams[0];
 const DUST_TEAM = GAME.teams[1];
@@ -38,6 +37,7 @@ function update() {
 
 window.onload = function () {
   init();
+  window.GAME_READY = true;
   mainGameLoop();
 };
 

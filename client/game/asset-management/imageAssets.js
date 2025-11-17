@@ -50,7 +50,17 @@ export async function preloadLanesImages() {
     "../../../media/assets/ui/bubble-bar-empty.png"
   );
 
-  IMAGES.barrel = await loadImageAsync("../../../media/assets/ui/barrel.png");
+  IMAGES.barrel = await preloadFrames(
+    "../../../media/assets/ui/barrel-animation/barrel"
+  );
+
+  IMAGES.scrollImage = await loadImageAsync(
+    "../../../media/assets/ui/scroll.png"
+  );
+
+  IMAGES.tableImage = await loadImageAsync(
+    "../../../media/assets/ui/table.png"
+  );
 
   IMAGES.bubbleShieldFrames = await preloadFrames(
     "../../../media/assets/armor/bubble-shield/bubble-shield",
