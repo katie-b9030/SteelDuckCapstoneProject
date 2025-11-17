@@ -57,8 +57,8 @@ function drawDustFillBar() {
   const fullWidth = 300 * 2;
   const fullHeight = 40;
 
-  const barX = width * 0.6;
-  const barY = height * 0.1;
+  const barX =windowWidth * 0.6;
+  const barY =windowHeight * 0.1;
   const r = fullHeight / 2;
 
   const x = barX - fullWidth + 175;
@@ -111,14 +111,14 @@ window.setup = function () {
 
 function drawBackground() {
   background(0);
-  image(IMAGES.dustBarrelBackgroundImage, width / 2, height / 2, width, height);
+  image(IMAGES.dustBarrelBackgroundImage,windowWidth / 2,windowHeight / 2,windowWidth,windowHeight);
 }
 
 function drawScrollPanel() {
   setStrongAgainst();
 
-  const scrollX = width * 0.78;
-  const scrollY = height * 0.45;
+  const scrollX =windowWidth * 0.78;
+  const scrollY =windowHeight * 0.45;
 
   let img;
 
@@ -152,7 +152,7 @@ function drawScrollPanel() {
 }
 
 function drawBarrel() {
-  const barrelX = width / 2;
+  const barrelX =windowWidth / 2;
   const barrelY = (height * 6) / 8;
 
   let barrelFrame = IMAGES.barrel[currentBarrelFrame];
@@ -160,8 +160,8 @@ function drawBarrel() {
 }
 
 function drawTable() {
-  const tableX = width * 0.5;
-  const tableY = height * 0.72;
+  const tableX =windowWidth * 0.5;
+  const tableY =windowHeight * 0.72;
 
   // You can adjust the scaling factor as needed
   const scale = 0.9;
@@ -173,7 +173,7 @@ function drawCurrentPowerup() {
   const s = getScale(DUST_POWERUP);
   let img;
 
-  const barrelX = width / 2;
+  const barrelX =windowWidth / 2;
   const barrelY = (height * 6) / 8;
 
   powerupX = barrelX;
@@ -203,7 +203,7 @@ window.draw = function () {
     background(20);
     fill(255);
     textAlign(CENTER, CENTER);
-    text("Loading...", width / 2, height / 2);
+    text("Loading...",windowWidth / 2,windowHeight / 2);
     return;
   }
 
