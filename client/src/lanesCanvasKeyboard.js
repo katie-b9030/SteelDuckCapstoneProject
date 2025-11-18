@@ -60,26 +60,26 @@ let scoreBar;
 function drawUIItems() {
   noStroke();
   // Actual Lane
-  fill("rgba(0, 0, 0, 0.5)");
-  rect(0, windowHeight - 225, width, LANE_HEIGHT);
+  // fill("rgba(0, 0, 0, 0.5)");
+  // rect(0, windowHeight - 225, width, LANE_HEIGHT);
 
-  //Bubble spawn
-  fill("rgba(35, 85, 221, 0.5)");
-  rect(0, windowHeight - 225, SPAWN_ZONE_WIDTH, LANE_HEIGHT);
+  // //Bubble spawn
+  // fill("rgba(35, 85, 221, 0.5)");
+  // rect(0, windowHeight - 225, SPAWN_ZONE_WIDTH, LANE_HEIGHT);
 
-  //Dust spawn
-  fill("rgba(50, 19, 58, 0.5)");
-  rect(
-    width - SPAWN_ZONE_WIDTH,
-    windowHeight - 225,
-    SPAWN_ZONE_WIDTH,
-    LANE_HEIGHT
-  );
+  // //Dust spawn
+  // fill("rgba(50, 19, 58, 0.5)");
+  // rect(
+  //   width - SPAWN_ZONE_WIDTH,
+  //   windowHeight - 225,
+  //   SPAWN_ZONE_WIDTH,
+  //   LANE_HEIGHT
+  // );
 
   // boxes behind the scores
-  stroke(150);        
+  stroke(150);
   strokeWeight(4);
-  fill(0);            
+  fill(0);
   rect(25, 170, 100, 75, 50);
   rect(width - 125, 170, 100, 75, 50);
 
@@ -87,7 +87,7 @@ function drawUIItems() {
   textFont(myFont);
   textSize(24);
   textAlign(CENTER);
-  text(window.GAME.timeRemaining, width / 2, 165);
+  text(window.GAME.timeRemaining, width / 2, 135);
 
   text("Score:", 75, 200);
   text(window.GAME.teams[0].score, 75, 230);
@@ -159,7 +159,9 @@ window.setup = function () {
 
 window.preload = async function () {
   myFont = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
-  lanesBackgroundImage = loadImage("../media/assets/backgrounds/bg-zoom-static-blur.png");
+  lanesBackgroundImage = loadImage(
+    "../media/assets/backgrounds/bg-zoom-static-blur.png"
+  );
   scoreBar = loadImage("../media/assets/ui/score-bar-empty.png");
   await preloadLanesImages();
 };
@@ -168,7 +170,7 @@ function drawScoreBar() {
   let leftScore = window.GAME.teams[0].score;
   let rightScore = window.GAME.teams[1].score;
   let total = leftScore + rightScore;
-  let barWidth = width - 400; // total bar width
+  let barWidth = width - 300; // total bar width
   let barHeight = 40;
 
   let leftFill = total === 0 ? barWidth / 2 : (leftScore / total) * barWidth;
@@ -177,17 +179,14 @@ function drawScoreBar() {
   noStroke();
 
   fill("rgba(35, 85, 221, 1)");
-  rect(200, 80, leftFill, barHeight, 60, 0, 0, 60);
+  rect(150, 65, leftFill, barHeight, 60, 0, 0, 60);
 
   fill("rgba(50, 19, 58, 1)");
-  rect(width - 200 - rightFill, 80, rightFill, barHeight, 0, 60, 60, 0);
+  rect(width - 150 - rightFill, 65, rightFill, barHeight, 0, 60, 60, 0);
 }
 
-
 function drawBackground() {
-  let imgAspect =
-    lanesBackgroundImage.width /
-    lanesBackgroundImage.height;
+  let imgAspect = lanesBackgroundImage.width / lanesBackgroundImage.height;
   let canvasAspect = width / height;
 
   let drawWidth, drawHeight;
@@ -201,32 +200,25 @@ function drawBackground() {
   }
 
   imageMode(CENTER);
-  image(
-    lanesBackgroundImage,
-    width / 2,
-    height / 2,
-    drawWidth,
-    drawHeight
-  );
+  image(lanesBackgroundImage, width / 2, height / 2, drawWidth, drawHeight);
 
   drawScoreBar();
 
   let sbAspect = scoreBar.height / scoreBar.width;
-  let sbW = width;          
-  let sbH = sbW * sbAspect; 
+  let sbW = width;
+  let sbH = sbW * sbAspect;
 
-  imageMode(CORNER);        
+  imageMode(CORNER);
   image(scoreBar, 0, 0, sbW, sbH);
 
   // image(
-  //   window.IMAGES.scoreBar, 
-  //   width / 2, 
-  //   window.IMAGES.scoreBar.height / 2, 
-  //   width, 
+  //   window.IMAGES.scoreBar,
+  //   width / 2,
+  //   window.IMAGES.scoreBar.height / 2,
+  //   width,
   //   width * (window.IMAGES.scoreBar.height / window.IMAGES.scoreBar.width)
   // );
 }
-
 
 function changeCurrentFrame() {
   if (currentDefaultFrame < numDefaultFrames - 1) {

@@ -2,8 +2,6 @@
 import { preloadLanesImages } from "../game/asset-management/imageAssets.js";
 import { Troop } from "../game/classes/troop.js";
 
-window.ASSETS_READY = false;
-
 let strongAgainst = "";
 let fillPercent;
 
@@ -22,19 +20,16 @@ let currentBarrelFrame = 0;
 
 window.preload = function () {
   barrelImg = loadImage("../media/assets/ui/barrel.png");
-  preloadLanesImages().then(() => {
-    window.ASSETS_READY = true;
-  });
 
   germania = loadFont("../media/fonts/Germania_One/GermaniaOne-Regular.ttf");
 };
 
 function setStrongAgainst() {
-  if (DUST_POWERUP === Troop.POWERUP.SHIELD) {
+  if (BUBBLE_POWERUP === Troop.POWERUP.SHIELD) {
     strongAgainst = Troop.POWERUP.HELMET;
-  } else if (DUST_POWERUP === Troop.POWERUP.CHEST) {
+  } else if (BUBBLE_POWERUP === Troop.POWERUP.CHEST) {
     strongAgainst = Troop.POWERUP.SHIELD;
-  } else if (DUST_POWERUP === Troop.POWERUP.HELMET) {
+  } else if (BUBBLE_POWERUP === Troop.POWERUP.HELMET) {
     strongAgainst = Troop.POWERUP.CHEST;
   }
 }
@@ -53,7 +48,7 @@ function changeCurrentFrame() {
   }
 }
 
-function drawDustFillBar() {
+function drawBubbleFillBar() {
   fillPercent = window.GAME.teams[1].spinCount;
 
   // Adjust if bar should be bigger/smaller
@@ -102,7 +97,7 @@ function drawDustFillBar() {
 }
 
 const getScale = (powerupName) =>
-  DUST_POWERUP === powerupName ? selectedScaleFactor : scaleFactor;
+  BUBBLE_POWERUP === powerupName ? selectedScaleFactor : scaleFactor;
 
 window.setup = function () {
   createCanvas(windowWidth, windowHeight);
@@ -115,7 +110,7 @@ window.setup = function () {
 function drawBackground() {
   background(0);
   image(
-    IMAGES.dustBarrelBackgroundImage,
+    IMAGES.bubbleBarrelBackgroundImage,
     windowWidth / 2,
     windowHeight / 2,
     windowWidth,
@@ -127,7 +122,13 @@ function drawBarrel() {
   const barrelX = windowWidth / 2;
   const barrelY = (windowHeight * 6) / 8;
 
-  image(barrelImg, barrelX, barrelY, 1400, 1150);
+  image(
+    barrelImg,
+    barrelX,
+    barrelY,
+    barrelImg.width * 0.4,
+    barrelImg.height * 0.4
+  );
 }
 
 function drawScrollPanel() {
@@ -145,18 +146,18 @@ function drawScrollPanel() {
   noStroke();
   textSize(34);
   textFont(germania);
-  text(`beats`, scrollX, scrollY - 80);
+  text(`beats`, scrollX, scrollY - 100);
 
   // fill("#964B00");
   // textSize(48);
   // text(strongAgainst, scrollX, scrollY + IMAGES.scrollImage.height * 0.02);
 
   if (strongAgainst === Troop.POWERUP.SHIELD)
-    img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
+    img = IMAGES.dustShieldFrames[currentPowerupFrame];
   else if (strongAgainst === Troop.POWERUP.CHEST)
-    img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
+    img = IMAGES.dustShieldFrames[currentPowerupFrame];
   else if (strongAgainst === Troop.POWERUP.HELMET)
-    img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
+    img = IMAGES.dustShieldFrames[currentPowerupFrame];
 
   image(img, scrollX, scrollY + 50, 150, 150);
 }
@@ -176,27 +177,27 @@ function drawTable() {
   // You can adjust the scaling factor as needed
   const scale = 0.9;
 
-  image(IMAGES.tableImage, tableX, tableY, 1700 * scale, 1400 * scale);
+  image(IMAGES.tableImage, tableX, tableY, 600 * scale, 500 * scale);
 }
 
 function drawCurrentPowerup() {
-  const s = getScale(DUST_POWERUP);
+  const s = getScale(BUBBLE_POWERUP);
   let img;
 
   const barrelX = windowWidth / 2;
-  const barrelY = (height * 7) / 8;
+  const barrelY = (height * 6) / 8;
 
   powerupX = barrelX;
-  powerupY = barrelY - 800 * 0.5;
+  powerupY = barrelY - 400 * 0.5;
 
-  if (DUST_POWERUP === Troop.POWERUP.SHIELD)
-    img = IMAGES.dustShieldFrames[currentPowerupFrame];
-  else if (DUST_POWERUP === Troop.POWERUP.CHEST)
-    img = IMAGES.dustChestFrames[currentPowerupFrame];
-  else if (DUST_POWERUP === Troop.POWERUP.HELMET)
-    img = IMAGES.dustHelmetFrames[currentPowerupFrame];
+  if (BUBBLE_POWERUP === Troop.POWERUP.SHIELD)
+    img = IMAGES.bubbleShieldFrames[currentPowerupFrame];
+  else if (BUBBLE_POWERUP === Troop.POWERUP.CHEST)
+    img = IMAGES.bubbleChestFrames[currentPowerupFrame];
+  else if (BUBBLE_POWERUP === Troop.POWERUP.HELMET)
+    img = IMAGES.bubbleHelmetFrames[currentPowerupFrame];
 
-  image(img, powerupX - 50, powerupY - 350, 800 * s, 800 * s);
+  image(img, powerupX - 50, powerupY, 300 * s, 300 * s);
 }
 
 function drawPowerupInfo() {
@@ -219,7 +220,7 @@ window.draw = function () {
 
   drawBackground();
   drawTable();
-  drawDustFillBar();
+  drawBubbleFillBar();
   drawScrollPanel();
   drawCurrentPowerup();
   drawBarrel();
